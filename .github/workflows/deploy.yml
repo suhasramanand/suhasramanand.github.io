@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - gh-pages
 
 jobs:
   build-and-deploy:
@@ -26,6 +26,8 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          VITE_BASE_PATH: /suhasramanand.github.io/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
