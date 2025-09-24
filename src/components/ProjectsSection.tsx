@@ -28,14 +28,14 @@ const projects: ProjectItem[] = [
     period: "Dec 2024",
     description: "Automated cloud infrastructure provisioning with Terraform, streamlining resource management. Deployed microservices on Kubernetes (AWS EKS) to enhance system scalability and reliability. Implemented CI/CD pipelines using GitHub Actions, improving DevOps efficiency and reducing deployment errors.",
     technologies: ["HCL", "YAML", "Terraform", "GCP"],
-    github: "https://github.com"
+    github: "https://github.com/suhasramanand/scalable-infrastructure-deployment"
   },
   {
     title: "Residential Management System",
     period: "Nov 2024",
     description: "Developed a Java-based system for managing tenants, leases, and rent payments with role-based access control. Implemented role-based access control (RBAC) for landlords, tenants, and administrators to enhance security. Designed an intuitive JavaFX/Swing UI, automating rent tracking and invoice generation.",
     technologies: ["Java", "MySQL", "MVC", "Swing", "OOP"],
-    github: "https://github.com"
+    github: "https://github.com/suhasreddy-northeastern/Final_Project_Group70_AED_INFO5100"
   }
 ];
 
