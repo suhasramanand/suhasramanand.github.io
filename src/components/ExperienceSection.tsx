@@ -14,6 +14,7 @@ interface ExperienceItem {
   points: string[];
 }
 
+// Updated experiences with Calix
 const experiences: ExperienceItem[] = [
   {
     title: "Software Engineering Intern, Cloud",
@@ -56,6 +57,7 @@ const experiences: ExperienceItem[] = [
 ];
 
 const ExperienceSection: React.FC = () => {
+  console.log("ExperienceSection loaded with Calix experience");
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const timelineItemsRef = useRef<(HTMLDivElement | null)[]>([]);
