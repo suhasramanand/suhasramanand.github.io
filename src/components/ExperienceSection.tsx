@@ -20,7 +20,7 @@ const experiences: ExperienceItem[] = [
     company: "Calix Inc",
     period: "Jun 2025 - Aug 2025",
     location: "Remote",
-    logo: "/placeholder.svg",
+    logo: "/Calix.png",
     points: [
       "Automated AlloyDB database deployments using Liquibase and Bash scripts, integrated with Cloud Build triggers and Bamboo pipelines, reducing manual provisioning time by 35%",
       "Developed monitoring scripts to detect deployment inconsistencies and package drift, reducing incident frequency and improving reliability KPIs",
