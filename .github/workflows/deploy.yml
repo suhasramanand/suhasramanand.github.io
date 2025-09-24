@@ -20,12 +20,23 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: 'npm'
+
+      - name: Clear any existing build artifacts
+        run: |
+          rm -rf dist/
+          rm -rf node_modules/.vite
+          rm -rf node_modules/.cache
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build
-        run: npm run build
+      - name: Build with fresh cache
+        run: |
+          npm run build
+          echo "Build completed. Generated files:"
+          ls -la dist/
+          ls -la dist/assets/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
