@@ -14,8 +14,8 @@ interface ExperienceItem {
   points: string[];
 }
 
-    // FORCE REBUILD - CALIX EXPERIENCE ADDED - MAJOR CHANGE
-    // Updated experiences with Calix - Force rebuild - DRAMATIC CHANGE
+    // CALIX EXPERIENCE IS HERE - FORCE REBUILD NOW
+    // This should definitely be in the build - MAJOR CHANGE
     const experiences: ExperienceItem[] = [
   {
     title: "Software Engineering Intern, Cloud",
@@ -58,6 +58,7 @@ interface ExperienceItem {
 ];
 
 const ExperienceSection: React.FC = () => {
+  console.log("CALIX EXPERIENCE SHOULD BE HERE!");
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const timelineItemsRef = useRef<(HTMLDivElement | null)[]>([]);
