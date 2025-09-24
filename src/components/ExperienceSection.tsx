@@ -14,9 +14,9 @@ interface ExperienceItem {
   points: string[];
 }
 
-// FORCE REBUILD - CALIX EXPERIENCE ADDED
-// Updated experiences with Calix - Force rebuild
-const experiences: ExperienceItem[] = [
+    // FORCE REBUILD - CALIX EXPERIENCE ADDED - MAJOR CHANGE
+    // Updated experiences with Calix - Force rebuild - DRAMATIC CHANGE
+    const experiences: ExperienceItem[] = [
   {
     title: "Software Engineering Intern, Cloud",
     company: "Calix Inc",
