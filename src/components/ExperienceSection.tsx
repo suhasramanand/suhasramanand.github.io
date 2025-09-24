@@ -58,7 +58,7 @@ interface ExperienceItem {
 ];
 
 const ExperienceSection: React.FC = () => {
-  console.log("CALIX EXPERIENCE SHOULD BE HERE!");
+  console.log("CALIX LOGO SHOULD BE VISIBLE NOW!");
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const timelineItemsRef = useRef<(HTMLDivElement | null)[]>([]);
