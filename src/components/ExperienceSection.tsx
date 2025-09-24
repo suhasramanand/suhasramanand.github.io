@@ -14,8 +14,8 @@ interface ExperienceItem {
   points: string[];
 }
 
-    // CALIX EXPERIENCE IS HERE - FORCE REBUILD NOW
-    // This should definitely be in the build - MAJOR CHANGE
+    // CALIX EXPERIENCE WITH OFFICIAL LOGO - REBUILD FOR LOGO
+    // Logo now in public directory - should display correctly
     const experiences: ExperienceItem[] = [
   {
     title: "Software Engineering Intern, Cloud",
