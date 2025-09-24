@@ -14,6 +14,7 @@ interface ExperienceItem {
   points: string[];
 }
 
+// FORCE REBUILD - CALIX EXPERIENCE ADDED
 // Updated experiences with Calix - Force rebuild
 const experiences: ExperienceItem[] = [
   {
