@@ -172,16 +172,27 @@ const CrazyMenu: React.FC = () => {
     setIsOpen(!isOpen);
     
     if (!isOpen) {
-      // Opening animation
-      gsap.fromTo(menuRef.current, 
-        { scale: 0, opacity: 0, rotation: -180 },
-        { scale: 1, opacity: 1, rotation: 0, duration: 0.5, ease: "back.out(1.7)" }
-      );
+      // Opening animation - smooth slide down with fade
+      if (menuRef.current) {
+        menuRef.current.style.display = 'block';
+        gsap.fromTo(menuRef.current, 
+          { y: -20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }
+        );
+      }
     } else {
-      // Closing animation
-      gsap.to(menuRef.current, 
-        { scale: 0, opacity: 0, rotation: 180, duration: 0.3, ease: "back.in(1.7)" }
-      );
+      // Closing animation - smooth fade out and slide up
+      if (menuRef.current) {
+        gsap.to(menuRef.current, 
+          { y: -10, opacity: 0, duration: 0.2, ease: "power2.in", 
+            onComplete: () => {
+              if (menuRef.current) {
+                menuRef.current.style.display = 'none';
+              }
+            }
+          }
+        );
+      }
     }
   };
 
@@ -440,7 +451,8 @@ const CrazyMenu: React.FC = () => {
         {/* Mobile Menu */}
         <div 
           ref={menuRef}
-          className={`md:hidden ${isOpen ? "block" : "hidden"}`}
+          className="md:hidden"
+          style={{ display: isOpen ? 'block' : 'none' }}
         >
           <div className="px-4 pt-2 pb-4 space-y-1 bg-paper-cream border-t border-ink-light-gray/30">
             {menuItems.map((item, index) => (
