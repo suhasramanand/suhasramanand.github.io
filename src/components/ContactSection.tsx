@@ -41,10 +41,11 @@ const ContactSection: React.FC = React.memo(() => {
     },
   });
 
-  // EmailJS Configuration - using environment variables
-  const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_4fj0nwr';
-  const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_p4072bl';
-  const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'IxFZkVYjMHJ1IUwuo';
+  // EmailJS Configuration - using environment variables only
+  // These must be set via environment variables or GitHub Secrets
+  const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+  const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+  const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
   const RECIPIENT_EMAIL = import.meta.env.VITE_RECIPIENT_EMAIL || 'reachsuhasreddy@gmail.com';
 
   // Initialize EmailJS - lazy initialization
@@ -65,6 +66,13 @@ const ContactSection: React.FC = React.memo(() => {
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
     setSubmitError(null);
+
+    // Validate EmailJS configuration
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+      setSubmitError("Email service is not configured. Please contact me directly via email.");
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       const templateParams = {
