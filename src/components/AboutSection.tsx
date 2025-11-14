@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Terminal from "./Terminal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -99,36 +100,30 @@ const AboutSection: React.FC = React.memo(() => {
         </h2>
 
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
-          <div ref={contentRef} className="order-2 md:order-1 min-h-[400px] sm:min-h-[450px]">
-            <p className="text-body mb-6 min-h-[3rem] sm:min-h-[3.5rem]">
+          <div ref={contentRef} className="order-2 md:order-1 min-h-[400px] sm:min-h-[450px] space-y-4">
+            <Terminal 
+              prompt="$" 
+              showCursor={displayedText1.length < fullText1.length}
+              className="w-full"
+            >
               {displayedText1}
-              {displayedText1.length < fullText1.length && (
-                <span 
-                  className="inline-block w-2 h-5 bg-black ml-1 align-middle"
-                  style={{ animation: 'blink 1s infinite' }}
-                />
-              )}
-            </p>
+            </Terminal>
 
-            <p className="text-body mb-6 min-h-[3rem] sm:min-h-[3.5rem]">
+            <Terminal 
+              prompt="$" 
+              showCursor={displayedText2.length < fullText2.length && displayedText1.length === fullText1.length}
+              className="w-full"
+            >
               {displayedText2}
-              {displayedText2.length < fullText2.length && displayedText1.length === fullText1.length && (
-                <span 
-                  className="inline-block w-2 h-5 bg-black ml-1 align-middle"
-                  style={{ animation: 'blink 1s infinite' }}
-                />
-              )}
-            </p>
+            </Terminal>
 
-            <p className="text-body min-h-[3rem] sm:min-h-[3.5rem]">
+            <Terminal 
+              prompt="$" 
+              showCursor={displayedText2.length === fullText2.length && displayedText1.length === fullText1.length && displayedText3.length < fullText3.length}
+              className="w-full"
+            >
               {displayedText3}
-              {displayedText2.length === fullText2.length && displayedText1.length === fullText1.length && (
-                <span 
-                  className="inline-block w-2 h-5 bg-black ml-1 align-middle"
-                  style={{ animation: 'blink 1s infinite' }}
-                />
-              )}
-            </p>
+            </Terminal>
           </div>
 
           <div ref={imageRef} className="flex justify-center order-1 md:order-2 sticky top-20">

@@ -171,3 +171,75 @@ html:not([data-scroll-locked]) {
     opacity: 0;
   }
 }
+
+/* Terminal Styles */
+.terminal-container {
+  @apply w-full;
+}
+
+.terminal-window {
+  @apply bg-black/90 border border-black/30 rounded-lg overflow-hidden shadow-lg;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+}
+
+.terminal-header {
+  @apply bg-black/95 border-b border-black/50 px-4 py-2 flex items-center;
+  height: 32px;
+}
+
+.terminal-buttons {
+  @apply flex gap-1.5;
+}
+
+.terminal-button {
+  @apply w-3 h-3 rounded-full;
+}
+
+.terminal-button-close {
+  @apply bg-red-500;
+}
+
+.terminal-button-minimize {
+  @apply bg-yellow-500;
+}
+
+.terminal-button-maximize {
+  @apply bg-green-500;
+}
+
+.terminal-title {
+  @apply text-xs text-gray-400 mx-auto font-mono;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+}
+
+.terminal-spacer {
+  @apply w-12;
+}
+
+.terminal-body {
+  @apply bg-black/90 p-4;
+  min-height: 120px;
+}
+
+.terminal-content {
+  @apply text-sm leading-relaxed;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+}
+
+.terminal-prompt {
+  @apply text-green-400 mr-2;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+}
+
+.terminal-text {
+  @apply text-gray-100;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.terminal-cursor {
+  @apply text-green-400 ml-1;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+  animation: blink 1s infinite;
+}

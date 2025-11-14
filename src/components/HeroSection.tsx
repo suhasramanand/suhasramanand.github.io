@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { Github, Linkedin, Mail, ArrowDown, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SmokeEffectWrapper from './SmokeEffectWrapper';
+import Terminal from './Terminal';
 
 const HeroSection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -107,15 +108,15 @@ const HeroSection: React.FC = () => {
           <p ref={titleRef} className="text-xl sm:text-2xl md:text-3xl text-ink-gray font-serif font-medium mb-6 italic">
             Software Engineer & Cloud Specialist
           </p>
-          <p ref={descRef} className="text-base sm:text-lg md:text-xl text-ink-gray/80 mb-12 max-w-2xl mx-auto leading-relaxed font-serif min-h-[3rem]">
-            {displayedDesc}
-            {displayedDesc.length < fullDescText.length && (
-              <span
-                className="inline-block w-2 h-5 bg-black ml-1 align-middle"
-                style={{ animation: 'blink 1s infinite' }}
-              />
-            )}
-          </p>
+                <div ref={descRef} className="mb-12 max-w-2xl mx-auto min-h-[3rem]">
+                  <Terminal 
+                    prompt="$" 
+                    showCursor={displayedDesc.length < fullDescText.length}
+                    className="w-full"
+                  >
+                    {displayedDesc}
+                  </Terminal>
+                </div>
         </div>
 
         {/* GitHub, LinkedIn and Resume Buttons */}
