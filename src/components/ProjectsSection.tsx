@@ -46,21 +46,24 @@ const projects: ProjectItem[] = [
     period: "Sep 2025",
     description: "A distributed query engine reliability testing framework with fault injection, monitoring, and recovery mechanisms. Designed comprehensive testing suite to ensure system resilience under various failure scenarios.",
     technologies: ["Python", "Distributed Systems", "Testing", "Monitoring"],
-    github: "https://github.com/suhasramanand/distributed-query-engine-reliability"
+    github: "https://github.com/suhasramanand/distributed-query-engine-reliability",
+    image: "/images/projects/distributed-query-engine.png"
   },
   {
     title: "High-Performance C++ Cache System",
     period: "Sep 2025",
     description: "High-Performance C++ Caching System with LRU eviction, custom memory allocator, and multi-threaded TCP server. Implemented efficient memory management and concurrent access patterns for optimal performance.",
     technologies: ["C++", "Memory Management", "Multi-threading", "TCP Server"],
-    github: "https://github.com/suhasramanand/high-performance-cache"
+    github: "https://github.com/suhasramanand/high-performance-cache",
+    image: "/images/projects/high-performance-cache.png"
   },
   {
     title: "EvalStack - AI Pipeline Platform",
     period: "Sep 2025",
     description: "Production-grade platform for evaluating, observing, and optimizing Generative AI pipelines (LLMs, RAG, Agents). Built comprehensive evaluation framework with monitoring capabilities for AI model performance.",
     technologies: ["Python", "AI/ML", "LLMs", "RAG", "Monitoring"],
-    github: "https://github.com/suhasramanand/evalstack"
+    github: "https://github.com/suhasramanand/evalstack",
+    image: "/images/projects/evalstack.png"
   },
   {
     title: "Streaming Analytics Platform",
