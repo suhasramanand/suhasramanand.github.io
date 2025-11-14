@@ -86,14 +86,16 @@ const projects: ProjectItem[] = [
     period: "Jan 2025",
     description: "Collection of Terraform configurations for learning and demonstrating infrastructure provisioning. Contains practical examples for AWS, Kubernetes, and cloud infrastructure automation.",
     technologies: ["HCL", "Terraform", "AWS", "Kubernetes", "DevOps"],
-    github: "https://github.com/suhasramanand/terraform"
+    github: "https://github.com/suhasramanand/terraform",
+    image: "/images/projects/terraform-infrastructure.png"
   },
   {
     title: "CKD Staging & Progression Prediction",
     period: "Jan 2025",
     description: "Machine learning project focused on predicting chronic kidney disease (CKD) stages and performing survival analysis using clinical biomarkers. Utilized Kaplan-Meier estimator for patient survival analysis.",
     technologies: ["Python", "Machine Learning", "Scikit-learn", "Survival Analysis"],
-    github: "https://github.com/suhasramanand/CKD_Staging_and_Progression_Prediction"
+    github: "https://github.com/suhasramanand/CKD_Staging_and_Progression_Prediction",
+    image: "/images/projects/ckd-prediction.png"
   },
   {
     title: "Endangered Bird Species Classification",
