@@ -41,11 +41,11 @@ const ContactSection: React.FC = React.memo(() => {
     },
   });
 
-  // EmailJS Configuration
-  const EMAILJS_SERVICE_ID = 'service_4fj0nwr';
-  const EMAILJS_TEMPLATE_ID = 'template_p4072bl';
-  const EMAILJS_PUBLIC_KEY = 'IxFZkVYjMHJ1IUwuo';
-  const RECIPIENT_EMAIL = 'reachsuhasreddy@gmail.com';
+  // EmailJS Configuration - using environment variables
+  const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_4fj0nwr';
+  const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_p4072bl';
+  const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'IxFZkVYjMHJ1IUwuo';
+  const RECIPIENT_EMAIL = import.meta.env.VITE_RECIPIENT_EMAIL || 'reachsuhasreddy@gmail.com';
 
   // Initialize EmailJS - lazy initialization
   useEffect(() => {
