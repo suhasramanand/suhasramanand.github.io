@@ -102,14 +102,16 @@ const projects: ProjectItem[] = [
     period: "Jan 2025",
     description: "Computer vision project for classifying endangered bird species using deep learning techniques. Implemented image preprocessing, feature extraction, and classification models for wildlife conservation.",
     technologies: ["Python", "Deep Learning", "Computer Vision", "Image Processing"],
-    github: "https://github.com/suhasramanand/Endangered-Bird-species-classification"
+    github: "https://github.com/suhasramanand/Endangered-Bird-species-classification",
+    image: "/images/projects/endangered-bird-classification.png"
   },
   {
     title: "Residential Management System",
     period: "Nov 2024",
     description: "Java-based system for managing tenants, leases, and rent payments with role-based access control. Implemented RBAC for landlords, tenants, and administrators with JavaFX/Swing UI for rent tracking and invoice generation.",
     technologies: ["Java", "MySQL", "MVC", "Swing", "OOP"],
-    github: "https://github.com/suhasreddy-northeastern/Final_Project_Group70_AED_INFO5100"
+    github: "https://github.com/suhasreddy-northeastern/Final_Project_Group70_AED_INFO5100",
+    image: "/images/projects/residential-management.png"
   }
 ];
 
