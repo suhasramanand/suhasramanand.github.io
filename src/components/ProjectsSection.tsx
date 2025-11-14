@@ -22,21 +22,24 @@ const projects: ProjectItem[] = [
     period: "Sep 2025",
     description: "Scalable Infrastructure Deployment with Terraform, Kubernetes (AWS EKS), and CI/CD pipelines for microservices architecture. Automated cloud infrastructure provisioning and container orchestration for high-availability systems.",
     technologies: ["HCL", "Terraform", "Kubernetes", "AWS EKS", "Docker", "CI/CD"],
-    github: "https://github.com/suhasramanand/scalable-infrastructure-deployment"
+    github: "https://github.com/suhasramanand/scalable-infrastructure-deployment",
+    image: "/images/projects/scalable-infrastructure.png"
   },
   {
     title: "CodeReviewer.AI",
     period: "Sep 2025",
     description: "AI-powered pull request review bot that leverages artificial intelligence to analyze and provide suggestions on code changes. Uses Groq's language model to review and suggest improvements, focusing on security and code quality.",
     technologies: ["Python", "AI", "GitHub API", "Security", "Automation"],
-    github: "https://github.com/suhasramanand/CodeReviewer.AI"
+    github: "https://github.com/suhasramanand/CodeReviewer.AI",
+    image: "/images/projects/codereviewer-ai.png"
   },
   {
     title: "JobHunt - Automated Job Aggregator",
     period: "Sep 2025",
     description: "Automated job aggregator for entry-level software engineering positions with visa sponsorship. Built intelligent web scraping and filtering system to identify relevant opportunities for international candidates.",
     technologies: ["Python", "Web Scraping", "Data Processing", "Automation"],
-    github: "https://github.com/suhasramanand/jobhunt"
+    github: "https://github.com/suhasramanand/jobhunt",
+    image: "/images/projects/jobhunt.png"
   },
   {
     title: "Distributed Query Engine Reliability",
