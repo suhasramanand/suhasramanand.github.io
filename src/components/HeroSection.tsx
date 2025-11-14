@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { Github, Linkedin, Mail, ArrowDown, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import SmokeEffectWrapper from './SmokeEffectWrapper';
 
 const HeroSection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -55,7 +54,14 @@ const HeroSection: React.FC = () => {
       // Initial animation timeline
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
       
-      // Note: nameRef animation is handled by SmokeEffect
+      // Animate name heading
+      tl.from(nameRef.current, {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.2
+      });
+      
       // Make buttons visible immediately - no animation hiding them
       if (buttonsRef.current) {
         gsap.set(buttonsRef.current, { opacity: 1, visibility: 'visible' });
@@ -99,11 +105,9 @@ const HeroSection: React.FC = () => {
     <div ref={sectionRef} id="hero" className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 sm:px-8 overflow-hidden">
       <div className="relative z-10 max-w-4xl w-full">
         <div className="mb-12">
-          <SmokeEffectWrapper color="#000000">
-            <h1 ref={nameRef} className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-black mb-6 tracking-tight">
-              Suhas Reddy
-            </h1>
-          </SmokeEffectWrapper>
+          <h1 ref={nameRef} className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-black mb-6 tracking-tight">
+            Suhas Reddy
+          </h1>
           <p ref={titleRef} className="text-xl sm:text-2xl md:text-3xl text-ink-gray font-serif font-medium mb-6 italic">
             Software Engineer & Cloud Specialist
           </p>
