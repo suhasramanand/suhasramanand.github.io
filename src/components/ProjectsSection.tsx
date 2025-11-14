@@ -70,14 +70,16 @@ const projects: ProjectItem[] = [
     period: "Sep 2025",
     description: "Complete end-to-end real-time streaming analytics platform with Kafka, Spark, Trino, and Iceberg on Kubernetes. Designed scalable data processing pipeline for real-time analytics and data lakehouse architecture.",
     technologies: ["Python", "Kafka", "Spark", "Trino", "Kubernetes", "Iceberg"],
-    github: "https://github.com/suhasramanand/streaming-analytics-platform"
+    github: "https://github.com/suhasramanand/streaming-analytics-platform",
+    image: "/images/projects/streaming-analytics.png"
   },
   {
     title: "React Metrics Operations",
     period: "Aug 2025",
     description: "React-based metrics operations dashboard for monitoring and analyzing application performance. Built comprehensive observability tools with real-time data visualization and alerting capabilities.",
     technologies: ["TypeScript", "React", "Metrics", "Observability"],
-    github: "https://github.com/suhasramanand/react-metrics-ops"
+    github: "https://github.com/suhasramanand/react-metrics-ops",
+    image: "/images/projects/react-metrics.png"
   },
   {
     title: "Terraform Infrastructure Collection",
