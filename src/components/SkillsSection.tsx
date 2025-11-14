@@ -80,7 +80,7 @@ const skillCategories: SkillCategory[] = [
   },
 ];
 
-const SkillsSection: React.FC = () => {
+const SkillsSection: React.FC = React.memo(() => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const categoryRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -90,64 +90,30 @@ const SkillsSection: React.FC = () => {
   );
 
   useEffect(() => {
-    let progressIndex = 0;
-    
-    const ctx = gsap.context(() => {
-      // Animate heading
-      gsap.from(headingRef.current, {
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: headingRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none"
-        }
-      });
-      
-      // Animate each category
-      categoryRefs.current.forEach((category, index) => {
-        gsap.from(category, {
-          y: 50,
-          opacity: 0,
-          duration: 0.8,
-          delay: 0.1 * index,
-          scrollTrigger: {
-            trigger: category,
-            start: "top 85%",
-            toggleActions: "play none none none",
-            onEnter: () => {
-              // When a category enters the viewport, schedule animation for its skill bars
-              const categorySkills = skillCategories[index].skills;
-              categorySkills.forEach((_, skillIndex) => {
-                const globalSkillIndex = progressIndex + skillIndex;
-                setTimeout(() => {
-                  setVisibleSkills(prev => {
-                    const newState = [...prev];
-                    newState[globalSkillIndex] = true;
-                    return newState;
-                  });
-                }, skillIndex * 200); // Stagger the skill bar animations
-              });
-              progressIndex += categorySkills.length;
-            }
-          }
-        });
-      });
+    // Set all elements to be visible immediately
+    if (headingRef.current) {
+      gsap.set(headingRef.current, { opacity: 1, y: 0 });
+    }
+    categoryRefs.current.forEach((category) => {
+      if (category) {
+        gsap.set(category, { opacity: 1, y: 0 });
+      }
     });
     
-    return () => ctx.revert(); // Clean up animations
+    // Show all skill bars immediately
+    const totalSkills = skillCategories.reduce((acc, cat) => acc + cat.skills.length, 0);
+    setVisibleSkills(Array(totalSkills).fill(true));
   }, []);
 
   // Reset progress counter for mapping
   let progressCounter = 0;
 
   return (
-    <section id="skills" className="py-20 relative overflow-hidden" ref={sectionRef}>
+    <section id="skills" className="py-16 sm:py-20 md:py-24 relative" ref={sectionRef}>
       <div className="section-container">
-        <h2 ref={headingRef} className="section-title text-center">Skills & Expertise</h2>
+        <h2 ref={headingRef} className="section-title">Skills & Expertise</h2>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 mt-12">
           {skillCategories.map((category, catIndex) => {
             // Store current progressCounter value before incrementing it
             const startIndex = progressCounter;
@@ -163,13 +129,10 @@ const SkillsSection: React.FC = () => {
               <div 
                 key={catIndex}
                 ref={el => categoryRefs.current[catIndex] = el}
-                className="apple-card hover:shadow-xl transition-all duration-300"
+                className="paper-card"
               >
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-groww-purple/10 text-groww-purple">
-                    {category.icon}
-                  </div>
-                  <h3 className="text-xl font-bold text-groww-dark-gray">{category.title}</h3>
+                <div className="mb-6 pb-4 border-b border-ink-light-gray/30">
+                  <h3 className="text-xl sm:text-2xl font-serif font-semibold text-black">{category.title}</h3>
                 </div>
                 
                 <div className="space-y-5">
@@ -179,19 +142,14 @@ const SkillsSection: React.FC = () => {
                     return (
                       <div key={skillIndex}>
                         <div className="flex justify-between items-center mb-2">
-                          <div className="flex items-center gap-2">
-                            <span className="text-gray-800 font-medium">{skill.name}</span>
-                            {skill.level >= 90 && (
-                              <Star size={14} className="fill-yellow-400 text-yellow-400" />
-                            )}
-                          </div>
-                          <span className="text-sm text-gray-600">{skill.level}%</span>
+                          <span className="text-body font-medium font-serif">{skill.name}</span>
+                          <span className="text-ink-gray font-serif">{skill.level}%</span>
                         </div>
                         
-                        <div className="skill-bar">
+                        <div className="h-1 bg-ink-light-gray/20 overflow-hidden">
                           <div 
                             ref={el => progressRefs.current[globalIndex] = el}
-                            className="skill-progress"
+                            className="h-full bg-black transition-all duration-1000"
                             style={{ 
                               width: visibleSkills[globalIndex] ? `${skill.level}%` : '0%'
                             }}
@@ -208,6 +166,8 @@ const SkillsSection: React.FC = () => {
       </div>
     </section>
   );
-};
+});
+
+SkillsSection.displayName = 'SkillsSection';
 
 export default SkillsSection;

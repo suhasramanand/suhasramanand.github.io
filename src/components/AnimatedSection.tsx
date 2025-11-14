@@ -6,6 +6,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
+  id?: string;
   className?: string;
   animationType?: 'fadeInUp' | 'fadeInLeft' | 'fadeInRight' | 'scaleIn' | 'slideIn' | 'bounceIn';
   delay?: number;
@@ -14,10 +15,11 @@ interface AnimatedSectionProps {
 
 const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   children,
+  id,
   className = '',
   animationType = 'fadeInUp',
   delay = 0,
-  duration = 1
+  duration = 0.4
 }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -51,22 +53,26 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
       ...finalStates[animationType],
       duration: duration,
       delay: delay,
-      ease: animationType === 'bounceIn' ? "back.out(1.7)" : "power3.out",
+      ease: animationType === 'bounceIn' ? "power2.out" : "power2.out", // Faster easing
       scrollTrigger: {
         trigger: element,
-        start: "top 80%",
-        end: "bottom 20%",
-        toggleActions: "play none none reverse"
+        start: "top 85%",
+        toggleActions: "play none none none",
+        once: true, // Only animate once for better performance
+        markers: false
       }
     });
 
     return () => {
+      if (animation.scrollTrigger) {
+        animation.scrollTrigger.kill();
+      }
       animation.kill();
     };
   }, [animationType, delay, duration]);
 
   return (
-    <div ref={sectionRef} className={className}>
+    <div ref={sectionRef} id={id} className={className}>
       {children}
     </div>
   );

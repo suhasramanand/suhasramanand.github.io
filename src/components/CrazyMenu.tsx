@@ -9,9 +9,16 @@ import {
   GraduationCap,
   Mail,
   Sparkles,
+  Award,
+  BookOpen,
 } from "lucide-react";
 import { gsap } from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useNavigate } from "react-router-dom";
+
+gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
 
 type MenuItem = {
   id: string;
@@ -36,14 +43,58 @@ const menuItems: MenuItem[] = [
     color: "from-orange-500 to-red-500",
   },
   { id: "projects", label: "Projects", icon: <Code className="h-5 w-5" />, color: "from-pink-500 to-purple-500" },
+  { id: "activities", label: "Activities", icon: <Sparkles className="h-5 w-5" />, color: "from-yellow-500 to-orange-500" },
+  { id: "certifications", label: "Certifications", icon: <Award className="h-5 w-5" />, color: "from-indigo-500 to-purple-500" },
+  { id: "blog", label: "Blog", icon: <BookOpen className="h-5 w-5" />, color: "from-indigo-500 to-purple-500" },
   { id: "contact", label: "Contact", icon: <Mail className="h-5 w-5" />, color: "from-cyan-500 to-blue-500" },
 ];
 
 const MorphingText: React.FC<{ text: string }> = ({ text }) => {
   const [displayText, setDisplayText] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
+  const animationRef = useRef<NodeJS.Timeout | null>(null);
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
   const animationSpeedMs = 30;
+
+  const decryptText = (startText: string, targetText: string) => {
+    setIsAnimating(true);
+    
+    // Clear any existing animation
+    if (animationRef.current) {
+      clearInterval(animationRef.current);
+    }
+
+    let currentText = startText;
+    const positions: number[] = [];
+
+    const availablePositions = [...Array(targetText.length).keys()];
+    while (availablePositions.length > 0) {
+      const randomIndex = Math.floor(Math.random() * availablePositions.length);
+      positions.push(availablePositions[randomIndex]);
+      availablePositions.splice(randomIndex, 1);
+    }
+
+    let currentStep = 0;
+
+    animationRef.current = setInterval(() => {
+      if (currentStep >= positions.length) {
+        setDisplayText(targetText);
+        setIsAnimating(false);
+        if (animationRef.current) {
+          clearInterval(animationRef.current);
+        }
+        return;
+      }
+
+      const position = positions[currentStep];
+      const textArray = currentText.split("");
+      textArray[position] = targetText[position];
+      currentText = textArray.join("");
+
+      setDisplayText(currentText);
+      currentStep++;
+    }, animationSpeedMs);
+  };
 
   useEffect(() => {
     const initialRandomText = Array(text.length)
@@ -54,47 +105,20 @@ const MorphingText: React.FC<{ text: string }> = ({ text }) => {
     setDisplayText(initialRandomText);
 
     const timer = setTimeout(() => {
-      setIsAnimating(true);
+      decryptText(initialRandomText, text);
     }, 800);
 
-    return () => clearTimeout(timer);
-  }, [text]);
-
-  useEffect(() => {
-    if (!isAnimating) return;
-
-    let currentText = displayText;
-    const positions: number[] = [];
-
-    const availablePositions = [...Array(text.length).keys()];
-    while (availablePositions.length > 0) {
-      const randomIndex = Math.floor(Math.random() * availablePositions.length);
-      positions.push(availablePositions[randomIndex]);
-      availablePositions.splice(randomIndex, 1);
-    }
-
-    let currentStep = 0;
-
-    const morphInterval = setInterval(() => {
-      if (currentStep >= positions.length) {
-        clearInterval(morphInterval);
-        return;
+    return () => {
+      clearTimeout(timer);
+      if (animationRef.current) {
+        clearInterval(animationRef.current);
       }
-
-      const position = positions[currentStep];
-      const textArray = currentText.split("");
-      textArray[position] = text[position];
-      currentText = textArray.join("");
-
-      setDisplayText(currentText);
-      currentStep++;
-    }, animationSpeedMs);
-
-    return () => clearInterval(morphInterval);
-  }, [isAnimating, text, displayText]);
+    };
+  }, [text]);
 
   const handleMouseEnter = () => {
     if (!isAnimating) {
+      // Scramble the text first
       let currentText = displayText;
       const positions: number[] = [];
 
@@ -114,13 +138,17 @@ const MorphingText: React.FC<{ text: string }> = ({ text }) => {
       });
 
       setDisplayText(currentText);
-      setIsAnimating(true);
+      
+      // Then decrypt to reveal the name
+      setTimeout(() => {
+        decryptText(currentText, text);
+      }, 100);
     }
   };
 
   return (
     <span
-      className="font-mono tracking-wider font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
+      className="font-serif tracking-wide font-semibold text-black"
       onMouseEnter={handleMouseEnter}
     >
       {displayText}
@@ -135,6 +163,8 @@ const CrazyMenu: React.FC = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
+  const manualClickRef = useRef<boolean>(false);
+  const navigate = useNavigate();
 
   const yourName = "SUHAS REDDY";
 
@@ -156,10 +186,91 @@ const CrazyMenu: React.FC = () => {
   };
 
   const scrollToSection = (id: string) => {
+    // Handle blog navigation separately
+    if (id === "blog") {
+      navigate('/blog');
+      setIsOpen(false);
+      return;
+    }
+
+    // Check if we're on a different route (not the home page)
+    const currentPath = window.location.pathname;
+    if (currentPath !== '/' && currentPath !== '') {
+      // Navigate to home first, then scroll after a brief delay
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          setActiveItem(id);
+          manualClickRef.current = true;
+          
+          if (id === "hero") {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => {
+              manualClickRef.current = false;
+            }, 50);
+          } else {
+            gsap.to(window, {
+              duration: 0.4,
+              scrollTo: {
+                y: element,
+                offsetY: 50
+              },
+              ease: 'power2.out',
+              onComplete: () => {
+                setTimeout(() => {
+                  manualClickRef.current = false;
+                }, 50);
+              }
+            });
+          }
+        } else if (id === "hero") {
+          // If hero section doesn't exist yet, just scroll to top
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 100);
+      setIsOpen(false);
+      return;
+    }
+
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      // Update active item immediately for instant feedback
       setActiveItem(id);
+      manualClickRef.current = true;
+      
+      // Special handling for "hero" - scroll to top
+      if (id === "hero") {
+        gsap.to(window, {
+          duration: 0.4,
+          scrollTo: {
+            y: 0
+          },
+          ease: 'power2.out',
+          onComplete: () => {
+            setTimeout(() => {
+              manualClickRef.current = false;
+            }, 50);
+          }
+        });
+      } else {
+        // Use GSAP for smooth scrolling - much faster
+        gsap.to(window, {
+          duration: 0.4,
+          scrollTo: {
+            y: element,
+            offsetY: 50
+          },
+          ease: 'power2.out',
+          onComplete: () => {
+            // Allow IntersectionObserver to take over after scroll completes
+            setTimeout(() => {
+              manualClickRef.current = false;
+            }, 50);
+          }
+        });
+      }
+      
       if (isMobile) {
         setIsOpen(false);
       }
@@ -185,30 +296,65 @@ const CrazyMenu: React.FC = () => {
   }, [isOpen, isMobile]);
 
   useEffect(() => {
+    // Use IntersectionObserver for better performance and accuracy
+    const observers: IntersectionObserver[] = [];
+    let scrollTimeout: NodeJS.Timeout;
+
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
+      // Debounce scroll handler for performance
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const scrollPosition = window.scrollY + 150; // Offset for header
 
-      for (const item of menuItems) {
-        const element = document.getElementById(item.id);
-        if (element) {
-          const { top, bottom } = element.getBoundingClientRect();
-          const elementTop = top + scrollPosition;
-          const elementBottom = bottom + scrollPosition;
+        // Check sections in reverse order to get the topmost visible one
+        for (let i = menuItems.length - 1; i >= 0; i--) {
+          const item = menuItems[i];
+          const element = document.getElementById(item.id);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            const elementTop = rect.top + window.scrollY;
 
-          if (
-            scrollPosition >= elementTop - 100 &&
-            scrollPosition < elementBottom
-          ) {
-            setActiveItem(item.id);
-            break;
+            if (scrollPosition >= elementTop - 100) {
+              setActiveItem(item.id);
+              break;
+            }
           }
         }
-      }
+      }, 50); // Debounce to 50ms for smooth updates
     };
 
-    window.addEventListener("scroll", handleScroll);
+    // Use IntersectionObserver for more efficient section detection
+    menuItems.forEach((item) => {
+      const element = document.getElementById(item.id);
+      if (element) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting && entry.intersectionRatio > 0.3 && !manualClickRef.current) {
+                // Only update if section is significantly visible and not during manual navigation
+                setActiveItem(item.id);
+              }
+            });
+          },
+          {
+            root: null,
+            rootMargin: '-100px 0px -50% 0px', // Trigger when section is in upper portion of viewport
+            threshold: [0, 0.3, 0.5, 1]
+          }
+        );
+
+        observer.observe(element);
+        observers.push(observer);
+      }
+    });
+
+    // Fallback scroll listener for edge cases
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     return () => {
+      clearTimeout(scrollTimeout);
       window.removeEventListener("scroll", handleScroll);
+      observers.forEach((observer) => observer.disconnect());
     };
   }, []);
 
@@ -226,59 +372,35 @@ const CrazyMenu: React.FC = () => {
     <>
       <nav
         ref={navRef}
-        className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-lg border-b border-gray-200/50"
+        className="fixed top-0 left-0 right-0 z-50 bg-paper-cream/95 backdrop-blur-sm border-b border-ink-light-gray/30"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="flex justify-between h-16">
             <div
               className="flex items-center cursor-pointer group"
               onClick={() => scrollToSection("hero")}
             >
-              <div className="flex-shrink-0 flex items-center text-lg">
+              <div className="flex-shrink-0 flex items-center text-lg font-serif">
                 <MorphingText text={yourName} />
-                <Sparkles className="ml-2 h-5 w-5 text-purple-500 group-hover:animate-spin" />
               </div>
             </div>
 
             {/* Desktop Menu */}
             <div className="hidden md:ml-6 md:flex md:items-center">
-              <div className="flex space-x-2">
+              <div className="flex space-x-1">
                 {menuItems.map((item, index) => (
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
                     onMouseEnter={() => setHoveredItem(item.id)}
                     onMouseLeave={() => setHoveredItem(null)}
-                    className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center space-x-2 overflow-hidden group ${
+                    className={`relative px-4 py-2 text-sm font-serif transition-all duration-200 flex items-center space-x-2 ${
                       activeItem === item.id
-                        ? "text-white"
-                        : "text-gray-700 hover:text-white"
+                        ? "text-black border-b-2 border-black"
+                        : "text-ink-gray hover:text-black"
                     }`}
-                    style={{
-                      background: activeItem === item.id 
-                        ? `linear-gradient(135deg, ${item.color.split(' ')[1].replace('to-', '')} 0%, ${item.color.split(' ')[3].replace('to-', '')} 100%)`
-                        : hoveredItem === item.id
-                        ? `linear-gradient(135deg, ${item.color.split(' ')[1].replace('to-', '')} 0%, ${item.color.split(' ')[3].replace('to-', '')} 100%)`
-                        : 'transparent'
-                    }}
                   >
-                    <div className="relative z-10 flex items-center space-x-2">
-                      <span className={`transition-transform duration-300 ${hoveredItem === item.id ? 'scale-110' : ''}`}>
-                        {item.icon}
-                      </span>
-                      <span className="ml-1">{item.label}</span>
-                    </div>
-                    
-                    {/* Animated background */}
-                    <div 
-                      className={`absolute inset-0 rounded-full transition-all duration-300 ${
-                        hoveredItem === item.id ? 'scale-110' : 'scale-0'
-                      }`}
-                      style={{
-                        background: `linear-gradient(135deg, ${item.color.split(' ')[1].replace('to-', '')} 0%, ${item.color.split(' ')[3].replace('to-', '')} 100%)`,
-                        opacity: 0.8
-                      }}
-                    />
+                    <span className="text-xs">{item.label}</span>
                   </button>
                 ))}
               </div>
@@ -288,13 +410,13 @@ const CrazyMenu: React.FC = () => {
             <div className="flex items-center md:hidden">
               <button
                 onClick={toggleMenu}
-                className="relative inline-flex items-center justify-center p-2 rounded-full text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 focus:outline-none transition-all duration-300"
+                className="relative inline-flex items-center justify-center p-2 text-black hover:text-ink-gray focus:outline-none transition-colors duration-200"
                 aria-expanded={isOpen}
               >
                 <span className="sr-only">Open main menu</span>
                 <div className="relative w-6 h-6">
                   {isOpen ? (
-                    <X size={24} className="absolute inset-0 animate-spin" />
+                    <X size={24} className="absolute inset-0" />
                   ) : (
                     <Menu size={24} className="absolute inset-0" />
                   )}
@@ -309,20 +431,17 @@ const CrazyMenu: React.FC = () => {
           ref={menuRef}
           className={`md:hidden ${isOpen ? "block" : "hidden"}`}
         >
-          <div className="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-md shadow-lg">
+          <div className="px-4 pt-2 pb-4 space-y-1 bg-paper-cream border-t border-ink-light-gray/30">
             {menuItems.map((item, index) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 ${
+                className={`w-full flex items-center space-x-3 px-4 py-3 text-base font-serif transition-all duration-200 ${
                   activeItem === item.id
-                    ? "text-white bg-gradient-to-r from-purple-500 to-pink-500"
-                    : "text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-200"
+                    ? "text-black border-l-2 border-black bg-paper-beige"
+                    : "text-ink-gray hover:text-black hover:bg-paper-beige/50"
                 }`}
               >
-                <span className={`transition-transform duration-300 ${activeItem === item.id ? 'scale-110' : ''}`}>
-                  {item.icon}
-                </span>
                 <span>{item.label}</span>
               </button>
             ))}

@@ -1,29 +1,55 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import HeroSection from '@/components/HeroSection';
-import AboutSection from '@/components/AboutSection';
-import ExperienceSection from '@/components/ExperienceSection';
-import EducationSection from '@/components/EducationSection';
-import ProjectsSection from '@/components/ProjectsSection';
-import SkillsSection from '@/components/SkillsSection';
-import ContactSection from '@/components/ContactSection';
 import CrazyMenu from '@/components/CrazyMenu';
 import AnimatedBackground from '@/components/AnimatedBackground';
-import CursorTrail from '@/components/CursorTrail';
 import AnimatedSection from '@/components/AnimatedSection';
 import FloatingActionButton from '@/components/FloatingActionButton';
 import ProgressBar from '@/components/ProgressBar';
-import { Github, Linkedin, Mail, PhoneCall } from 'lucide-react';
+import { Github, Linkedin, Mail } from 'lucide-react';
+
+// Lazy load below-the-fold sections for better initial load performance
+const AboutSection = lazy(() => import('@/components/AboutSection'));
+const ExperienceSection = lazy(() => import('@/components/ExperienceSection'));
+const EducationSection = lazy(() => import('@/components/EducationSection'));
+const ProjectsSection = lazy(() => import('@/components/ProjectsSection'));
+const SkillsSection = lazy(() => import('@/components/SkillsSection'));
+const ActivitiesSection = lazy(() => import('@/components/ActivitiesSection'));
+const CertificationsSection = lazy(() => import('@/components/CertificationsSection'));
+const ContactSection = lazy(() => import('@/components/ContactSection'));
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const Index = () => {
   useEffect(() => {
+    // Force scroll to top on mount
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    
+    // Also use requestAnimationFrame to ensure it happens after render
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    });
+    
     // Initialize any global animations or effects
+    
+    // Refresh ScrollTrigger after elements are rendered (debounced for performance)
+    let refreshTimeout: NodeJS.Timeout;
+    const refreshScrollTrigger = () => {
+      clearTimeout(refreshTimeout);
+      refreshTimeout = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 150);
+    };
+    
+    refreshScrollTrigger();
     
     // Set up smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -35,21 +61,32 @@ const Index = () => {
           const targetElement = document.getElementById(targetId);
           if (targetElement) {
             gsap.to(window, {
-              duration: 1,
+              duration: 0.4,
               scrollTo: {
                 y: targetElement,
                 offsetY: 50
               },
-              ease: 'power2.inOut'
+              ease: 'power2.out'
             });
           }
         }
       });
     });
     
+    // Refresh on window resize (debounced for performance)
+    let resizeTimeout: NodeJS.Timeout;
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 250);
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+    
     return () => {
-      // Clean up any event listeners or animations
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      clearTimeout(refreshTimeout);
+      clearTimeout(resizeTimeout);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -57,9 +94,6 @@ const Index = () => {
     <main className="relative overflow-hidden">
       {/* Crazy animated background */}
       <AnimatedBackground />
-      
-      {/* Cursor trail effect */}
-      <CursorTrail />
       
       {/* Crazy morphing menu */}
       <CrazyMenu />
@@ -75,74 +109,75 @@ const Index = () => {
         <HeroSection />
       </AnimatedSection>
       
-      <AnimatedSection id="about" animationType="fadeInLeft" delay={0.1}>
-        <AboutSection />
-      </AnimatedSection>
-      
-      <AnimatedSection id="experience" animationType="scaleIn" delay={0.3}>
-        <ExperienceSection />
-      </AnimatedSection>
-      
-      <AnimatedSection id="education" animationType="fadeInRight" delay={0.2}>
-        <EducationSection />
-      </AnimatedSection>
-      
-      <AnimatedSection id="projects" animationType="bounceIn" delay={0.4}>
-        <ProjectsSection />
-      </AnimatedSection>
-      
-      <AnimatedSection id="skills" animationType="slideIn" delay={0.1}>
-        <SkillsSection />
-      </AnimatedSection>
-      
-      <AnimatedSection id="contact" animationType="fadeInUp" delay={0.2}>
-        <ContactSection />
-      </AnimatedSection>
+      <Suspense fallback={<div className="min-h-screen" />}>
+        <AnimatedSection id="about" animationType="fadeInLeft" delay={0} duration={0.3}>
+          <AboutSection />
+        </AnimatedSection>
+        
+        <AnimatedSection id="experience" animationType="scaleIn" delay={0} duration={0.3}>
+          <ExperienceSection />
+        </AnimatedSection>
+        
+        <AnimatedSection id="education" animationType="fadeInRight" delay={0} duration={0.3}>
+          <EducationSection />
+        </AnimatedSection>
+        
+        <AnimatedSection id="projects" animationType="fadeInUp" delay={0} duration={0.3}>
+          <ProjectsSection />
+        </AnimatedSection>
+        
+        <AnimatedSection id="skills" animationType="slideIn" delay={0} duration={0.3}>
+          <SkillsSection />
+        </AnimatedSection>
+        
+        <AnimatedSection id="activities" animationType="fadeInUp" delay={0} duration={0.3}>
+          <ActivitiesSection />
+        </AnimatedSection>
+        
+        <AnimatedSection id="certifications" animationType="fadeInUp" delay={0} duration={0.3}>
+          <CertificationsSection />
+        </AnimatedSection>
+        
+        <AnimatedSection id="contact" animationType="fadeInUp" delay={0} duration={0.3}>
+          <ContactSection />
+        </AnimatedSection>
+      </Suspense>
       
       {/* Enhanced Footer with social links */}
-      <AnimatedSection animationType="fadeInUp" delay={0.5}>
-        <footer className="py-8 text-center text-gray-600 bg-white/80 backdrop-blur-md border-t border-gray-100/50">
-          <div className="container mx-auto">
-            {/* Social Links */}
-            <div className="flex justify-center gap-4 mb-6">
-              <a 
-                href="https://github.com/suhasramanand" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="group p-3 rounded-full bg-gray-100 hover:bg-gradient-to-r hover:from-gray-800 hover:to-gray-900 hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-lg"
-                aria-label="GitHub Profile"
-              >
-                <Github size={22} className="group-hover:animate-pulse" />
-              </a>
-              <a 
-                href="https://linkedin.com/in/suhasreddybr/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="group p-3 rounded-full bg-gray-100 hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-700 hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-lg"
-                aria-label="LinkedIn Profile"
-              >
-                <Linkedin size={22} className="group-hover:animate-pulse" />
-              </a>
-              <a 
-                href="mailto:baluvanahallyraman.s@northeastern.edu"
-                className="group p-3 rounded-full bg-gray-100 hover:bg-gradient-to-r hover:from-red-500 hover:to-red-600 hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-lg"
-                aria-label="Email Contact"
-              >
-                <Mail size={22} className="group-hover:animate-pulse" />
-              </a>
-              <a 
-                href="tel:+18577462805"
-                className="group p-3 rounded-full bg-gray-100 hover:bg-gradient-to-r hover:from-green-500 hover:to-green-600 hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-lg"
-                aria-label="Phone Contact"
-              >
-                <PhoneCall size={22} className="group-hover:animate-pulse" />
-              </a>
-            </div>
-            
-            <p className="text-sm">&copy; {new Date().getFullYear()} Suhas Reddy. All rights reserved.</p>
+      <footer className="py-12 text-center border-t border-black/20 relative z-10">
+        <div className="section-container">
+          {/* Social Links */}
+          <div className="flex justify-center gap-4 mb-6">
+            <a 
+              href="https://github.com/suhasramanand" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group p-3 border border-black/20 hover:bg-black hover:text-paper-cream transition-all duration-200"
+              aria-label="GitHub Profile"
+            >
+              <Github size={22} />
+            </a>
+            <a 
+              href="https://linkedin.com/in/suhasreddybr/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group p-3 border border-black/20 hover:bg-black hover:text-paper-cream transition-all duration-200"
+              aria-label="LinkedIn Profile"
+            >
+              <Linkedin size={22} />
+            </a>
+            <a 
+              href="mailto:reachsuhasreddy@gmail.com"
+              className="group p-3 border border-black/20 hover:bg-black hover:text-paper-cream transition-all duration-200"
+              aria-label="Email Contact"
+            >
+              <Mail size={22} />
+            </a>
           </div>
-        </footer>
-      </AnimatedSection>
+          
+          <p className="text-black font-serif">&copy; {new Date().getFullYear()} Suhas Reddy</p>
+        </div>
+      </footer>
     </main>
   );
 };

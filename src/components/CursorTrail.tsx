@@ -8,8 +8,8 @@ const CursorTrail: React.FC = () => {
   useEffect(() => {
     if (!trailRef.current) return;
 
-    // Create trail elements
-    for (let i = 0; i < 20; i++) {
+    // Create trail elements - reduced for performance
+    for (let i = 0; i < 10; i++) { // Reduced from 20 for better performance
       const element = document.createElement('div');
       element.className = 'fixed w-3 h-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full pointer-events-none z-50';
       element.style.opacity = '0';
@@ -23,27 +23,29 @@ const CursorTrail: React.FC = () => {
     let trailX = 0;
     let trailY = 0;
 
+    let rafId: number;
     const updateTrail = () => {
-      trailX += (mouseX - trailX) * 0.1;
-      trailY += (mouseY - trailY) * 0.1;
+      trailX += (mouseX - trailX) * 0.15; // Faster follow for better performance
+      trailY += (mouseY - trailY) * 0.15;
 
       trailElements.forEach((element, index) => {
-        const delay = index * 0.02;
-        const scale = 1 - (index * 0.05);
-        const opacity = 1 - (index * 0.05);
+        const delay = index * 0.03;
+        const scale = 1 - (index * 0.08);
+        const opacity = Math.max(0, 1 - (index * 0.1));
 
         gsap.to(element, {
           x: trailX,
           y: trailY,
           scale: scale,
           opacity: opacity,
-          duration: 0.1,
+          duration: 0.15,
           delay: delay,
           ease: "power2.out",
+          overwrite: true, // Cancel previous animations for better performance
         });
       });
 
-      requestAnimationFrame(updateTrail);
+      rafId = requestAnimationFrame(updateTrail);
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -81,6 +83,9 @@ const CursorTrail: React.FC = () => {
     updateTrail();
 
     return () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseenter', handleMouseEnter);
       document.removeEventListener('mouseleave', handleMouseLeave);

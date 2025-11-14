@@ -60,32 +60,10 @@ const GoToTopButton: React.FC = () => {
       onClick={scrollToTop}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      className={`go-to-top-btn fixed bottom-28 right-8 w-14 h-14 rounded-full shadow-xl flex items-center justify-center z-40 focus:outline-none transition-all ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+      className={`go-to-top-btn fixed bottom-28 right-8 w-12 h-12 rounded-full shadow-md flex items-center justify-center z-40 focus:outline-none transition-all bg-black text-paper-cream border border-black hover:bg-white hover:text-black ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       aria-label="Go to top"
     >
-      <div className="go-to-top-btn-bg w-full h-full rounded-full flex items-center justify-center" 
-        style={{ 
-          background: 'linear-gradient(135deg, #FFDE59 0%, #FF914D 100%)',
-          boxShadow: '0 6px 20px rgba(255, 222, 89, 0.4)'
-        }}>
-        <ArrowUp size={24} className="arrow-icon text-white" />
-      </div>
-      
-      {/* Animated particles around the button */}
-      <div className="absolute -inset-2 -z-10">
-        {Array.from({ length: 8 }).map((_, index) => (
-          <div
-            key={`particle-${index}`}
-            className="absolute w-2 h-2 rounded-full"
-            style={{
-              background: `rgba(255, 222, 89, ${0.3 + Math.random() * 0.4})`,
-              top: `${50 + Math.cos(index * Math.PI / 4) * 130}%`,
-              left: `${50 + Math.sin(index * Math.PI / 4) * 130}%`,
-              animation: `float ${2 + Math.random()}s ease-in-out ${Math.random()}s infinite alternate`
-            }}
-          />
-        ))}
-      </div>
+      <ArrowUp size={20} className="arrow-icon" />
     </button>
   );
 };

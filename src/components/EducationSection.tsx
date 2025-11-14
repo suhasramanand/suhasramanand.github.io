@@ -34,7 +34,7 @@ const educationItems: EducationItem[] = [
   }
 ];
 
-const EducationSection: React.FC = () => {
+const EducationSection: React.FC = React.memo(() => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -73,51 +73,45 @@ const EducationSection: React.FC = () => {
   }, []);
 
   return (
-    <section id="education" className="py-20 relative overflow-hidden" ref={sectionRef}>
+    <section id="education" className="py-16 sm:py-20 md:py-24 relative" ref={sectionRef}>
       <div className="section-container">
-        <h2 ref={headingRef} className="section-title text-center">Education</h2>
+        <h2 ref={headingRef} className="section-title">Education</h2>
         
-        <div className="grid md:grid-cols-2 gap-10 mt-16">
+        <div className="space-y-12 md:space-y-16 mt-12">
           {educationItems.map((edu, index) => (
             <div 
               key={index}
               ref={el => cardRefs.current[index] = el}
-              className="apple-card hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+              className="paper-card"
             >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-groww-purple/10 text-groww-purple shrink-0">
-                  <BookOpen size={24} />
-                </div>
+              <div className="mb-6 pb-6 border-b border-ink-light-gray/30">
+                <h3 className="text-2xl sm:text-3xl font-serif font-semibold text-black mb-2">{edu.institution}</h3>
+                <h4 className="text-lg sm:text-xl font-serif font-medium text-ink-gray italic mb-4">{edu.degree}</h4>
                 
-                <div>
-                  <h3 className="text-xl font-bold text-groww-dark-gray">{edu.institution}</h3>
-                  <h4 className="text-lg font-medium text-groww-purple mb-2">{edu.degree}</h4>
-                  
-                  <div className="flex flex-wrap gap-x-4 gap-y-2 text-gray-600 mb-4">
-                    <div className="flex items-center gap-1">
-                      <Calendar size={16} />
-                      <span className="text-sm">{edu.period}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <MapPin size={16} />
-                      <span className="text-sm">{edu.location}</span>
-                    </div>
-                    <div className="font-medium">GPA: {edu.gpa}</div>
+                <div className="flex flex-wrap gap-4 text-ink-gray">
+                  <div className="flex items-center gap-2">
+                    <Calendar size={16} className="text-ink-light-gray" />
+                    <span className="font-serif text-ink-gray">{edu.period}</span>
                   </div>
-                  
-                  <div>
-                    <div className="font-medium text-gray-700 mb-2">Coursework:</div>
-                    <div className="flex flex-wrap gap-2">
-                      {edu.courses.map((course, i) => (
-                        <span 
-                          key={i}
-                          className="inline-block px-3 py-1 rounded-full bg-groww-purple/10 text-groww-purple-dark text-sm"
-                        >
-                          {course}
-                        </span>
-                      ))}
-                    </div>
+                  <div className="flex items-center gap-2">
+                    <MapPin size={16} className="text-ink-light-gray" />
+                    <span className="font-serif text-ink-gray">{edu.location}</span>
                   </div>
+                  <div className="font-serif text-ink-gray">GPA: {edu.gpa}</div>
+                </div>
+              </div>
+              
+              <div>
+                <div className="text-body font-medium mb-3">Coursework:</div>
+                <div className="flex flex-wrap gap-2">
+                  {edu.courses.map((course, i) => (
+                    <span 
+                      key={i}
+                      className="inline-block px-3 py-1 border border-ink-light-gray/40 text-ink-gray text-sm font-serif"
+                    >
+                      {course}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -126,6 +120,8 @@ const EducationSection: React.FC = () => {
       </div>
     </section>
   );
-};
+});
+
+EducationSection.displayName = 'EducationSection';
 
 export default EducationSection;

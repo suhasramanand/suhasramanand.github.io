@@ -8,13 +8,13 @@ const AnimatedBackground: React.FC = () => {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Create floating particles
+    // Create floating particles - reduced for performance
     const particles: HTMLDivElement[] = [];
-    const particleCount = 50;
+    const particleCount = 20; // Keep original amount
 
     for (let i = 0; i < particleCount; i++) {
       const particle = document.createElement('div');
-      particle.className = 'absolute w-1 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full opacity-60';
+      particle.className = 'absolute w-1 h-1 bg-black rounded-full opacity-10';
       
       // Random position
       particle.style.left = `${Math.random() * 100}%`;
@@ -38,7 +38,7 @@ const AnimatedBackground: React.FC = () => {
 
       gsap.to(particle, {
         scale: 1 + Math.random() * 2,
-        opacity: 0.3 + Math.random() * 0.4,
+        opacity: 0.05 + Math.random() * 0.08, // Reduced opacity: 0.05-0.13 (was 0.3-0.7)
         duration: duration,
         delay: delay,
         ease: "power2.out",
@@ -62,7 +62,7 @@ const AnimatedBackground: React.FC = () => {
     const shapes = ['circle', 'triangle', 'square'];
     const shapeElements: HTMLDivElement[] = [];
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 15; i++) { // Keep original amount
       const shape = document.createElement('div');
       const shapeType = shapes[Math.floor(Math.random() * shapes.length)];
       const size = 20 + Math.random() * 40;
@@ -72,17 +72,19 @@ const AnimatedBackground: React.FC = () => {
       shape.style.position = 'absolute';
       shape.style.left = `${Math.random() * 100}%`;
       shape.style.top = `${Math.random() * 100}%`;
-      shape.style.opacity = '0.1';
       shape.style.pointerEvents = 'none';
       
       if (shapeType === 'circle') {
-        shape.className = 'bg-gradient-to-r from-blue-400 to-purple-400 rounded-full';
+        shape.className = 'bg-black rounded-full';
+        shape.style.opacity = '0.02'; // Reduced opacity from 0.05
       } else if (shapeType === 'triangle') {
-        shape.className = 'bg-gradient-to-r from-green-400 to-blue-400';
+        shape.className = 'bg-black';
         shape.style.clipPath = 'polygon(50% 0%, 0% 100%, 100% 100%)';
+        shape.style.opacity = '0.02'; // Reduced opacity from 0.05
       } else {
-        shape.className = 'bg-gradient-to-r from-pink-400 to-red-400';
+        shape.className = 'bg-black';
         shape.style.transform = 'rotate(45deg)';
+        shape.style.opacity = '0.02'; // Reduced opacity from 0.05
       }
       
       containerRef.current.appendChild(shape);
@@ -131,10 +133,6 @@ const AnimatedBackground: React.FC = () => {
     <div 
       ref={containerRef}
       className="fixed inset-0 pointer-events-none overflow-hidden z-0"
-      style={{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        opacity: 0.05,
-      }}
     />
   );
 };

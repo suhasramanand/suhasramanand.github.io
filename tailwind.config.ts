@@ -63,14 +63,17 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Groww color scheme
-				groww: {
-					purple: '#9b87f5',
-					'purple-dark': '#7E69AB',
-					'purple-light': '#D6BCFA',
-					gray: '#8E9196',
-					'dark-gray': '#222222',
-					white: '#FFFFFF',
+				// Minimal color palette - Notion/Nothing inspired
+				paper: {
+					cream: '#F5F1E8',
+					beige: '#E8E3D8',
+					'light-cream': '#FAF8F3',
+				},
+				ink: {
+					black: '#000000',
+					'off-black': '#1A1A1A',
+					gray: '#6B6B6B',
+					'light-gray': '#9B9B9B',
 				},
 			},
 			borderRadius: {
@@ -148,7 +151,9 @@ export default {
 				'circle-menu-appear': 'circle-menu-appear 0.3s ease-out forwards',
 			},
 			fontFamily: {
+				'serif': ['Georgia', 'Times New Roman', 'Times', 'serif'],
 				'sans': ['-apple-system', 'BlinkMacSystemFont', 'San Francisco', 'Segoe UI', 'Roboto', 'Ubuntu', 'sans-serif'],
+				'roman': ['"Cormorant Garamond"', 'Georgia', 'Times New Roman', 'serif'],
 			},
 		}
 	},
