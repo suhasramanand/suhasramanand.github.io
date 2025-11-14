@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { BookOpen, Calendar, Clock } from 'lucide-react';
+import { BookOpen, Calendar, Clock, Home } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import CrazyMenu from '@/components/CrazyMenu';
 
@@ -110,7 +110,17 @@ const Blog: React.FC = () => {
       <main className="pt-16">
         <section ref={sectionRef} className="py-16 sm:py-20 md:py-24 relative">
           <div className="section-container">
-            <h2 ref={headingRef} className="section-title">Blog</h2>
+            <div className="flex items-center justify-between mb-8">
+              <h2 ref={headingRef} className="section-title mb-0">Blog</h2>
+              <button
+                onClick={() => navigate('/')}
+                className="flex items-center gap-2 px-4 py-2 border border-black/20 hover:bg-black hover:text-paper-cream transition-all duration-200 font-serif text-sm"
+                aria-label="Go to home"
+              >
+                <Home size={18} />
+                <span>Home</span>
+              </button>
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 mt-12">
               {blogPosts.map((post, index) => (

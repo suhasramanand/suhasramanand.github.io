@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Calendar, Clock, ArrowLeft } from 'lucide-react';
+import { Calendar, Clock, ArrowLeft, Home } from 'lucide-react';
 import CrazyMenu from '@/components/CrazyMenu';
 
 interface BlogPost {
@@ -968,13 +968,23 @@ const BlogPost: React.FC = () => {
       <main className="pt-16">
         <article className="py-16 sm:py-20 md:py-24">
           <div className="section-container max-w-3xl">
-            <button
-              onClick={() => navigate('/blog')}
-              className="flex items-center gap-2 text-ink-gray hover:text-black transition-colors mb-8 font-serif"
-            >
-              <ArrowLeft size={18} />
-              <span>Back to Blog</span>
-            </button>
+            <div className="flex items-center gap-4 mb-8">
+              <button
+                onClick={() => navigate('/blog')}
+                className="flex items-center gap-2 text-ink-gray hover:text-black transition-colors font-serif"
+              >
+                <ArrowLeft size={18} />
+                <span>Back to Blog</span>
+              </button>
+              <button
+                onClick={() => navigate('/')}
+                className="flex items-center gap-2 px-4 py-2 border border-black/20 hover:bg-black hover:text-paper-cream transition-all duration-200 font-serif text-sm"
+                aria-label="Go to home"
+              >
+                <Home size={18} />
+                <span>Home</span>
+              </button>
+            </div>
 
             <div className="mb-6">
               <span className="text-xs font-serif text-ink-gray border border-ink-light-gray/40 px-3 py-1">
