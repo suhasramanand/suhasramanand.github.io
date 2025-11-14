@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Calendar, Clock, ArrowLeft, Home } from 'lucide-react';
+import React, { useEffect, useRef, useMemo } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { Calendar, Clock, ArrowLeft, Home, BookOpen } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import CrazyMenu from '@/components/CrazyMenu';
@@ -967,6 +967,14 @@ const BlogPost: React.FC = () => {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   };
 
+  // Get related posts (same category, excluding current post)
+  const relatedPosts = useMemo(() => {
+    if (!post) return [];
+    return blogPosts
+      .filter(p => p.id !== post.id && p.category === post.category)
+      .slice(0, 3);
+  }, [post]);
+
   return (
     <>
       <CrazyMenu />
@@ -1021,6 +1029,35 @@ const BlogPost: React.FC = () => {
             >
               {/* Content will be inserted via innerHTML */}
             </div>
+
+            {/* Related Posts */}
+            {relatedPosts.length > 0 && (
+              <div className="mt-16 pt-8 border-t border-ink-light-gray/30">
+                <h3 className="text-2xl font-serif font-semibold text-black mb-6">Related Posts</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {relatedPosts.map((relatedPost) => (
+                    <Link
+                      key={relatedPost.id}
+                      to={`/blog/${relatedPost.id}`}
+                      className="paper-card group hover:border-black/40 transition-all duration-200"
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        <BookOpen size={14} className="text-ink-gray" />
+                        <span className="text-xs font-serif text-ink-gray border border-ink-light-gray/40 px-2 py-0.5">
+                          {relatedPost.category}
+                        </span>
+                      </div>
+                      <h4 className="text-lg font-serif font-semibold text-black mb-2 group-hover:text-ink-gray transition-colors">
+                        {relatedPost.title}
+                      </h4>
+                      <p className="text-sm text-ink-gray font-serif line-clamp-2">
+                        {relatedPost.excerpt}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </article>
       </main>

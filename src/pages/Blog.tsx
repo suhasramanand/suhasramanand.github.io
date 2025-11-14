@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-import { BookOpen, Calendar, Clock, Home } from 'lucide-react';
+import { BookOpen, Calendar, Clock, Home, Search, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import CrazyMenu from '@/components/CrazyMenu';
 import FloatingActionButton from '@/components/FloatingActionButton';
@@ -88,6 +88,8 @@ const Blog: React.FC = () => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const postRefs = useRef<(HTMLDivElement | null)[]>([]);
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
     // Set all elements to be visible immediately
@@ -105,6 +107,26 @@ const Blog: React.FC = () => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   };
+
+  // Get unique categories
+  const categories = useMemo(() => {
+    const cats = new Set(blogPosts.map(post => post.category));
+    return Array.from(cats).sort();
+  }, []);
+
+  // Filter posts
+  const filteredPosts = useMemo(() => {
+    return blogPosts.filter(post => {
+      const matchesSearch = searchQuery === '' || 
+        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.category.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      const matchesCategory = selectedCategory === null || post.category === selectedCategory;
+      
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchQuery, selectedCategory]);
 
   return (
     <>
@@ -124,9 +146,83 @@ const Blog: React.FC = () => {
                 <span>Home</span>
               </button>
             </div>
+
+            {/* Search and Filter Section */}
+            <div className="mb-8 space-y-4">
+              {/* Search Bar */}
+              <div className="relative max-w-md">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-ink-light-gray" size={18} />
+                <input
+                  type="text"
+                  placeholder="Search blog posts..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-10 py-3 border border-ink-light-gray/40 bg-paper-cream text-black font-serif focus:outline-none focus:border-black transition-colors"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-ink-light-gray hover:text-black transition-colors"
+                    aria-label="Clear search"
+                  >
+                    <X size={18} />
+                  </button>
+                )}
+              </div>
+
+              {/* Category Filters */}
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setSelectedCategory(null)}
+                  className={`px-3 py-1.5 text-sm font-serif border transition-all ${
+                    selectedCategory === null
+                      ? 'bg-black text-paper-cream border-black'
+                      : 'bg-paper-cream text-ink-gray border-ink-light-gray/40 hover:border-black hover:text-black'
+                  }`}
+                >
+                  All
+                </button>
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`px-3 py-1.5 text-sm font-serif border transition-all ${
+                      selectedCategory === category
+                        ? 'bg-black text-paper-cream border-black'
+                        : 'bg-paper-cream text-ink-gray border-ink-light-gray/40 hover:border-black hover:text-black'
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+
+              {/* Results count */}
+              {filteredPosts.length !== blogPosts.length && (
+                <p className="text-sm font-serif text-ink-gray">
+                  Showing {filteredPosts.length} of {blogPosts.length} posts
+                </p>
+              )}
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 mt-12">
-              {blogPosts.map((post, index) => (
+              {filteredPosts.length === 0 ? (
+                <div className="col-span-full text-center py-12">
+                  <p className="text-body text-ink-gray font-serif mb-4">
+                    No blog posts found matching your search.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setSearchQuery('');
+                      setSelectedCategory(null);
+                    }}
+                    className="minimal-button-outline"
+                  >
+                    Clear filters
+                  </button>
+                </div>
+              ) : (
+                filteredPosts.map((post, index) => (
                 <div
                   key={post.id}
                   ref={el => postRefs.current[index] = el}
@@ -164,7 +260,8 @@ const Blog: React.FC = () => {
                     <p className="text-xs font-serif text-ink-gray">By {post.author}</p>
                   </div>
                 </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         </section>

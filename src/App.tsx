@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ErrorBoundary from "./components/ErrorBoundary";
+import Analytics from "./components/Analytics";
 import Index from "./pages/Index";
 import Resume from "./pages/Resume";
 import Blog from "./pages/Blog";
@@ -14,6 +15,7 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <ErrorBoundary>
+    <Analytics />
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />

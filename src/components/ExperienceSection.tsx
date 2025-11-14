@@ -104,6 +104,7 @@ const ExperienceSection: React.FC = React.memo(() => {
                       src={exp.logo}
                       alt={`${exp.company} logo`}
                       className="h-8 w-auto object-contain opacity-80"
+                      loading="lazy"
                     />
                     <div>
                       <h3 className="text-xl sm:text-2xl font-serif font-semibold text-black mb-1">

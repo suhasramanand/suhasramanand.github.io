@@ -125,10 +125,11 @@ const ActivitiesSection: React.FC = React.memo(() => {
               className="paper-card w-full md:w-[500px] flex flex-row items-center gap-6"
             >
               <div className="w-32 h-32 flex-shrink-0 flex items-center justify-center p-2 overflow-hidden border-2 border-black/30 bg-paper-beige">
-                <img 
-                  src={activity.logo} 
-                  alt={`${activity.name} Logo`}
-                  className="w-full h-full object-contain"
+                    <img
+                      src={activity.logo}
+                      alt={`${activity.name} Logo`}
+                      className="w-full h-full object-contain"
+                      loading="lazy"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';

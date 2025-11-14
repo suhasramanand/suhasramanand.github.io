@@ -13,6 +13,7 @@ interface ProjectItem {
   technologies: string[];
   github?: string;
   link?: string;
+  image?: string;
 }
 
 const projects: ProjectItem[] = [
@@ -288,6 +289,16 @@ const ProjectsSection: React.FC = React.memo(() => {
               onMouseEnter={() => setHoveredProject(originalIndex)}
               onMouseLeave={() => setHoveredProject(null)}
             >
+              {project.image && (
+                <div className="mb-6 overflow-hidden border border-ink-light-gray/30">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+                    loading="lazy"
+                  />
+                </div>
+              )}
               <div className="mb-6">
                 <h3 className="text-xl sm:text-2xl font-serif font-semibold text-black mb-4">{project.title}</h3>
                 

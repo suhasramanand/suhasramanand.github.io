@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Suhas Reddy - Blog</title>
+    <link>https://suhasramanand.github.io/blog</link>
+    <description>Thoughts, insights, and technical deep-dives on software engineering, cloud, and DevOps.</description>
+    <language>en-us</language>
+    <atom:link href="https://suhasramanand.github.io/rss.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 20 Jan 2025 00:00:00 GMT</lastBuildDate>
+    
+    <item>
+      <title>Building Scalable Cloud Infrastructure with Terraform and Kubernetes</title>
+      <link>https://suhasramanand.github.io/blog/1</link>
+      <description>A comprehensive guide to designing and deploying production-ready cloud infrastructure using Infrastructure as Code principles and container orchestration.</description>
+      <pubDate>Mon, 20 Jan 2025 00:00:00 GMT</pubDate>
+      <category>Cloud</category>
+    </item>
+    
+    <item>
+      <title>Site Reliability Engineering: From Theory to Practice</title>
+      <link>https://suhasramanand.github.io/blog/2</link>
+      <description>Understanding SRE principles, error budgets, and how to implement reliability practices that balance innovation with operational stability.</description>
+      <pubDate>Wed, 15 Jan 2025 00:00:00 GMT</pubDate>
+      <category>SRE</category>
+    </item>
+    
+    <item>
+      <title>Optimizing CI/CD Pipelines: Reducing Build Times by 70%</title>
+      <link>https://suhasramanand.github.io/blog/3</link>
+      <description>Practical strategies for accelerating your CI/CD pipelines through parallelization, caching, and intelligent dependency management.</description>
+      <pubDate>Fri, 10 Jan 2025 00:00:00 GMT</pubDate>
+      <category>DevOps</category>
+    </item>
+    
+    <item>
+      <title>Kubernetes Monitoring and Observability: A Complete Guide</title>
+      <link>https://suhasramanand.github.io/blog/4</link>
+      <description>Implementing comprehensive monitoring, logging, and tracing for Kubernetes clusters to ensure visibility and quick incident response.</description>
+      <pubDate>Sun, 05 Jan 2025 00:00:00 GMT</pubDate>
+      <category>Kubernetes</category>
+    </item>
+    
+    <item>
+      <title>AWS EKS vs GKE vs AKS: Choosing the Right Managed Kubernetes Service</title>
+      <link>https://suhasramanand.github.io/blog/5</link>
+      <description>A detailed comparison of managed Kubernetes offerings from major cloud providers, including cost, features, and use case recommendations.</description>
+      <pubDate>Sat, 28 Dec 2024 00:00:00 GMT</pubDate>
+      <category>Cloud</category>
+    </item>
+    
+    <item>
+      <title>Infrastructure as Code: Terraform Modules and Best Practices</title>
+      <link>https://suhasramanand.github.io/blog/6</link>
+      <description>Building reusable, maintainable Terraform modules and establishing patterns for managing complex infrastructure across multiple environments.</description>
+      <pubDate>Fri, 20 Dec 2024 00:00:00 GMT</pubDate>
+      <category>DevOps</category>
+    </item>
+  </channel>
+</rss>
+

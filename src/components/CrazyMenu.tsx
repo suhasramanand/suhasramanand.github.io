@@ -376,32 +376,43 @@ const CrazyMenu: React.FC = () => {
       >
         <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="flex justify-between h-16">
-            <div
-              className="flex items-center cursor-pointer group"
-              onClick={() => scrollToSection("hero")}
-            >
-              <div className="flex-shrink-0 flex items-center text-lg font-serif">
-                <MorphingText text={yourName} />
-              </div>
-            </div>
+                  <div
+                    className="flex items-center cursor-pointer group"
+                    onClick={() => scrollToSection("hero")}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        scrollToSection("hero");
+                      }
+                    }}
+                    aria-label="Go to home"
+                  >
+                    <div className="flex-shrink-0 flex items-center text-lg font-serif">
+                      <MorphingText text={yourName} />
+                    </div>
+                  </div>
 
             {/* Desktop Menu */}
             <div className="hidden md:ml-6 md:flex md:items-center">
               <div className="flex space-x-1">
                 {menuItems.map((item, index) => (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    onMouseEnter={() => setHoveredItem(item.id)}
-                    onMouseLeave={() => setHoveredItem(null)}
-                    className={`relative px-4 py-2 text-sm font-serif transition-all duration-200 flex items-center space-x-2 ${
-                      activeItem === item.id
-                        ? "text-black border-b-2 border-black"
-                        : "text-ink-gray hover:text-black"
-                    }`}
-                  >
-                    <span className="text-xs">{item.label}</span>
-                  </button>
+                        <button
+                          key={item.id}
+                          onClick={() => scrollToSection(item.id)}
+                          onMouseEnter={() => setHoveredItem(item.id)}
+                          onMouseLeave={() => setHoveredItem(null)}
+                          className={`relative px-4 py-2 text-sm font-serif transition-all duration-200 flex items-center space-x-2 ${
+                            activeItem === item.id
+                              ? "text-black border-b-2 border-black"
+                              : "text-ink-gray hover:text-black"
+                          }`}
+                          aria-label={`Navigate to ${item.label} section`}
+                          aria-current={activeItem === item.id ? 'page' : undefined}
+                        >
+                          <span className="text-xs">{item.label}</span>
+                        </button>
                 ))}
               </div>
             </div>

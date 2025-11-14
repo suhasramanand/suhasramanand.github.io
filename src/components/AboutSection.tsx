@@ -135,8 +135,9 @@ const AboutSection: React.FC = React.memo(() => {
             <div className="w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 overflow-hidden border-2 border-black rounded-full">
               <img
                 src="/images/profile/profile-pic.jpg"
-                alt="Profile"
+                alt="Suhas Reddy - Software Engineer & Cloud Specialist"
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
             </div>
           </div>

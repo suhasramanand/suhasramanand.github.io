@@ -109,7 +109,14 @@ const Index = () => {
         <HeroSection />
       </AnimatedSection>
       
-      <Suspense fallback={<div className="min-h-screen" />}>
+             <Suspense fallback={
+               <div className="min-h-screen flex items-center justify-center">
+                 <div className="text-center">
+                   <div className="inline-block w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin mb-4"></div>
+                   <p className="text-ink-gray font-serif">Loading...</p>
+                 </div>
+               </div>
+             }>
         <AnimatedSection id="about" animationType="fadeInLeft" delay={0} duration={0.3}>
           <AboutSection />
         </AnimatedSection>

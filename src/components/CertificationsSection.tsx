@@ -85,6 +85,7 @@ const CertificationsSection: React.FC = React.memo(() => {
                     src={cert.badgeUrl} 
                     alt={`${cert.name} Badge`}
                     className="w-full h-full object-contain"
+                    loading="lazy"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
