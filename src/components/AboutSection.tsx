@@ -10,16 +10,17 @@ const AboutSection: React.FC = React.memo(() => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-  const [displayedText1, setDisplayedText1] = useState("");
-  const [displayedText2, setDisplayedText2] = useState("");
-  const [displayedText3, setDisplayedText3] = useState("");
+  const [displayedText, setDisplayedText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
   const fullText1 = "I'm a Software Engineer and Cloud Specialist currently pursuing my Master's in Computer Software Engineering at Northeastern University. My passion lies in building resilient, scalable infrastructure and automating complex systems in the cloud.";
   const fullText2 = "Through my experience at Calix, Elanco, and Bosch, I've specialized in Site Reliability Engineering (SRE), cloud infrastructure automation, and DevOps practices. I work extensively with AWS, GCP, Kubernetes, Terraform, and CI/CD pipelines to design systems that are both reliable and efficient.";
   const fullText3 = "What excites me most is solving infrastructure challenges—whether it's automating database deployments, hardening CI/CD pipelines, or designing monitoring systems that prevent incidents before they happen. I'm always exploring new cloud technologies and contributing to infrastructure-as-code projects that make systems more maintainable and scalable.";
+  
+  // Combine all text with line breaks
+  const fullText = `${fullText1}\n\n${fullText2}\n\n${fullText3}`;
 
-  const typeText = (text: string, setText: (text: string) => void, onComplete: () => void) => {
+  const typeText = (text: string, setText: (text: string) => void) => {
     let currentIndex = 0;
     const typingSpeed = 15; // milliseconds per character
 
@@ -28,8 +29,6 @@ const AboutSection: React.FC = React.memo(() => {
         setText(text.substring(0, currentIndex + 1));
         currentIndex++;
         setTimeout(type, typingSpeed);
-      } else {
-        onComplete();
       }
     };
 
@@ -70,15 +69,7 @@ const AboutSection: React.FC = React.memo(() => {
         onEnter: () => {
           if (!isTyping) {
             setIsTyping(true);
-            typeText(fullText1, setDisplayedText1, () => {
-              setTimeout(() => {
-                typeText(fullText2, setDisplayedText2, () => {
-                  setTimeout(() => {
-                    typeText(fullText3, setDisplayedText3, () => {});
-                  }, 300);
-                });
-              }, 300);
-            });
+            typeText(fullText, setDisplayedText);
           }
         },
         once: true
@@ -100,29 +91,13 @@ const AboutSection: React.FC = React.memo(() => {
         </h2>
 
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
-          <div ref={contentRef} className="order-2 md:order-1 min-h-[400px] sm:min-h-[450px] space-y-4">
+          <div ref={contentRef} className="order-2 md:order-1 min-h-[400px] sm:min-h-[450px]">
             <Terminal 
               prompt="$" 
-              showCursor={displayedText1.length < fullText1.length}
+              showCursor={displayedText.length < fullText.length}
               className="w-full"
             >
-              {displayedText1}
-            </Terminal>
-
-            <Terminal 
-              prompt="$" 
-              showCursor={displayedText2.length < fullText2.length && displayedText1.length === fullText1.length}
-              className="w-full"
-            >
-              {displayedText2}
-            </Terminal>
-
-            <Terminal 
-              prompt="$" 
-              showCursor={displayedText2.length === fullText2.length && displayedText1.length === fullText1.length && displayedText3.length < fullText3.length}
-              className="w-full"
-            >
-              {displayedText3}
+              {displayedText}
             </Terminal>
           </div>
 
