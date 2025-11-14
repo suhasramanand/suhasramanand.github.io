@@ -176,7 +176,7 @@ const ResumeView: React.FC<ResumeViewProps> = ({ onClose }) => {
                 <p>GPA: 3.8</p>
               </div>
             </div>
-            <p className="text-sm font-serif text-black print:text-[9px]">Coursework: Data Structures, Database Management Systems, Cloud Computing, Software Development</p>
+            <p className="text-sm font-serif text-black print:text-[9px]">Coursework: Application Engineering & Development, Data Science Engineering Methods & Tools, Program Structure & Algorithms, Web Design and User Experience Engineering, Network Structures & Cloud Computing, Prompt Engineering & AI</p>
           </div>
 
           <div className="mb-2 print:mb-1">
@@ -191,7 +191,7 @@ const ResumeView: React.FC<ResumeViewProps> = ({ onClose }) => {
                 <p>GPA: 3.6</p>
               </div>
             </div>
-            <p className="text-sm font-serif text-black print:text-[9px]">Coursework: Data Structures & Algorithms, Object-Oriented Programming (OOP)</p>
+            <p className="text-sm font-serif text-black print:text-[9px]">Coursework: Object Oriented Programming, Probability and Statistics, Data Structures, Java, Digital Logic Design, Database Management System, Computer Organization and Architecture, Embedded System Design, Computer Networks, Python for Data Analysis, Cloud Computing and Big Data, Machine Learning for Data Analytics, Artificial Intelligence, Mobile Application Development, Cryptography and Network Security, Augmented and Virtual Reality, Data Science using R</p>
           </div>
         </section>
 

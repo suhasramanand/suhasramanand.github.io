@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { BookOpen, Calendar, Clock, Home } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import CrazyMenu from '@/components/CrazyMenu';
+import FloatingActionButton from '@/components/FloatingActionButton';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 interface BlogPost {
   id: string;
@@ -107,6 +109,7 @@ const Blog: React.FC = () => {
   return (
     <>
       <CrazyMenu />
+      <FloatingActionButton />
       <main className="pt-16">
         <section ref={sectionRef} className="py-16 sm:py-20 md:py-24 relative">
           <div className="section-container">

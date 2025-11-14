@@ -22,7 +22,14 @@ const educationItems: EducationItem[] = [
     period: "Expected May 2026",
     location: "Boston, MA",
     gpa: "3.8",
-    courses: ["Data Structures", "Database Management Systems", "Cloud Computing", "Software Development"]
+    courses: [
+      "Application Engineering & Development",
+      "Data Science Engineering Methods & Tools",
+      "Program Structure & Algorithms",
+      "Web Design and User Experience Engineering",
+      "Network Structures & Cloud Computing",
+      "Prompt Engineering & AI"
+    ]
   },
   {
     institution: "REVA University",
@@ -30,7 +37,25 @@ const educationItems: EducationItem[] = [
     period: "Aug 2023",
     location: "Bangalore, India",
     gpa: "3.6",
-    courses: ["Data Structures & Algorithms", "Object-Oriented Programming (OOP)"]
+    courses: [
+      "Object Oriented Programming",
+      "Probability and Statistics",
+      "Data Structures",
+      "Java",
+      "Digital Logic Design",
+      "Database Management System",
+      "Computer Organization and Architecture",
+      "Embedded System Design",
+      "Computer Networks",
+      "Python for Data Analysis",
+      "Cloud Computing and Big Data",
+      "Machine Learning for Data Analytics",
+      "Artificial Intelligence",
+      "Mobile Application Development",
+      "Cryptography and Network Security",
+      "Augmented and Virtual Reality",
+      "Data Science using R"
+    ]
   }
 ];
 

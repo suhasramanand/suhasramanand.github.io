@@ -1,7 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Calendar, Clock, ArrowLeft, Home } from 'lucide-react';
+import { gsap } from 'gsap';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import CrazyMenu from '@/components/CrazyMenu';
+import FloatingActionButton from '@/components/FloatingActionButton';
+
+gsap.registerPlugin(ScrollToPlugin);
 
 interface BlogPost {
   id: string;
@@ -965,6 +970,7 @@ const BlogPost: React.FC = () => {
   return (
     <>
       <CrazyMenu />
+      <FloatingActionButton />
       <main className="pt-16">
         <article className="py-16 sm:py-20 md:py-24">
           <div className="section-container max-w-3xl">
