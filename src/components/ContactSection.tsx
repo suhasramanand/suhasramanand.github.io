@@ -185,10 +185,16 @@ const ContactSection: React.FC = React.memo(() => {
           {/* Contact Info */}
           <div ref={cardRef} className="paper-card">
             <div className="mb-8">
-              <p className="text-body mb-8">
-                I'm currently open to new opportunities and collaborations. 
+              <p className="text-body mb-6">
+                I'm currently open to new opportunities and collaborations.
                 Feel free to reach out if you'd like to connect!
               </p>
+              
+              {/* Response Time Indicator */}
+              <div className="flex items-center gap-2 mb-8 pb-6 border-b border-ink-light-gray/30">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-sm text-ink-gray font-serif">Usually responds within 24 hours</span>
+              </div>
               
               {/* Social Icons */}
               <div className="flex justify-center gap-6 mb-8">
