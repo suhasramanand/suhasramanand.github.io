@@ -19,7 +19,7 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   className = '',
   animationType = 'fadeInUp',
   delay = 0,
-  duration = 0.4
+  duration = 0.3 // Default to faster duration
 }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -28,14 +28,14 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
 
     const element = sectionRef.current;
     
-    // Set initial state based on animation type
+    // Elegant, subtle initial states - reduced movement for faster feel
     const initialStates = {
-      fadeInUp: { y: 100, opacity: 0 },
-      fadeInLeft: { x: -100, opacity: 0 },
-      fadeInRight: { x: 100, opacity: 0 },
-      scaleIn: { scale: 0, opacity: 0 },
-      slideIn: { y: 50, opacity: 0 },
-      bounceIn: { scale: 0, opacity: 0, rotation: -10 }
+      fadeInUp: { y: 30, opacity: 0 },
+      fadeInLeft: { x: -30, opacity: 0 },
+      fadeInRight: { x: 30, opacity: 0 },
+      scaleIn: { scale: 0.95, opacity: 0 },
+      slideIn: { y: 20, opacity: 0 },
+      bounceIn: { scale: 0.96, opacity: 0 }
     };
 
     const finalStates = {
@@ -44,7 +44,7 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
       fadeInRight: { x: 0, opacity: 1 },
       scaleIn: { scale: 1, opacity: 1 },
       slideIn: { y: 0, opacity: 1 },
-      bounceIn: { scale: 1, opacity: 1, rotation: 0 }
+      bounceIn: { scale: 1, opacity: 1 }
     };
 
     gsap.set(element, initialStates[animationType]);
@@ -53,10 +53,10 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
       ...finalStates[animationType],
       duration: duration,
       delay: delay,
-      ease: animationType === 'bounceIn' ? "power2.out" : "power2.out", // Faster easing
+      ease: "power1.out", // Smooth, fast easing
       scrollTrigger: {
         trigger: element,
-        start: "top 85%",
+        start: "top 90%",
         toggleActions: "play none none none",
         once: true, // Only animate once for better performance
         markers: false

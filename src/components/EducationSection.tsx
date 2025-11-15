@@ -64,18 +64,7 @@ const EducationSection: React.FC = React.memo(() => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Removed scroll-triggered animations for instant display
-  useEffect(() => {
-    // Set all elements to be visible immediately
-    if (headingRef.current) {
-      gsap.set(headingRef.current, { opacity: 1, y: 0 });
-    }
-    cardRefs.current.forEach((card) => {
-      if (card) {
-        gsap.set(card, { opacity: 1, y: 0 });
-      }
-    });
-  }, []);
+  // Animation handled by AnimatedSection wrapper
 
   return (
     <section id="education" className="py-16 sm:py-20 md:py-24 relative" ref={sectionRef}>

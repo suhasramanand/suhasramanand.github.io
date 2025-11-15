@@ -66,18 +66,7 @@ const ExperienceSection: React.FC = React.memo(() => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const timelineItemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Removed scroll-triggered animations for instant display
-  useEffect(() => {
-    // Set all elements to be visible immediately
-    if (headingRef.current) {
-      gsap.set(headingRef.current, { opacity: 1, y: 0 });
-    }
-    timelineItemsRef.current.forEach((item) => {
-      if (item) {
-        gsap.set(item, { opacity: 1, y: 0 });
-      }
-    });
-  }, []);
+  // Animation handled by AnimatedSection wrapper
 
   return (
     <section

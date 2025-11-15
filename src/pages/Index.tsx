@@ -26,27 +26,50 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const Index = () => {
   useEffect(() => {
-    // Force scroll to top on mount
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    // Remove hash from URL to prevent browser from auto-scrolling to sections
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
     
-    // Also use requestAnimationFrame to ensure it happens after render
-    requestAnimationFrame(() => {
+    // Force scroll to top on mount - multiple attempts to ensure it sticks
+    const forceScrollToTop = () => {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
+    };
+    
+    // Immediate scroll to top
+    forceScrollToTop();
+    
+    // Also use requestAnimationFrame to ensure it happens after render
+    requestAnimationFrame(() => {
+      forceScrollToTop();
+      
+      // Another attempt after a short delay to override any browser behavior
+      setTimeout(() => {
+        forceScrollToTop();
+      }, 0);
+      
+      // Final attempt after a slightly longer delay
+      setTimeout(() => {
+        forceScrollToTop();
+      }, 100);
     });
     
     // Initialize any global animations or effects
     
-    // Refresh ScrollTrigger after elements are rendered (debounced for performance)
+    // Refresh ScrollTrigger after elements are rendered and scroll position is set
+    // Delay this to ensure scroll to top happens first
     let refreshTimeout: NodeJS.Timeout;
     const refreshScrollTrigger = () => {
       clearTimeout(refreshTimeout);
       refreshTimeout = setTimeout(() => {
+        // Make sure we're still at top before refreshing
+        if (window.scrollY > 0) {
+          forceScrollToTop();
+        }
         ScrollTrigger.refresh();
-      }, 150);
+      }, 300);
     };
     
     refreshScrollTrigger();
@@ -121,13 +144,13 @@ const Index = () => {
           <AboutSection />
         </AnimatedSection>
         
-        <div id="experience">
+        <AnimatedSection id="experience" animationType="fadeInUp" delay={0} duration={0.25}>
           <ExperienceSection />
-        </div>
+        </AnimatedSection>
         
-        <div id="education">
+        <AnimatedSection id="education" animationType="fadeInUp" delay={0} duration={0.25}>
           <EducationSection />
-        </div>
+        </AnimatedSection>
         
         <AnimatedSection id="projects" animationType="fadeInUp" delay={0} duration={0.3}>
           <ProjectsSection />
