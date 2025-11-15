@@ -121,13 +121,13 @@ const Index = () => {
           <AboutSection />
         </AnimatedSection>
         
-        <AnimatedSection id="experience" animationType="scaleIn" delay={0} duration={0.3}>
+        <div id="experience">
           <ExperienceSection />
-        </AnimatedSection>
+        </div>
         
-        <AnimatedSection id="education" animationType="fadeInRight" delay={0} duration={0.3}>
+        <div id="education">
           <EducationSection />
-        </AnimatedSection>
+        </div>
         
         <AnimatedSection id="projects" animationType="fadeInUp" delay={0} duration={0.3}>
           <ProjectsSection />

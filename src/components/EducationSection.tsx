@@ -64,37 +64,17 @@ const EducationSection: React.FC = React.memo(() => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  // Removed scroll-triggered animations for instant display
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Animate heading
-      gsap.from(headingRef.current, {
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: headingRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none"
-        }
-      });
-      
-      // Animate each education card
-      cardRefs.current.forEach((card, index) => {
-        gsap.from(card, {
-          y: 50,
-          opacity: 0,
-          duration: 0.8,
-          delay: 0.2 + (index * 0.2),
-          scrollTrigger: {
-            trigger: card,
-            start: "top 80%",
-            toggleActions: "play none none none"
-          }
-        });
-      });
+    // Set all elements to be visible immediately
+    if (headingRef.current) {
+      gsap.set(headingRef.current, { opacity: 1, y: 0 });
+    }
+    cardRefs.current.forEach((card) => {
+      if (card) {
+        gsap.set(card, { opacity: 1, y: 0 });
+      }
     });
-    
-    return () => ctx.revert(); // Clean up animations
   }, []);
 
   return (
