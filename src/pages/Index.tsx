@@ -9,6 +9,7 @@ import AnimatedBackground from '@/components/AnimatedBackground';
 import AnimatedSection from '@/components/AnimatedSection';
 import FloatingActionButton from '@/components/FloatingActionButton';
 import ProgressBar from '@/components/ProgressBar';
+import SupportBot from '@/components/SupportBot';
 import { Github, Linkedin, Mail } from 'lucide-react';
 
 // Lazy load below-the-fold sections for better initial load performance
@@ -124,6 +125,9 @@ const Index = () => {
       {/* Floating action button */}
       <FloatingActionButton />
       
+      {/* Support Bot */}
+      <SupportBot />
+      
       {/* Gamification progress bar */}
       <ProgressBar />
       
@@ -174,7 +178,7 @@ const Index = () => {
       </Suspense>
       
       {/* Enhanced Footer with social links */}
-      <footer className="py-12 text-center border-t border-black/20 relative z-10">
+      <footer className="py-12 text-center border-t border-black/20 dark:border-border relative z-10">
         <div className="section-container">
           {/* Social Links */}
           <div className="flex justify-center gap-4 mb-6">
@@ -182,7 +186,7 @@ const Index = () => {
               href="https://github.com/suhasramanand" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="group p-3 border border-black/20 hover:bg-black hover:text-paper-cream transition-all duration-200"
+              className="group p-3 border border-black/20 dark:border-border hover:bg-black dark:hover:bg-foreground hover:text-paper-cream dark:hover:text-background transition-all duration-200"
               aria-label="GitHub Profile"
             >
               <Github size={22} />
@@ -191,21 +195,21 @@ const Index = () => {
               href="https://linkedin.com/in/suhasreddybr/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="group p-3 border border-black/20 hover:bg-black hover:text-paper-cream transition-all duration-200"
+              className="group p-3 border border-black/20 dark:border-border hover:bg-black dark:hover:bg-foreground hover:text-paper-cream dark:hover:text-background transition-all duration-200"
               aria-label="LinkedIn Profile"
             >
               <Linkedin size={22} />
             </a>
             <a 
               href="mailto:reachsuhasreddy@gmail.com"
-              className="group p-3 border border-black/20 hover:bg-black hover:text-paper-cream transition-all duration-200"
+              className="group p-3 border border-black/20 dark:border-border hover:bg-black dark:hover:bg-foreground hover:text-paper-cream dark:hover:text-background transition-all duration-200"
               aria-label="Email Contact"
             >
               <Mail size={22} />
             </a>
           </div>
           
-          <p className="text-black font-serif">&copy; {new Date().getFullYear()} Suhas Reddy</p>
+          <p className="text-black dark:text-foreground font-serif">&copy; {new Date().getFullYear()} Suhas Reddy</p>
         </div>
       </footer>
     </main>

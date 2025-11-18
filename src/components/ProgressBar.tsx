@@ -14,6 +14,7 @@ import {
   Award,
   BookOpen
 } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -25,14 +26,14 @@ const ProgressBar: React.FC = () => {
 
   const totalSections = 8; // Number of sections to track
   const badges = [
-    { threshold: 1, id: 'hero', icon: <Home size={18} className="text-black" />, label: 'Home' },
-    { threshold: 2, id: 'about', icon: <User size={18} className="text-black" />, label: 'About' },
-    { threshold: 3, id: 'experience', icon: <Briefcase size={18} className="text-black" />, label: 'Experience' },
-    { threshold: 4, id: 'education', icon: <GraduationCap size={18} className="text-black" />, label: 'Education' },
-    { threshold: 5, id: 'projects', icon: <Code size={18} className="text-black" />, label: 'Projects' },
-    { threshold: 6, id: 'activities', icon: <Sparkles size={18} className="text-black" />, label: 'Activities' },
-    { threshold: 7, id: 'certifications', icon: <Award size={18} className="text-black" />, label: 'Certifications' },
-    { threshold: 8, id: 'contact', icon: <Mail size={18} className="text-black" />, label: 'Contact' },
+    { threshold: 1, id: 'hero', icon: <Home size={18} className="text-black dark:text-foreground" />, label: 'Home' },
+    { threshold: 2, id: 'about', icon: <User size={18} className="text-black dark:text-foreground" />, label: 'About' },
+    { threshold: 3, id: 'experience', icon: <Briefcase size={18} className="text-black dark:text-foreground" />, label: 'Experience' },
+    { threshold: 4, id: 'education', icon: <GraduationCap size={18} className="text-black dark:text-foreground" />, label: 'Education' },
+    { threshold: 5, id: 'projects', icon: <Code size={18} className="text-black dark:text-foreground" />, label: 'Projects' },
+    { threshold: 6, id: 'activities', icon: <Sparkles size={18} className="text-black dark:text-foreground" />, label: 'Activities' },
+    { threshold: 7, id: 'certifications', icon: <Award size={18} className="text-black dark:text-foreground" />, label: 'Certifications' },
+    { threshold: 8, id: 'contact', icon: <Mail size={18} className="text-black dark:text-foreground" />, label: 'Contact' },
   ];
 
   const scrollToSection = (id: string) => {
@@ -145,19 +146,24 @@ const ProgressBar: React.FC = () => {
         
         <div className="flex flex-col gap-4">
           {badges.map((badge, index) => (
-            <button
-              key={index}
-              ref={el => badgesRef.current[index] = el}
-              onClick={() => scrollToSection(badge.id)}
-              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer hover:scale-110 border border-black/20 ${
-                unlocked >= badge.threshold 
-                  ? 'bg-black text-paper-cream shadow-md' 
-                  : 'bg-paper-cream text-ink-light-gray hover:bg-paper-beige'
-              }`}
-              title={badge.label}
-            >
-              {badge.icon}
-            </button>
+            <Tooltip key={index} delayDuration={300}>
+              <TooltipTrigger asChild>
+                <button
+                  ref={el => badgesRef.current[index] = el}
+                  onClick={() => scrollToSection(badge.id)}
+                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer hover:scale-110 border border-black/20 dark:border-border ${
+                    unlocked >= badge.threshold 
+                      ? 'bg-black/70 dark:bg-foreground/70 text-paper-cream dark:text-background shadow-md backdrop-blur-sm' 
+                      : 'bg-paper-cream dark:bg-card text-ink-light-gray dark:text-muted-foreground hover:bg-paper-beige dark:hover:bg-accent'
+                  }`}
+                >
+                  {badge.icon}
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="right" className="font-serif">
+                {badge.label}
+              </TooltipContent>
+            </Tooltip>
           ))}
         </div>
       </div>

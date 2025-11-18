@@ -185,26 +185,26 @@ const ContactSection: React.FC = React.memo(() => {
           {/* Contact Info */}
           <div ref={cardRef} className="paper-card">
             <div className="mb-8">
-              <p className="text-body mb-6">
+              <p className="text-body mb-6 text-black dark:text-foreground">
                 I'm currently open to new opportunities and collaborations.
                 Feel free to reach out if you'd like to connect!
               </p>
               
               {/* Response Time Indicator */}
-              <div className="flex items-center gap-2 mb-8 pb-6 border-b border-ink-light-gray/30">
+              <div className="flex items-center gap-2 mb-8 pb-6 border-b border-ink-light-gray/30 dark:border-border">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-sm text-ink-gray font-serif">Usually responds within 24 hours</span>
+                <span className="text-sm text-ink-gray dark:text-muted-foreground font-serif">Usually responds within 24 hours</span>
               </div>
               
               {/* Social Icons */}
               <div className="flex justify-center gap-6 mb-8">
-                <a href="https://github.com/suhasramanand" target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center text-black hover:text-ink-gray transition-colors">
+                <a href="https://github.com/suhasramanand" target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center text-black dark:text-foreground hover:text-ink-gray dark:hover:text-muted-foreground transition-colors">
                   <Github size={20} />
                 </a>
-                <a href="https://linkedin.com/in/suhasreddybr/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center text-black hover:text-ink-gray transition-colors">
+                <a href="https://linkedin.com/in/suhasreddybr/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center text-black dark:text-foreground hover:text-ink-gray dark:hover:text-muted-foreground transition-colors">
                   <Linkedin size={20} />
                 </a>
-                <a href="mailto:reachsuhasreddy@gmail.com" className="w-10 h-10 flex items-center justify-center text-black hover:text-ink-gray transition-colors">
+                <a href="mailto:reachsuhasreddy@gmail.com" className="w-10 h-10 flex items-center justify-center text-black dark:text-foreground hover:text-ink-gray dark:hover:text-muted-foreground transition-colors">
                   <Mail size={20} />
                 </a>
               </div>
@@ -214,14 +214,14 @@ const ContactSection: React.FC = React.memo(() => {
               <a 
                 ref={el => (contactItemsRef.current[0] = el)}
                 href="mailto:reachsuhasreddy@gmail.com"
-                className="flex items-center p-4 border border-ink-light-gray/30 hover:border-black transition-colors"
+                className="flex items-center p-4 border border-ink-light-gray/30 dark:border-border hover:border-black dark:hover:border-foreground transition-colors"
               >
-                <div className="w-10 h-10 flex items-center justify-center text-black mr-4">
+                <div className="w-10 h-10 flex items-center justify-center text-black dark:text-foreground mr-4">
                   <Mail size={20} />
                 </div>
                 <div>
-                  <div className="text-xs text-ink-gray font-serif">Email</div>
-                  <div className="text-body font-serif break-all">reachsuhasreddy@gmail.com</div>
+                  <div className="text-xs text-ink-gray dark:text-muted-foreground font-serif">Email</div>
+                  <div className="text-body font-serif break-all text-black dark:text-foreground">reachsuhasreddy@gmail.com</div>
                 </div>
               </a>
               
@@ -230,14 +230,14 @@ const ContactSection: React.FC = React.memo(() => {
                 href="https://linkedin.com/in/suhasreddybr/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center p-4 border border-ink-light-gray/30 hover:border-black transition-colors"
+                className="flex items-center p-4 border border-ink-light-gray/30 dark:border-border hover:border-black dark:hover:border-foreground transition-colors"
               >
-                <div className="w-10 h-10 flex items-center justify-center text-black mr-4">
+                <div className="w-10 h-10 flex items-center justify-center text-black dark:text-foreground mr-4">
                   <Linkedin size={20} />
                 </div>
                 <div>
-                  <div className="text-xs text-ink-gray font-serif">LinkedIn</div>
-                  <div className="text-body font-serif">linkedin.com/in/suhasreddybr</div>
+                  <div className="text-xs text-ink-gray dark:text-muted-foreground font-serif">LinkedIn</div>
+                  <div className="text-body font-serif text-black dark:text-foreground">linkedin.com/in/suhasreddybr</div>
                 </div>
               </a>
               
@@ -246,14 +246,14 @@ const ContactSection: React.FC = React.memo(() => {
                 href="https://github.com/suhasramanand"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center p-4 border border-ink-light-gray/30 hover:border-black transition-colors"
+                className="flex items-center p-4 border border-ink-light-gray/30 dark:border-border hover:border-black dark:hover:border-foreground transition-colors"
               >
-                <div className="w-10 h-10 flex items-center justify-center text-black mr-4">
+                <div className="w-10 h-10 flex items-center justify-center text-black dark:text-foreground mr-4">
                   <Github size={20} />
                 </div>
                 <div>
-                  <div className="text-xs text-ink-gray font-serif">GitHub</div>
-                  <div className="text-body font-serif">github.com/suhasramanand</div>
+                  <div className="text-xs text-ink-gray dark:text-muted-foreground font-serif">GitHub</div>
+                  <div className="text-body font-serif text-black dark:text-foreground">github.com/suhasramanand</div>
                 </div>
               </a>
             </div>
@@ -261,22 +261,22 @@ const ContactSection: React.FC = React.memo(() => {
           
           {/* Contact Form */}
           <div ref={formRef} className="paper-card">
-            <h3 className="text-2xl font-serif font-semibold text-black mb-8">Send me a message</h3>
+            <h3 className="text-2xl font-serif font-semibold text-black dark:text-foreground mb-8">Send me a message</h3>
             
             {formSubmitted ? (
-              <div className="border border-black p-6 text-center">
-                <p className="text-body font-serif font-medium mb-2">Message sent successfully!</p>
-                <p className="text-ink-gray font-serif">Thank you for reaching out. I'll get back to you as soon as possible.</p>
+              <div className="border border-black dark:border-border p-6 text-center">
+                <p className="text-body font-serif font-medium mb-2 text-black dark:text-foreground">Message sent successfully!</p>
+                <p className="text-ink-gray dark:text-muted-foreground font-serif">Thank you for reaching out. I'll get back to you as soon as possible.</p>
               </div>
             ) : (
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   {submitError && (
-                    <div className="border border-black p-4 text-center">
-                      <p className="text-sm font-serif mb-2">{submitError}</p>
+                    <div className="border border-black dark:border-border p-4 text-center">
+                      <p className="text-sm font-serif mb-2 text-black dark:text-foreground">{submitError}</p>
                       <a 
                         href="mailto:reachsuhasreddy@gmail.com" 
-                        className="text-sm underline font-serif"
+                        className="text-sm underline font-serif text-black dark:text-foreground"
                       >
                         Click here to email directly
                       </a>
@@ -293,7 +293,7 @@ const ContactSection: React.FC = React.memo(() => {
                           <Input 
                             placeholder="Your name" 
                             {...field} 
-                            className="border-ink-light-gray/40 font-serif focus:border-black" 
+                            className="border-ink-light-gray/40 dark:border-border font-serif focus:border-black dark:focus:border-foreground" 
                             disabled={isSubmitting}
                           />
                         </FormControl>
@@ -313,7 +313,7 @@ const ContactSection: React.FC = React.memo(() => {
                             placeholder="Your email" 
                             type="email" 
                             {...field} 
-                            className="border-ink-light-gray/40 font-serif focus:border-black" 
+                            className="border-ink-light-gray/40 dark:border-border font-serif focus:border-black dark:focus:border-foreground" 
                             disabled={isSubmitting}
                           />
                         </FormControl>
@@ -330,7 +330,7 @@ const ContactSection: React.FC = React.memo(() => {
                         <FormLabel className="font-serif">Message</FormLabel>
                         <FormControl>
                           <textarea 
-                            className="flex w-full border border-ink-light-gray/40 bg-transparent px-3 py-2 text-sm font-serif placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-black disabled:cursor-not-allowed disabled:opacity-50 min-h-[120px] resize-none"
+                            className="flex w-full border border-ink-light-gray/40 dark:border-border bg-transparent px-3 py-2 text-sm font-serif placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-black dark:focus-visible:border-foreground disabled:cursor-not-allowed disabled:opacity-50 min-h-[120px] resize-none text-black dark:text-foreground"
                             placeholder="Your message"
                             {...field}
                             disabled={isSubmitting}

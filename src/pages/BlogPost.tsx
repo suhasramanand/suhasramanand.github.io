@@ -952,7 +952,7 @@ const BlogPost: React.FC = () => {
         <CrazyMenu />
         <main className="pt-16">
           <div className="section-container py-24 text-center">
-            <h1 className="text-4xl font-serif font-bold text-black mb-4">Post Not Found</h1>
+            <h1 className="text-4xl font-serif font-bold text-black dark:text-foreground mb-4">Post Not Found</h1>
             <button onClick={() => navigate('/blog')} className="minimal-button-outline">
               Back to Blog
             </button>
@@ -985,14 +985,14 @@ const BlogPost: React.FC = () => {
             <div className="flex items-center gap-4 mb-8">
               <button
                 onClick={() => navigate('/blog')}
-                className="flex items-center gap-2 text-ink-gray hover:text-black transition-colors font-serif"
+                className="flex items-center gap-2 text-ink-gray dark:text-muted-foreground hover:text-black dark:hover:text-foreground transition-colors font-serif"
               >
                 <ArrowLeft size={18} />
                 <span>Back to Blog</span>
               </button>
               <button
                 onClick={() => navigate('/')}
-                className="flex items-center gap-2 px-4 py-2 border border-black/20 hover:bg-black hover:text-paper-cream transition-all duration-200 font-serif text-sm"
+                className="flex items-center gap-2 px-4 py-2 border border-black/20 dark:border-border hover:bg-black dark:hover:bg-foreground hover:text-paper-cream dark:hover:text-background transition-all duration-200 font-serif text-sm text-black dark:text-foreground"
                 aria-label="Go to home"
               >
                 <Home size={18} />
@@ -1001,22 +1001,22 @@ const BlogPost: React.FC = () => {
             </div>
 
             <div className="mb-6">
-              <span className="text-xs font-serif text-ink-gray border border-ink-light-gray/40 px-3 py-1">
+              <span className="text-xs font-serif text-ink-gray dark:text-muted-foreground border border-ink-light-gray/40 dark:border-border px-3 py-1">
                 {post.category}
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl font-serif font-bold text-black mb-6">
+            <h1 className="text-4xl sm:text-5xl font-serif font-bold text-black dark:text-foreground mb-6">
               {post.title}
             </h1>
 
-            <div className="flex items-center gap-6 text-ink-gray mb-8 pb-6 border-b border-ink-light-gray/30">
+            <div className="flex items-center gap-6 text-ink-gray dark:text-muted-foreground mb-8 pb-6 border-b border-ink-light-gray/30 dark:border-border">
               <div className="flex items-center gap-2">
-                <Calendar size={16} className="text-ink-light-gray" />
+                <Calendar size={16} className="text-ink-light-gray dark:text-muted-foreground" />
                 <span className="text-sm font-serif">{formatDate(post.date)}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock size={16} className="text-ink-light-gray" />
+                <Clock size={16} className="text-ink-light-gray dark:text-muted-foreground" />
                 <span className="text-sm font-serif">{post.readTime}</span>
               </div>
               <span className="text-sm font-serif">By {post.author}</span>
@@ -1024,7 +1024,7 @@ const BlogPost: React.FC = () => {
 
             <div 
               ref={contentRef} 
-              className="prose prose-lg max-w-none font-serif"
+              className="prose prose-lg max-w-none font-serif blog-content"
               style={{ fontFamily: "'Cormorant Garamond', Georgia, 'Times New Roman', serif" }}
             >
               {/* Content will be inserted via innerHTML */}
@@ -1032,25 +1032,25 @@ const BlogPost: React.FC = () => {
 
             {/* Related Posts */}
             {relatedPosts.length > 0 && (
-              <div className="mt-16 pt-8 border-t border-ink-light-gray/30">
-                <h3 className="text-2xl font-serif font-semibold text-black mb-6">Related Posts</h3>
+              <div className="mt-16 pt-8 border-t border-ink-light-gray/30 dark:border-border">
+                <h3 className="text-2xl font-serif font-semibold text-black dark:text-foreground mb-6">Related Posts</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {relatedPosts.map((relatedPost) => (
                     <Link
                       key={relatedPost.id}
                       to={`/blog/${relatedPost.id}`}
-                      className="paper-card group hover:border-black/40 transition-all duration-200"
+                      className="paper-card group hover:border-black/40 dark:hover:border-border transition-all duration-200"
                     >
                       <div className="flex items-center gap-2 mb-2">
-                        <BookOpen size={14} className="text-ink-gray" />
-                        <span className="text-xs font-serif text-ink-gray border border-ink-light-gray/40 px-2 py-0.5">
+                        <BookOpen size={14} className="text-ink-gray dark:text-muted-foreground" />
+                        <span className="text-xs font-serif text-ink-gray dark:text-muted-foreground border border-ink-light-gray/40 dark:border-border px-2 py-0.5">
                           {relatedPost.category}
                         </span>
                       </div>
-                      <h4 className="text-lg font-serif font-semibold text-black mb-2 group-hover:text-ink-gray transition-colors">
+                      <h4 className="text-lg font-serif font-semibold text-black dark:text-foreground mb-2 group-hover:text-ink-gray dark:group-hover:text-muted-foreground transition-colors">
                         {relatedPost.title}
                       </h4>
-                      <p className="text-sm text-ink-gray font-serif line-clamp-2">
+                      <p className="text-sm text-ink-gray dark:text-muted-foreground font-serif line-clamp-2">
                         {relatedPost.excerpt}
                       </p>
                     </Link>

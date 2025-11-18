@@ -105,17 +105,17 @@ const HeroSection: React.FC = () => {
     <div ref={sectionRef} id="hero" className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 sm:px-8 overflow-hidden">
       <div className="relative z-10 max-w-4xl w-full">
         <div className="mb-12">
-          <h1 ref={nameRef} className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-black mb-6 tracking-tight">
+          <h1 ref={nameRef} className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-black dark:text-foreground mb-6 tracking-tight">
             Suhas Reddy
           </h1>
-          <p ref={titleRef} className="text-xl sm:text-2xl md:text-3xl text-ink-gray font-serif font-medium mb-6 italic">
+          <p ref={titleRef} className="text-xl sm:text-2xl md:text-3xl text-ink-gray dark:text-muted-foreground font-serif font-medium mb-6 italic">
             Software Engineer & Cloud Specialist
           </p>
-                <p ref={descRef} className="text-base sm:text-lg md:text-xl text-ink-gray/80 mb-12 max-w-2xl mx-auto leading-relaxed font-serif min-h-[3rem]">
+                <p ref={descRef} className="text-base sm:text-lg md:text-xl text-ink-gray/80 dark:text-muted-foreground/80 mb-12 max-w-2xl mx-auto leading-relaxed font-serif min-h-[3rem]">
                   {displayedDesc}
                   {displayedDesc.length < fullDescText.length && (
                     <span
-                      className="inline-block w-2 h-5 bg-black ml-1 align-middle"
+                      className="inline-block w-2 h-5 bg-black dark:bg-foreground ml-1 align-middle"
                       style={{ animation: 'blink 1s infinite' }}
                     />
                   )}
@@ -153,8 +153,8 @@ const HeroSection: React.FC = () => {
         
         <div ref={scrollRef} className="absolute bottom-2 left-1/2 transform -translate-x-1/2">
           <div className="flex flex-col items-center cursor-pointer" onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}>
-            <p className="text-xs text-ink-gray mb-2 font-serif">Scroll</p>
-            <ArrowDown className="text-black animate-bounce w-4 h-4" />
+            <p className="text-xs text-ink-gray dark:text-muted-foreground mb-2 font-serif">Scroll</p>
+            <ArrowDown className="text-black dark:text-foreground animate-bounce w-4 h-4" />
           </div>
         </div>
       </div>

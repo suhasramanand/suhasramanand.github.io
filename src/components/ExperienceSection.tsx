@@ -87,36 +87,36 @@ const ExperienceSection: React.FC = React.memo(() => {
               className="relative"
             >
               <div className="paper-card">
-                <div className="mb-6 pb-6 border-b border-ink-light-gray/30">
+                <div className="mb-6 pb-6 border-b border-ink-light-gray/30 dark:border-border">
                   <div className="flex flex-wrap items-start gap-4 mb-3">
                     <img
                       src={exp.logo}
                       alt={`${exp.company} logo`}
-                      className="h-8 w-auto object-contain opacity-80"
+                      className="h-8 w-auto object-contain opacity-80 dark:opacity-90"
                       loading="lazy"
                     />
                     <div>
-                      <h3 className="text-xl sm:text-2xl font-serif font-semibold text-black mb-1">
+                      <h3 className="text-xl sm:text-2xl font-serif font-semibold text-black dark:text-foreground mb-1">
                         {exp.title}
                       </h3>
-                      <h4 className="text-lg sm:text-xl font-serif font-medium text-ink-gray italic">
+                      <h4 className="text-lg sm:text-xl font-serif font-medium text-ink-gray dark:text-muted-foreground italic">
                         {exp.company}
                       </h4>
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-4 text-ink-gray mt-3">
+                  <div className="flex flex-wrap items-center gap-4 text-ink-gray dark:text-muted-foreground mt-3">
                     <div className="flex items-center gap-2">
-                      <Calendar size={16} className="text-ink-light-gray" />
-                      <span className="font-serif text-ink-gray">{exp.period}</span>
+                      <Calendar size={16} className="text-ink-light-gray dark:text-muted-foreground" />
+                      <span className="font-serif text-ink-gray dark:text-muted-foreground">{exp.period}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <MapPin size={16} className="text-ink-light-gray" />
-                      <span className="font-serif text-ink-gray">{exp.location}</span>
+                      <MapPin size={16} className="text-ink-light-gray dark:text-muted-foreground" />
+                      <span className="font-serif text-ink-gray dark:text-muted-foreground">{exp.location}</span>
                     </div>
                     {exp.tag && (
                       <div className="flex items-center gap-2">
-                        <span className="font-serif text-ink-gray">{exp.tag}</span>
+                        <span className="font-serif text-ink-gray dark:text-muted-foreground">{exp.tag}</span>
                       </div>
                     )}
                   </div>
@@ -125,8 +125,8 @@ const ExperienceSection: React.FC = React.memo(() => {
                 <ul className="space-y-3 text-body">
                   {exp.points.map((point, i) => (
                     <li key={i} className="flex gap-3">
-                      <span className="text-black mt-1.5 flex-shrink-0 font-serif">—</span>
-                      <span className="font-serif">{point}</span>
+                      <span className="text-black dark:text-foreground mt-1.5 flex-shrink-0 font-serif">—</span>
+                      <span className="font-serif text-black dark:text-foreground">{point}</span>
                     </li>
                   ))}
                 </ul>

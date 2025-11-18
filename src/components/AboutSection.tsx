@@ -91,14 +91,36 @@ const AboutSection: React.FC = React.memo(() => {
         </h2>
 
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
-          <div ref={contentRef} className="order-2 md:order-1 min-h-[400px] sm:min-h-[450px]">
-            <Terminal 
-              prompt="$" 
-              showCursor={displayedText.length < fullText.length}
-              className="w-full"
-            >
-              {displayedText}
-            </Terminal>
+          <div ref={contentRef} className="order-2 md:order-1">
+            <div className="relative">
+              {/* Hidden full text to reserve space and prevent layout shift */}
+              {/* Matches terminal structure exactly: header (32px) + body padding (16px) + content */}
+              <div className="invisible" aria-hidden="true">
+                <div className="bg-black/90 border border-black/30 rounded-lg overflow-hidden shadow-lg">
+                  {/* Terminal header */}
+                  <div className="bg-black/95 border-b border-black/50 px-4 py-2 flex items-center h-8"></div>
+                  {/* Terminal body with matching padding */}
+                  <div className="bg-black/90 p-4">
+                    <div className="text-sm leading-relaxed" style={{ fontFamily: "'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace" }}>
+                      <span className="text-green-400 mr-2">$</span>
+                      <span className="text-gray-100 whitespace-pre-wrap word-wrap break-word" style={{ fontFamily: "'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace" }}>
+                        {fullText}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* Visible typing text overlay */}
+              <div className="absolute top-0 left-0 w-full">
+                <Terminal 
+                  prompt="$" 
+                  showCursor={displayedText.length < fullText.length}
+                  className="w-full"
+                >
+                  {displayedText}
+                </Terminal>
+              </div>
+            </div>
           </div>
 
           <div ref={imageRef} className="flex justify-center order-1 md:order-2 sticky top-20">

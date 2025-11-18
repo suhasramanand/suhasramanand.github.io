@@ -17,6 +17,7 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useNavigate } from "react-router-dom";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
 
@@ -148,7 +149,7 @@ const MorphingText: React.FC<{ text: string }> = ({ text }) => {
 
   return (
     <span
-      className="font-serif tracking-wide font-semibold text-black"
+      className="font-serif tracking-wide font-semibold text-black dark:text-foreground"
       onMouseEnter={handleMouseEnter}
     >
       {displayText}
@@ -383,12 +384,12 @@ const CrazyMenu: React.FC = () => {
     <>
       <nav
         ref={navRef}
-        className="fixed top-0 left-0 right-0 z-50 bg-paper-cream/95 backdrop-blur-sm border-b border-ink-light-gray/30"
+        className="fixed top-0 left-0 right-0 z-50 bg-paper-cream/95 dark:bg-background/95 backdrop-blur-sm border-b border-ink-light-gray/30 dark:border-border"
       >
         <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12">
-          <div className="flex justify-between h-16">
+          <div className="flex justify-between items-center h-16">
                   <div
-                    className="flex items-center cursor-pointer group"
+                    className="flex items-center cursor-pointer group flex-shrink-0"
                     onClick={() => scrollToSection("hero")}
                     role="button"
                     tabIndex={0}
@@ -400,14 +401,14 @@ const CrazyMenu: React.FC = () => {
                     }}
                     aria-label="Go to home"
                   >
-                    <div className="flex-shrink-0 flex items-center text-lg font-serif">
+                    <div className="flex items-center text-lg font-serif">
                       <MorphingText text={yourName} />
                     </div>
                   </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:ml-6 md:flex md:items-center">
-              <div className="flex space-x-1">
+            <div className="hidden md:flex md:items-center md:ml-12 lg:ml-16">
+              <div className="flex items-center space-x-1">
                 {menuItems.map((item, index) => (
                         <button
                           key={item.id}
@@ -416,8 +417,8 @@ const CrazyMenu: React.FC = () => {
                           onMouseLeave={() => setHoveredItem(null)}
                           className={`relative px-4 py-2 text-sm font-serif transition-all duration-200 flex items-center space-x-2 ${
                             activeItem === item.id
-                              ? "text-black border-b-2 border-black"
-                              : "text-ink-gray hover:text-black"
+                              ? "text-black border-b-2 border-black dark:text-foreground dark:border-foreground"
+                              : "text-ink-gray hover:text-black dark:text-muted-foreground dark:hover:text-foreground"
                           }`}
                           aria-label={`Navigate to ${item.label} section`}
                           aria-current={activeItem === item.id ? 'page' : undefined}
@@ -425,14 +426,18 @@ const CrazyMenu: React.FC = () => {
                           <span className="text-xs">{item.label}</span>
                         </button>
                 ))}
+                <div className="ml-2">
+                  <ThemeToggle />
+                </div>
               </div>
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="flex items-center md:hidden">
+            <div className="flex items-center gap-2 md:hidden">
+              <ThemeToggle />
               <button
                 onClick={toggleMenu}
-                className="relative inline-flex items-center justify-center p-2 text-black hover:text-ink-gray focus:outline-none transition-colors duration-200"
+                className="relative inline-flex items-center justify-center p-2 text-black hover:text-ink-gray focus:outline-none transition-colors duration-200 dark:text-foreground dark:hover:text-muted-foreground"
                 aria-expanded={isOpen}
               >
                 <span className="sr-only">Open main menu</span>
@@ -454,15 +459,15 @@ const CrazyMenu: React.FC = () => {
           className="md:hidden"
           style={{ display: isOpen ? 'block' : 'none' }}
         >
-          <div className="px-4 pt-2 pb-4 space-y-1 bg-paper-cream border-t border-ink-light-gray/30">
+          <div className="px-4 pt-2 pb-4 space-y-1 bg-paper-cream dark:bg-background border-t border-ink-light-gray/30 dark:border-border">
             {menuItems.map((item, index) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
                 className={`w-full flex items-center space-x-3 px-4 py-3 text-base font-serif transition-all duration-200 ${
                   activeItem === item.id
-                    ? "text-black border-l-2 border-black bg-paper-beige"
-                    : "text-ink-gray hover:text-black hover:bg-paper-beige/50"
+                    ? "text-black border-l-2 border-black bg-paper-beige dark:text-foreground dark:border-foreground dark:bg-accent"
+                    : "text-ink-gray hover:text-black hover:bg-paper-beige/50 dark:text-muted-foreground dark:hover:text-foreground dark:hover:bg-accent/50"
                 }`}
               >
                 <span>{item.label}</span>

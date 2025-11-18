@@ -229,7 +229,7 @@ const ProjectsSection: React.FC = React.memo(() => {
               placeholder="Search projects by title, description, or technology..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-10 py-3 border border-ink-light-gray/40 bg-paper-cream text-black font-serif focus:outline-none focus:border-black transition-colors"
+              className="w-full pl-10 pr-10 py-3 border border-ink-light-gray/40 dark:border-border bg-paper-cream dark:bg-card text-black dark:text-foreground font-serif focus:outline-none focus:border-black dark:focus:border-foreground transition-colors"
             />
             {searchQuery && (
               <button
@@ -263,8 +263,8 @@ const ProjectsSection: React.FC = React.memo(() => {
                     onClick={() => toggleTag(tag)}
                     className={`px-3 py-1.5 text-sm font-serif border transition-all ${
                       isSelected
-                        ? 'bg-black text-paper-cream border-black'
-                        : 'bg-paper-cream text-ink-gray border-ink-light-gray/40 hover:border-black hover:text-black'
+                        ? 'bg-black dark:bg-foreground text-paper-cream dark:text-background border-black dark:border-foreground'
+                        : 'bg-paper-cream dark:bg-card text-ink-gray dark:text-muted-foreground border-ink-light-gray/40 dark:border-border hover:border-black dark:hover:border-foreground hover:text-black dark:hover:text-foreground'
                     }`}
                   >
                     {tag}
@@ -284,7 +284,7 @@ const ProjectsSection: React.FC = React.memo(() => {
 
           {/* Results count */}
           {filteredProjects.length !== projects.length && (
-            <p className="text-sm font-serif text-ink-gray">
+            <p className="text-sm font-serif text-ink-gray dark:text-muted-foreground">
               Showing {filteredProjects.length} of {projects.length} projects
             </p>
           )}
@@ -302,7 +302,7 @@ const ProjectsSection: React.FC = React.memo(() => {
               onMouseLeave={() => setHoveredProject(null)}
             >
               {project.image && (
-                <div className="mb-6 overflow-hidden border border-ink-light-gray/30">
+                <div className="mb-6 overflow-hidden border border-ink-light-gray/30 dark:border-border">
                   <img
                     src={project.image}
                     alt={project.title}
@@ -312,9 +312,9 @@ const ProjectsSection: React.FC = React.memo(() => {
                 </div>
               )}
               <div className="mb-6">
-                <h3 className="text-xl sm:text-2xl font-serif font-semibold text-black mb-4">{project.title}</h3>
+                <h3 className="text-xl sm:text-2xl font-serif font-semibold text-black dark:text-foreground mb-4">{project.title}</h3>
                 
-                <p className="text-body mb-6">
+                <p className="text-body mb-6 text-black dark:text-foreground">
                   {project.description}
                 </p>
                 
@@ -322,7 +322,7 @@ const ProjectsSection: React.FC = React.memo(() => {
                   {project.technologies.map((tech, i) => (
                     <span 
                       key={i}
-                      className="inline-block px-3 py-1 border border-ink-light-gray/40 text-ink-gray text-sm font-serif"
+                      className="inline-block px-3 py-1 border border-ink-light-gray/40 dark:border-border text-ink-gray dark:text-muted-foreground text-sm font-serif"
                     >
                       {tech}
                     </span>
@@ -330,13 +330,13 @@ const ProjectsSection: React.FC = React.memo(() => {
                 </div>
               </div>
               
-              <div className="flex flex-wrap gap-4 mt-auto pt-4 border-t border-ink-light-gray/30">
+              <div className="flex flex-wrap gap-4 mt-auto pt-4 border-t border-ink-light-gray/30 dark:border-border">
                 {project.github && (
                   <a 
                     href={project.github} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-black hover:text-ink-gray transition-colors text-sm font-serif"
+                    className="flex items-center gap-2 text-black dark:text-foreground hover:text-ink-gray dark:hover:text-muted-foreground transition-colors text-sm font-serif"
                   >
                     <Github size={16} />
                     <span>View on GitHub</span>
@@ -348,7 +348,7 @@ const ProjectsSection: React.FC = React.memo(() => {
                     href={project.link} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-black hover:text-ink-gray transition-colors text-sm font-serif"
+                    className="flex items-center gap-2 text-black dark:text-foreground hover:text-ink-gray dark:hover:text-muted-foreground transition-colors text-sm font-serif"
                   >
                     <ExternalLink size={16} />
                     <span>Live Demo</span>

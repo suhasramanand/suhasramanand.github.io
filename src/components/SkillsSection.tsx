@@ -129,27 +129,30 @@ const SkillsSection: React.FC = React.memo(() => {
               <div 
                 key={catIndex}
                 ref={el => categoryRefs.current[catIndex] = el}
-                className="paper-card"
+                className="paper-card min-h-[300px]"
               >
-                <div className="mb-6 pb-4 border-b border-ink-light-gray/30">
-                  <h3 className="text-xl sm:text-2xl font-serif font-semibold text-black">{category.title}</h3>
+                <div className="mb-8 pb-5 border-b border-ink-light-gray/30 dark:border-border">
+                  <div className="flex items-center gap-3 mb-2">
+                    {category.icon}
+                    <h3 className="text-xl sm:text-2xl font-serif font-semibold text-black dark:text-foreground">{category.title}</h3>
+                  </div>
                 </div>
                 
-                <div className="space-y-5">
+                <div className="space-y-6">
                   {category.skills.map((skill, skillIndex) => {
                     const globalIndex = startIndex + skillIndex;
                     
                     return (
                       <div key={skillIndex}>
-                        <div className="flex justify-between items-center mb-2">
-                          <span className="text-body font-medium font-serif">{skill.name}</span>
-                          <span className="text-ink-gray font-serif">{skill.level}%</span>
+                        <div className="flex justify-between items-center mb-3 gap-4">
+                          <span className="text-base sm:text-lg font-medium font-serif text-black dark:text-foreground flex-1">{skill.name}</span>
+                          <span className="text-sm sm:text-base text-ink-gray dark:text-muted-foreground font-serif whitespace-nowrap">{skill.level}%</span>
                         </div>
                         
-                        <div className="h-1 bg-ink-light-gray/20 overflow-hidden">
+                        <div className="h-1.5 bg-ink-light-gray/20 dark:bg-muted/30 overflow-hidden rounded-full">
                           <div 
                             ref={el => progressRefs.current[globalIndex] = el}
-                            className="h-full bg-black transition-all duration-1000"
+                            className="h-full bg-black dark:bg-foreground transition-all duration-1000 rounded-full"
                             style={{ 
                               width: visibleSkills[globalIndex] ? `${skill.level}%` : '0%'
                             }}

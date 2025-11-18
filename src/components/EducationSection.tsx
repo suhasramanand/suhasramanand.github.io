@@ -78,30 +78,30 @@ const EducationSection: React.FC = React.memo(() => {
               ref={el => cardRefs.current[index] = el}
               className="paper-card"
             >
-              <div className="mb-6 pb-6 border-b border-ink-light-gray/30">
-                <h3 className="text-2xl sm:text-3xl font-serif font-semibold text-black mb-2">{edu.institution}</h3>
-                <h4 className="text-lg sm:text-xl font-serif font-medium text-ink-gray italic mb-4">{edu.degree}</h4>
+              <div className="mb-6 pb-6 border-b border-ink-light-gray/30 dark:border-border">
+                <h3 className="text-2xl sm:text-3xl font-serif font-semibold text-black dark:text-foreground mb-2">{edu.institution}</h3>
+                <h4 className="text-lg sm:text-xl font-serif font-medium text-ink-gray dark:text-muted-foreground italic mb-4">{edu.degree}</h4>
                 
-                <div className="flex flex-wrap gap-4 text-ink-gray">
+                <div className="flex flex-wrap gap-4 text-ink-gray dark:text-muted-foreground">
                   <div className="flex items-center gap-2">
-                    <Calendar size={16} className="text-ink-light-gray" />
-                    <span className="font-serif text-ink-gray">{edu.period}</span>
+                    <Calendar size={16} className="text-ink-light-gray dark:text-muted-foreground" />
+                    <span className="font-serif text-ink-gray dark:text-muted-foreground">{edu.period}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <MapPin size={16} className="text-ink-light-gray" />
-                    <span className="font-serif text-ink-gray">{edu.location}</span>
+                    <MapPin size={16} className="text-ink-light-gray dark:text-muted-foreground" />
+                    <span className="font-serif text-ink-gray dark:text-muted-foreground">{edu.location}</span>
                   </div>
-                  <div className="font-serif text-ink-gray">GPA: {edu.gpa}</div>
+                  <div className="font-serif text-ink-gray dark:text-muted-foreground">GPA: {edu.gpa}</div>
                 </div>
               </div>
               
               <div>
-                <div className="text-body font-medium mb-3">Coursework:</div>
+                <div className="text-body font-medium mb-3 text-black dark:text-foreground">Coursework:</div>
                 <div className="flex flex-wrap gap-2">
                   {edu.courses.map((course, i) => (
                     <span 
                       key={i}
-                      className="inline-block px-3 py-1 border border-ink-light-gray/40 text-ink-gray text-sm font-serif"
+                      className="inline-block px-3 py-1 border border-ink-light-gray/40 dark:border-border text-ink-gray dark:text-muted-foreground text-sm font-serif"
                     >
                       {course}
                     </span>

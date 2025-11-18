@@ -13,35 +13,22 @@ const ActivitiesSection: React.FC = React.memo(() => {
     const mouseMoveHandlers: ((e: MouseEvent) => void)[] = [];
     const mouseLeaveHandlers: (() => void)[] = [];
 
-    const ctx = gsap.context(() => {
-      // Animate heading
-      gsap.from(headingRef.current, {
-        y: 30,
-        opacity: 0,
-        duration: 0.3,
-        scrollTrigger: {
-          trigger: headingRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none"
-        }
-      });
+    // Set all elements to be visible immediately - let AnimatedSection handle entrance animation
+    if (headingRef.current) {
+      gsap.set(headingRef.current, { opacity: 1, y: 0 });
+    }
+    
+    // Set badges to be visible
+    badgeRefs.current.forEach((badge) => {
+      if (badge) {
+        gsap.set(badge, { opacity: 1, y: 0, rotationY: 0 });
+      }
+    });
 
-      // Animate badges with 3D effect
+    const ctx = gsap.context(() => {
+      // Set up 3D hover effects for badges
       badgeRefs.current.forEach((badge, index) => {
         if (badge) {
-          gsap.from(badge, {
-            y: 50,
-            opacity: 0,
-            rotationY: -15,
-            duration: 0.6,
-            delay: 0.2 * index,
-            scrollTrigger: {
-              trigger: badge,
-              start: "top 85%",
-              toggleActions: "play none none none"
-            }
-          });
-
           // 3D hover effect
           const handleMouseMove = (e: MouseEvent) => {
             const rect = badge.getBoundingClientRect();
@@ -124,7 +111,7 @@ const ActivitiesSection: React.FC = React.memo(() => {
               ref={el => badgeRefs.current[index] = el}
               className="paper-card w-full md:w-[500px] flex flex-row items-center gap-6"
             >
-              <div className="w-32 h-32 flex-shrink-0 flex items-center justify-center p-2 overflow-hidden border-2 border-black/30 bg-paper-beige">
+              <div className="w-32 h-32 flex-shrink-0 flex items-center justify-center p-2 overflow-hidden border-2 border-black/30 dark:border-border bg-paper-beige dark:bg-muted">
                     <img
                       src={activity.logo}
                       alt={`${activity.name} Logo`}
@@ -136,16 +123,16 @@ const ActivitiesSection: React.FC = React.memo(() => {
                     const parent = target.parentElement;
                     if (parent) {
                       const initials = activity.name.split(' ').map(n => n[0]).join('').substring(0, 2);
-                      parent.className = "w-32 h-32 flex-shrink-0 bg-black text-paper-cream flex items-center justify-center border-2 border-black";
+                      parent.className = "w-32 h-32 flex-shrink-0 bg-black dark:bg-foreground text-paper-cream dark:text-background flex items-center justify-center border-2 border-black dark:border-foreground";
                       parent.innerHTML = `<span class="font-serif font-bold text-2xl">${initials}</span>`;
                     }
                   }}
                 />
               </div>
               <div className="flex flex-col justify-center flex-1">
-                <span className="text-xl font-serif font-semibold text-black mb-1">{activity.name}</span>
-                <span className="text-ink-gray font-serif mb-2">{activity.year}</span>
-                <span className="text-sm text-black border border-black/40 px-3 py-1 w-fit font-serif bg-paper-beige">{activity.text}</span>
+                <span className="text-xl font-serif font-semibold text-black dark:text-foreground mb-1">{activity.name}</span>
+                <span className="text-ink-gray dark:text-muted-foreground font-serif mb-2">{activity.year}</span>
+                <span className="text-sm text-black dark:text-foreground border border-black/40 dark:border-border px-3 py-1 w-fit font-serif bg-paper-beige dark:bg-muted">{activity.text}</span>
               </div>
             </div>
           ))}
