@@ -15,14 +15,17 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      react: path.resolve(__dirname, "./node_modules/react"),
-      "react-dom": path.resolve(__dirname, "./node_modules/react-dom"),
     },
     dedupe: ["react", "react-dom"],
   },
   optimizeDeps: {
     include: ["react", "react-dom", "@react-three/fiber", "@react-three/drei"],
     exclude: [],
+    esbuildOptions: {
+      define: {
+        global: 'globalThis',
+      },
+    },
   },
   build: {
     rollupOptions: {
@@ -32,11 +35,24 @@ export default defineConfig(({ mode }) => ({
         assetFileNames: 'assets/[name]-[hash].[ext]',
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // Put React Three Fiber with React to ensure React is available
-            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router') || id.includes('@react-three')) {
-              return 'vendor-react';
+            // Don't manually chunk React - let Vite handle it automatically
+            // This ensures React is always available when needed
+            if (
+              id.includes('/react/') || 
+              id.includes('\\react\\') ||
+              id.includes('/react-dom/') ||
+              id.includes('\\react-dom\\') ||
+              id.includes('/scheduler/') ||
+              id.includes('\\scheduler\\') ||
+              (id.includes('react') && !id.includes('/') && !id.includes('\\'))
+            ) {
+              return undefined; // Let Vite handle React bundling
             }
-            // Put three.js core in its own chunk (but @react-three is with React)
+            
+            // Chunk large dependencies separately
+            if (id.includes('@react-three')) {
+              return 'vendor-r3f';
+            }
             if (id.includes('three') && !id.includes('@react-three')) {
               return 'vendor-three';
             }
@@ -44,8 +60,10 @@ export default defineConfig(({ mode }) => ({
               return 'vendor-gsap';
             }
             if (id.includes('@radix-ui')) {
-              return 'vendor-ui';
+              return 'vendor-radix';
             }
+            
+            // Everything else in vendor chunk
             return 'vendor';
           }
         }
@@ -59,5 +77,9 @@ export default defineConfig(({ mode }) => ({
       },
     },
     chunkSizeWarningLimit: 1000,
+    commonjsOptions: {
+      include: [/node_modules/],
+      transformMixedEsModules: true
+    },
   }
 }));
