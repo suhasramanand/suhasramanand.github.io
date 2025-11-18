@@ -15,7 +15,14 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      react: path.resolve(__dirname, "./node_modules/react"),
+      "react-dom": path.resolve(__dirname, "./node_modules/react-dom"),
     },
+    dedupe: ["react", "react-dom"],
+  },
+  optimizeDeps: {
+    include: ["react", "react-dom", "@react-three/fiber", "@react-three/drei"],
+    exclude: [],
   },
   build: {
     rollupOptions: {
@@ -23,10 +30,24 @@ export default defineConfig(({ mode }) => ({
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]',
-        manualChunks: {
-          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-          'vendor-gsap': ['gsap'],
-          'vendor-ui': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-popover'],
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            // Put React Three Fiber with React to ensure React is available
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router') || id.includes('@react-three')) {
+              return 'vendor-react';
+            }
+            // Put three.js core in its own chunk (but @react-three is with React)
+            if (id.includes('three') && !id.includes('@react-three')) {
+              return 'vendor-three';
+            }
+            if (id.includes('gsap')) {
+              return 'vendor-gsap';
+            }
+            if (id.includes('@radix-ui')) {
+              return 'vendor-ui';
+            }
+            return 'vendor';
+          }
         }
       }
     },

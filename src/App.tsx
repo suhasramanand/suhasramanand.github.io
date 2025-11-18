@@ -3,6 +3,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import React from "react";
 import { ThemeProvider } from "next-themes";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Analytics from "./components/Analytics";
@@ -10,7 +12,34 @@ import Index from "./pages/Index";
 import Resume from "./pages/Resume";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import Test from "./pages/Test";
 import NotFound from "./pages/NotFound";
+
+// Import React Three Fiber with React explicitly available
+const ThreeDSkills = lazy(async () => {
+  // Ensure React is available before importing React Three Fiber
+  // React Three Fiber needs React to be fully initialized
+  await Promise.resolve(); // Ensure we're in async context
+  if (typeof window !== 'undefined') {
+    // Ensure React is on window if needed
+    if (!(window as any).React && React) {
+      (window as any).React = React;
+    }
+  }
+  return import("./pages/test/ThreeDSkills");
+});
+
+const FaceModel3D = lazy(async () => {
+  await Promise.resolve();
+  if (typeof window !== 'undefined') {
+    if (!(window as any).React && React) {
+      (window as any).React = React;
+    }
+  }
+  return import("./pages/test/FaceModel3D");
+});
+
+const GitHubHeatmap = lazy(() => import("./pages/test/GitHubHeatmap"));
 
 const queryClient = new QueryClient();
 
@@ -28,6 +57,52 @@ const App = () => (
               <Route path="/resume" element={<Resume />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:id" element={<BlogPost />} />
+              <Route path="/test" element={<Test />} />
+              <Route 
+                path="/test/3d-skills" 
+                element={
+                  <Suspense fallback={
+                    <div className="min-h-screen flex items-center justify-center bg-paper-cream dark:bg-background">
+                      <div className="text-center">
+                        <div className="inline-block w-8 h-8 border-2 border-black dark:border-foreground border-t-transparent rounded-full animate-spin mb-4"></div>
+                        <p className="text-black dark:text-foreground font-serif">Loading 3D visualization...</p>
+                      </div>
+                    </div>
+                  }>
+                    <ThreeDSkills />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="/test/face-model" 
+                element={
+                  <Suspense fallback={
+                    <div className="min-h-screen flex items-center justify-center bg-paper-cream dark:bg-background">
+                      <div className="text-center">
+                        <div className="inline-block w-8 h-8 border-2 border-black dark:border-foreground border-t-transparent rounded-full animate-spin mb-4"></div>
+                        <p className="text-black dark:text-foreground font-serif">Loading 3D face model...</p>
+                      </div>
+                    </div>
+                  }>
+                    <FaceModel3D />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="/test/github-heatmap" 
+                element={
+                  <Suspense fallback={
+                    <div className="min-h-screen flex items-center justify-center bg-paper-cream dark:bg-background">
+                      <div className="text-center">
+                        <div className="inline-block w-8 h-8 border-2 border-black dark:border-foreground border-t-transparent rounded-full animate-spin mb-4"></div>
+                        <p className="text-black dark:text-foreground font-serif">Loading GitHub heatmap...</p>
+                      </div>
+                    </div>
+                  }>
+                    <GitHubHeatmap />
+                  </Suspense>
+                } 
+              />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

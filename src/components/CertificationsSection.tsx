@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Award } from 'lucide-react';
+import { Award, ExternalLink } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,6 +10,7 @@ interface Certification {
   issuer: string;
   badgeUrl: string;
   color: string;
+  credlyUrl?: string;
 }
 
 const certifications: Certification[] = [
@@ -17,7 +18,8 @@ const certifications: Certification[] = [
     name: "AWS Certified DevOps Engineer - Professional",
     issuer: "Amazon Web Services",
     badgeUrl: "/images/certifications/AWSDevops.png",
-    color: "from-orange-500 to-yellow-500"
+    color: "from-orange-500 to-yellow-500",
+    credlyUrl: "https://www.credly.com/badges/02644054-6fc0-4863-aed1-779c957d7f3f/public_url"
   },
   {
     name: "AZ-900: Microsoft Azure Fundamentals",
@@ -73,12 +75,8 @@ const CertificationsSection: React.FC = React.memo(() => {
         <h2 ref={headingRef} className="section-title">Certifications</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-4xl mx-auto mt-12">
-          {certifications.map((cert, index) => (
-            <div
-              key={index}
-              ref={el => certRefs.current[index] = el}
-              className="paper-card"
-            >
+          {certifications.map((cert, index) => {
+            const CardContent = (
               <div className="flex items-start gap-4">
                 <div className="w-20 h-20 flex items-center justify-center flex-shrink-0 overflow-hidden border-2 border-black/30 dark:border-border bg-paper-beige dark:bg-muted">
                   <img 
@@ -98,12 +96,45 @@ const CertificationsSection: React.FC = React.memo(() => {
                   />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-xl font-serif font-semibold text-black dark:text-foreground mb-2">{cert.name}</h3>
-                  <p className="text-ink-gray dark:text-muted-foreground font-serif">{cert.issuer}</p>
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1">
+                      <h3 className="text-xl font-serif font-semibold text-black dark:text-foreground mb-2">{cert.name}</h3>
+                      <p className="text-ink-gray dark:text-muted-foreground font-serif">{cert.issuer}</p>
+                    </div>
+                    {cert.credlyUrl && (
+                      <ExternalLink className="w-4 h-4 text-ink-gray dark:text-muted-foreground flex-shrink-0 mt-1" />
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+
+            if (cert.credlyUrl) {
+              return (
+                <a
+                  key={index}
+                  href={cert.credlyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  ref={el => certRefs.current[index] = el}
+                  className="paper-card hover:scale-105 transition-transform duration-200 cursor-pointer group"
+                  aria-label={`View ${cert.name} on Credly`}
+                >
+                  {CardContent}
+                </a>
+              );
+            }
+
+            return (
+              <div
+                key={index}
+                ref={el => certRefs.current[index] = el}
+                className="paper-card"
+              >
+                {CardContent}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
