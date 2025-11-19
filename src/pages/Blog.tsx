@@ -22,6 +22,16 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    id: '7',
+    title: 'Prompt Engineering Cheatsheet: A Comprehensive Guide',
+    excerpt: 'Master the art of prompt engineering with essential patterns, advanced techniques, and best practices for getting the most out of AI models.',
+    content: 'Full blog post content goes here...',
+    date: '2025-11-19',
+    readTime: '18 min read',
+    category: 'AI',
+    author: 'Suhas Reddy'
+  },
+  {
     id: '1',
     title: 'Building Scalable Cloud Infrastructure with Terraform and Kubernetes',
     excerpt: 'A comprehensive guide to designing and deploying production-ready cloud infrastructure using Infrastructure as Code principles and container orchestration.',
@@ -79,16 +89,6 @@ const blogPosts: BlogPost[] = [
     date: '2025-11-13',
     readTime: '13 min read',
     category: 'DevOps',
-    author: 'Suhas Reddy'
-  },
-  {
-    id: '7',
-    title: 'Prompt Engineering Cheatsheet: A Comprehensive Guide',
-    excerpt: 'Master the art of prompt engineering with essential patterns, advanced techniques, and best practices for getting the most out of AI models.',
-    content: 'Full blog post content goes here...',
-    date: '2025-11-19',
-    readTime: '18 min read',
-    category: 'AI',
     author: 'Suhas Reddy'
   }
 ];
