@@ -1059,7 +1059,7 @@ module "compute" {
         <li><strong>Markdown:</strong> "Format as markdown with headers, lists, code blocks"</li>
         <li><strong>Structured Lists:</strong> "Provide numbered list" or "Use bullet points with sub-items"</li>
         <li><strong>Tables:</strong> "Format as table with columns: {cols}" or "Create comparison table"</li>
-        <li><strong>Code Blocks:</strong> "Wrap code in ```language``` blocks" or "Use syntax highlighting"</li>
+        <li><strong>Code Blocks:</strong> "Wrap code in triple backticks with language specification" or "Use syntax highlighting"</li>
       </ul>
       
       <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">System vs User Prompts</h2>
