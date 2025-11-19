@@ -26,7 +26,7 @@ const blogPosts: BlogPost[] = [
     title: 'Building Scalable Cloud Infrastructure with Terraform and Kubernetes',
     excerpt: 'A comprehensive guide to designing and deploying production-ready cloud infrastructure using Infrastructure as Code principles and container orchestration.',
     content: 'Full blog post content goes here...',
-    date: '2025-01-20',
+    date: '2025-11-18',
     readTime: '12 min read',
     category: 'Cloud',
     author: 'Suhas Reddy'
@@ -36,7 +36,7 @@ const blogPosts: BlogPost[] = [
     title: 'Site Reliability Engineering: From Theory to Practice',
     excerpt: 'Understanding SRE principles, error budgets, and how to implement reliability practices that balance innovation with operational stability.',
     content: 'Full blog post content goes here...',
-    date: '2025-01-15',
+    date: '2025-11-17',
     readTime: '15 min read',
     category: 'SRE',
     author: 'Suhas Reddy'
@@ -46,7 +46,7 @@ const blogPosts: BlogPost[] = [
     title: 'Optimizing CI/CD Pipelines: Reducing Build Times by 70%',
     excerpt: 'Practical strategies for accelerating your CI/CD pipelines through parallelization, caching, and intelligent dependency management.',
     content: 'Full blog post content goes here...',
-    date: '2025-01-10',
+    date: '2025-11-16',
     readTime: '10 min read',
     category: 'DevOps',
     author: 'Suhas Reddy'
@@ -56,7 +56,7 @@ const blogPosts: BlogPost[] = [
     title: 'Kubernetes Monitoring and Observability: A Complete Guide',
     excerpt: 'Implementing comprehensive monitoring, logging, and tracing for Kubernetes clusters to ensure visibility and quick incident response.',
     content: 'Full blog post content goes here...',
-    date: '2025-01-05',
+    date: '2025-11-15',
     readTime: '14 min read',
     category: 'Kubernetes',
     author: 'Suhas Reddy'
@@ -66,7 +66,7 @@ const blogPosts: BlogPost[] = [
     title: 'AWS EKS vs GKE vs AKS: Choosing the Right Managed Kubernetes Service',
     excerpt: 'A detailed comparison of managed Kubernetes offerings from major cloud providers, including cost, features, and use case recommendations.',
     content: 'Full blog post content goes here...',
-    date: '2024-12-28',
+    date: '2025-11-14',
     readTime: '11 min read',
     category: 'Cloud',
     author: 'Suhas Reddy'
@@ -76,7 +76,7 @@ const blogPosts: BlogPost[] = [
     title: 'Infrastructure as Code: Terraform Modules and Best Practices',
     excerpt: 'Building reusable, maintainable Terraform modules and establishing patterns for managing complex infrastructure across multiple environments.',
     content: 'Full blog post content goes here...',
-    date: '2024-12-20',
+    date: '2025-11-13',
     readTime: '13 min read',
     category: 'DevOps',
     author: 'Suhas Reddy'
@@ -86,7 +86,7 @@ const blogPosts: BlogPost[] = [
     title: 'Prompt Engineering Cheatsheet: A Comprehensive Guide',
     excerpt: 'Master the art of prompt engineering with essential patterns, advanced techniques, and best practices for getting the most out of AI models.',
     content: 'Full blog post content goes here...',
-    date: '2025-01-22',
+    date: '2025-11-19',
     readTime: '18 min read',
     category: 'AI',
     author: 'Suhas Reddy'

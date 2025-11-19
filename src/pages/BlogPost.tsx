@@ -124,7 +124,7 @@ const blogPosts: BlogPost[] = [
       <p class="text-body mb-4">Building scalable cloud infrastructure requires careful planning, the right tools, and adherence to best practices. Terraform provides the foundation for managing infrastructure as code, while Kubernetes enables efficient container orchestration. By combining these technologies and following the practices outlined above, you can build resilient, scalable, and cost-effective cloud infrastructure that supports your application's growth.</p>
       <p class="text-body mb-4">Remember: infrastructure is not a one-time setup but an evolving system. Continuously monitor, optimize, and iterate based on your application's needs and performance metrics.</p>
     `,
-    date: '2025-01-20',
+    date: '2025-11-18',
     readTime: '12 min read',
     category: 'Cloud',
     author: 'Suhas Reddy'
@@ -219,7 +219,7 @@ const blogPosts: BlogPost[] = [
       <p class="text-body mb-4">SRE is not just a job title—it's a mindset and a set of practices that balance reliability with innovation. By implementing error budgets, focusing on automation, and maintaining a culture of continuous improvement, organizations can build systems that are both reliable and capable of rapid iteration.</p>
       <p class="text-body mb-4">Remember: perfect reliability is not the goal. The goal is to make informed trade-offs between reliability and feature velocity, using data and engineering practices to optimize both.</p>
     `,
-    date: '2025-01-15',
+    date: '2025-11-17',
     readTime: '15 min read',
     category: 'SRE',
     author: 'Suhas Reddy'
@@ -386,7 +386,7 @@ jobs:
       <p class="text-body mb-4">CI/CD optimization is an ongoing process. Start by measuring current performance, identify bottlenecks, and implement optimizations incrementally. The strategies outlined here—caching, parallelization, and intelligent execution—can dramatically improve pipeline performance.</p>
       <p class="text-body mb-4">Remember: fast feedback loops are essential for developer productivity. Every minute saved in CI/CD translates to faster feature delivery and happier developers.</p>
     `,
-    date: '2025-01-10',
+    date: '2025-11-16',
     readTime: '10 min read',
     category: 'DevOps',
     author: 'Suhas Reddy'
@@ -530,7 +530,7 @@ with tracer.start_as_current_span("process_request"):
       <p class="text-body mb-4">Comprehensive observability is essential for running Kubernetes in production. By implementing metrics collection with Prometheus, centralized logging, and distributed tracing, you gain the visibility needed to maintain reliable systems.</p>
       <p class="text-body mb-4">Remember: observability is not a one-time setup. Continuously refine your dashboards, alerts, and instrumentation based on real incidents and evolving requirements.</p>
     `,
-    date: '2025-01-05',
+    date: '2025-11-15',
     readTime: '14 min read',
     category: 'Kubernetes',
     author: 'Suhas Reddy'
@@ -705,7 +705,7 @@ with tracer.start_as_current_span("process_request"):
       <p class="text-body mb-4">There's no one-size-fits-all answer. The best choice depends on your existing infrastructure, team expertise, compliance requirements, and budget. AWS EKS offers the most comprehensive enterprise features, GKE provides the best Kubernetes experience, and AKS is the most cost-effective for Microsoft-centric organizations.</p>
       <p class="text-body mb-4">Evaluate your specific needs, run proof-of-concepts, and consider long-term strategic alignment with your cloud provider. Remember: the managed Kubernetes service is just one piece of your infrastructure puzzle—consider the entire ecosystem when making your decision.</p>
     `,
-    date: '2024-12-28',
+    date: '2025-11-14',
     readTime: '11 min read',
     category: 'Cloud',
     author: 'Suhas Reddy'
@@ -926,7 +926,7 @@ module "compute" {
       <p class="text-body mb-4">Terraform modules are essential for managing infrastructure at scale. By following these best practices—versioning, validation, documentation, and testing—you can build a library of reusable, reliable infrastructure components.</p>
       <p class="text-body mb-4">Start small with simple modules, iterate based on real usage, and gradually build a comprehensive module library. Well-designed modules are investments that pay dividends in reduced maintenance overhead and faster infrastructure delivery.</p>
     `,
-    date: '2024-12-20',
+    date: '2025-11-13',
     readTime: '13 min read',
     category: 'DevOps',
     author: 'Suhas Reddy'
@@ -1240,7 +1240,7 @@ module "compute" {
         </div>
       </div>
     `,
-    date: '2025-01-22',
+    date: '2025-11-19',
     readTime: '18 min read',
     category: 'AI',
     author: 'Suhas Reddy'
