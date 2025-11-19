@@ -961,49 +961,77 @@ module "compute" {
         <h3 class="text-lg font-serif font-semibold text-black dark:text-foreground mb-2">1. Persona Pattern</h3>
         <p class="text-body mb-2"><strong>Purpose:</strong> Assume a role to shape tone & knowledge</p>
         <p class="text-body mb-2"><strong>Template:</strong> "Act as a {role}. {task}. Consider {constraints}."</p>
-        <p class="text-body italic">Example: "Act as a physics teacher. Explain terminal velocity with an analogy."</p>
+        <div class="mt-3 p-3 bg-white dark:bg-card rounded border border-ink-light-gray dark:border-border">
+          <p class="text-sm font-semibold text-black dark:text-foreground mb-1">Tested Example:</p>
+          <p class="text-sm text-body italic mb-2">"Act as a senior software architect with 15 years of experience. Explain microservices architecture to a junior developer. Use analogies from everyday life and include potential pitfalls."</p>
+          <p class="text-xs text-ink-gray dark:text-muted-foreground"><strong>Why it works:</strong> The persona (senior architect) shapes the expertise level, while the audience (junior dev) and constraints (analogies, pitfalls) ensure appropriate output.</p>
+        </div>
       </div>
       
       <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4">
         <h3 class="text-lg font-serif font-semibold text-black dark:text-foreground mb-2">2. Audience Persona Pattern</h3>
         <p class="text-body mb-2"><strong>Purpose:</strong> Specify target audience for complexity tuning</p>
         <p class="text-body mb-2"><strong>Template:</strong> "Write for {audience}. {task}. Keep reading level around {grade} and include {style cues}."</p>
-        <p class="text-body italic">Example: "Write for MBA students: compare A/B testing vs. causal inference, 8th-grade reading level."</p>
+        <div class="mt-3 p-3 bg-white dark:bg-card rounded border border-ink-light-gray dark:border-border">
+          <p class="text-sm font-semibold text-black dark:text-foreground mb-1">Tested Example:</p>
+          <p class="text-sm text-body italic mb-2">"Write for business executives with limited technical background. Explain what Kubernetes is and why it matters for their company. Use business analogies, keep it to 300 words, and focus on ROI and competitive advantages."</p>
+          <p class="text-xs text-ink-gray dark:text-muted-foreground"><strong>Why it works:</strong> Explicitly defining audience (executives), reading level (non-technical), and style (business-focused) ensures output matches their knowledge and interests.</p>
+        </div>
       </div>
       
       <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4">
         <h3 class="text-lg font-serif font-semibold text-black dark:text-foreground mb-2">3. Flipped Interaction Pattern</h3>
         <p class="text-body mb-2"><strong>Purpose:</strong> Model interviews you before answering</p>
         <p class="text-body mb-2"><strong>Template:</strong> "You are a consultant. Ask up to 5 clarifying questions. After I answer, propose a solution."</p>
-        <p class="text-body italic">Example: "You're a product strategist. Ask 4 questions about our app. Then recommend a launch plan."</p>
+        <div class="mt-3 p-3 bg-white dark:bg-card rounded border border-ink-light-gray dark:border-border">
+          <p class="text-sm font-semibold text-black dark:text-foreground mb-1">Tested Example:</p>
+          <p class="text-sm text-body italic mb-2">"You are a DevOps consultant. I need help optimizing our CI/CD pipeline. Before proposing solutions, ask me 4 targeted questions to understand our current setup, pain points, team size, and budget constraints. Wait for my responses, then provide recommendations."</p>
+          <p class="text-xs text-ink-gray dark:text-muted-foreground"><strong>Why it works:</strong> Forces the AI to gather necessary context first, leading to more accurate and tailored solutions rather than generic advice.</p>
+        </div>
       </div>
       
       <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4">
         <h3 class="text-lg font-serif font-semibold text-black dark:text-foreground mb-2">4. Template Pattern</h3>
         <p class="text-body mb-2"><strong>Purpose:</strong> Provide structured form to fill</p>
         <p class="text-body mb-2"><strong>Template:</strong> "Use this template: {fields}. Populate it for {task}."</p>
-        <p class="text-body italic">Example: "Use template—Problem, Evidence, Options, Recommendation—for a memo on cart abandonment."</p>
+        <div class="mt-3 p-3 bg-white dark:bg-card rounded border border-ink-light-gray dark:border-border">
+          <p class="text-sm font-semibold text-black dark:text-foreground mb-1">Tested Example:</p>
+          <p class="text-sm text-body italic mb-2">"Use this template for a project proposal: [Problem Statement], [Proposed Solution], [Technical Approach], [Timeline], [Resources Needed], [Success Metrics], [Risks & Mitigation]. Populate it for migrating our monolithic application to microservices architecture."</p>
+          <p class="text-xs text-ink-gray dark:text-muted-foreground"><strong>Why it works:</strong> The structured template ensures all critical information is included and formatted consistently, making outputs easier to review and use.</p>
+        </div>
       </div>
       
       <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4">
         <h3 class="text-lg font-serif font-semibold text-black dark:text-foreground mb-2">5. Recipe Pattern</h3>
         <p class="text-body mb-2"><strong>Purpose:</strong> Stepwise procedure with ingredients & tools</p>
         <p class="text-body mb-2"><strong>Template:</strong> "Create a recipe for {goal} including: Inputs, Tools, Steps (numbered), Quality checks, Variations."</p>
-        <p class="text-body italic">Example: "Recipe for blog post: inputs (audience, thesis), steps (outline→draft→revise), QC checklist."</p>
+        <div class="mt-3 p-3 bg-white dark:bg-card rounded border border-ink-light-gray dark:border-border">
+          <p class="text-sm font-semibold text-black dark:text-foreground mb-1">Tested Example:</p>
+          <p class="text-sm text-body italic mb-2">"Create a recipe for setting up a production-ready Kubernetes cluster. Include: Inputs (requirements, node count, region), Tools (Terraform, kubectl, Helm), Steps (numbered 1-10), Quality checks (security scan, load test, monitoring), Variations (cloud provider options)."</p>
+          <p class="text-xs text-ink-gray dark:text-muted-foreground"><strong>Why it works:</strong> Breaks complex tasks into actionable, repeatable steps with clear prerequisites and validation criteria, making it easy to follow and verify success.</p>
+        </div>
       </div>
       
       <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4">
         <h3 class="text-lg font-serif font-semibold text-black dark:text-foreground mb-2">6. Alternative Approaches Pattern</h3>
         <p class="text-body mb-2"><strong>Purpose:</strong> Generate multiple methods with trade-offs</p>
         <p class="text-body mb-2"><strong>Template:</strong> "Provide 3 approaches to {problem}. For each: steps, pros, cons, effort, risk. End with a comparison table."</p>
-        <p class="text-body italic">Example: "Three ways to implement search (keyword, semantic, hybrid) with pros/cons."</p>
+        <div class="mt-3 p-3 bg-white dark:bg-card rounded border border-ink-light-gray dark:border-border">
+          <p class="text-sm font-semibold text-black dark:text-foreground mb-1">Tested Example:</p>
+          <p class="text-sm text-body italic mb-2">"Provide 3 approaches to implementing user authentication: API keys, OAuth 2.0, and JWT tokens. For each approach, detail: implementation steps, pros, cons, development effort (hours), security risk level (1-10), and maintenance complexity. End with a comparison table summarizing all factors."</p>
+          <p class="text-xs text-ink-gray dark:text-muted-foreground"><strong>Why it works:</strong> Helps decision-making by presenting multiple options with comparable metrics, making trade-offs explicit and easier to evaluate.</p>
+        </div>
       </div>
       
       <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4">
         <h3 class="text-lg font-serif font-semibold text-black dark:text-foreground mb-2">7. Bridge Pattern</h3>
         <p class="text-body mb-2"><strong>Purpose:</strong> Combine goal → constraints → examples → evaluation</p>
         <p class="text-body mb-2"><strong>Template:</strong> "Goal: {goal}. Constraints: {list}. Examples: {few-shot}. Evaluation: {rubric}. Task: {do X}. Output format: {schema}."</p>
-        <p class="text-body italic">Example: "Goal: draft policy brief. Constraints: ≤400 words, neutral tone, cite 2 sources. Evaluation: clarity, evidence."</p>
+        <div class="mt-3 p-3 bg-white dark:bg-card rounded border border-ink-light-gray dark:border-border">
+          <p class="text-sm font-semibold text-black dark:text-foreground mb-1">Tested Example:</p>
+          <p class="text-sm text-body italic mb-2">"Goal: Create a user story for a feature. Constraints: Follow INVEST principles, include acceptance criteria, write in user perspective. Example: 'As a customer, I want to save items to a wishlist so that I can purchase them later. Acceptance: User can add items, view wishlist, remove items.' Evaluation: Check for user value, testability, clarity. Task: Write user story for 'export data as CSV' feature. Output format: As a [role], I want [action] so that [benefit]."</p>
+          <p class="text-xs text-ink-gray dark:text-muted-foreground"><strong>Why it works:</strong> Combines all elements (goal, constraints, examples, evaluation criteria) to ensure output meets specific quality standards while providing a clear template to follow.</p>
+        </div>
       </div>
       
       <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Advanced Techniques</h2>
@@ -1048,6 +1076,30 @@ module "compute" {
             <td class="border border-ink-light-gray dark:border-border p-3 text-body">Use output of one prompt as input to next</td>
             <td class="border border-ink-light-gray dark:border-border p-3 text-body">Multi-stage tasks, complex workflows</td>
           </tr>
+        </tbody>
+      </table>
+      
+      <div class="mt-6 space-y-4">
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded border border-blue-200 dark:border-blue-800">
+          <h4 class="font-serif font-semibold text-black dark:text-foreground mb-2">Tested Example: Chain of Thought</h4>
+          <p class="text-sm text-body italic mb-2">"Calculate the optimal number of replicas for a Kubernetes deployment. Show your step-by-step reasoning: 1) Identify key metrics, 2) Calculate current utilization, 3) Determine target utilization, 4) Apply scaling formula, 5) Consider constraints, 6) Provide final recommendation with rationale."</p>
+        </div>
+        
+        <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded border border-green-200 dark:border-green-800">
+          <h4 class="font-serif font-semibold text-black dark:text-foreground mb-2">Tested Example: Few-Shot Learning</h4>
+          <p class="text-sm text-body italic mb-2">"Example 1: Input: 'Fix database connection timeout' → Output: 'Investigate network latency, increase connection pool size, implement retry logic with exponential backoff, add connection health checks.' Example 2: Input: 'Reduce API response time' → Output: 'Add caching layer, optimize database queries, implement response compression, use CDN for static assets.' Now analyze this problem: 'Improve CI/CD pipeline speed' (follow the same format)."</p>
+        </div>
+        
+        <div class="bg-purple-50 dark:bg-purple-900/20 p-4 rounded border border-purple-200 dark:border-purple-800">
+          <h4 class="font-serif font-semibold text-black dark:text-foreground mb-2">Tested Example: ReAct Prompting</h4>
+          <p class="text-sm text-body italic mb-2">"Our application is experiencing intermittent failures. Use the ReAct method: Think step by step (reasoning), identify potential causes (action), analyze each systematically (reasoning), recommend solutions (action), prioritize fixes (reasoning). Present your analysis in a structured format showing the reasoning-action flow."</p>
+        </div>
+        
+        <div class="bg-orange-50 dark:bg-orange-900/20 p-4 rounded border border-orange-200 dark:border-orange-800">
+          <h4 class="font-serif font-semibold text-black dark:text-foreground mb-2">Tested Example: Prompt Chaining</h4>
+          <p class="text-sm text-body italic mb-2">"Step 1: Analyze this infrastructure requirement document and extract: requirements, constraints, and technical needs. Step 2: Use the extracted information to create a high-level architecture diagram description. Step 3: Based on the architecture, generate a Terraform module structure. Chain each output as input to the next step."</p>
+        </div>
+      </div>
         </tbody>
       </table>
       
