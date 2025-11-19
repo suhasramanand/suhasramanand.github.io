@@ -930,6 +930,254 @@ module "compute" {
     readTime: '13 min read',
     category: 'DevOps',
     author: 'Suhas Reddy'
+  },
+  {
+    id: '7',
+    title: 'Prompt Engineering Cheatsheet: A Comprehensive Guide',
+    excerpt: 'Master the art of prompt engineering with essential patterns, advanced techniques, and best practices for getting the most out of AI models.',
+    content: `
+      <p class="text-body mb-4">Prompt engineering is the art and science of crafting inputs that guide AI models to produce desired outputs. As AI becomes increasingly integrated into our workflows, understanding how to effectively communicate with these models becomes a critical skill. This comprehensive guide covers essential patterns, advanced techniques, and best practices for prompt engineering.</p>
+      
+      <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-6 border-l-4 border-black dark:border-foreground">
+        <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-2">Quick Reference: Temperature Settings</h3>
+        <p class="text-body mb-2"><strong>Low (0.1-0.3):</strong> Precision and consistency - Use for code generation, factual Q&A, translation</p>
+        <p class="text-body mb-2"><strong>Medium (0.4-0.6):</strong> Balanced accuracy and creativity - Use for general tasks, content creation</p>
+        <p class="text-body"><strong>High (0.7-1.0):</strong> Maximum creativity - Use for brainstorming, creative writing, ideation</p>
+      </div>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Core Principles</h2>
+      <p class="text-body mb-4">Effective prompt engineering rests on four fundamental principles:</p>
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>Be Specific:</strong> Vague prompts lead to vague outputs. Clearly define what you want.</li>
+        <li><strong>Provide Context:</strong> Give the AI the background information it needs to understand your request.</li>
+        <li><strong>Use Examples:</strong> Show the AI what good output looks like with few-shot examples.</li>
+        <li><strong>Set Constraints:</strong> Define boundaries, format requirements, and limitations explicitly.</li>
+      </ul>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Essential Prompt Patterns</h2>
+      <p class="text-body mb-4">These proven patterns form the foundation of effective prompt engineering:</p>
+      
+      <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4">
+        <h3 class="text-lg font-serif font-semibold text-black dark:text-foreground mb-2">1. Persona Pattern</h3>
+        <p class="text-body mb-2"><strong>Purpose:</strong> Assume a role to shape tone & knowledge</p>
+        <p class="text-body mb-2"><strong>Template:</strong> "Act as a {role}. {task}. Consider {constraints}."</p>
+        <p class="text-body italic">Example: "Act as a physics teacher. Explain terminal velocity with an analogy."</p>
+      </div>
+      
+      <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4">
+        <h3 class="text-lg font-serif font-semibold text-black dark:text-foreground mb-2">2. Audience Persona Pattern</h3>
+        <p class="text-body mb-2"><strong>Purpose:</strong> Specify target audience for complexity tuning</p>
+        <p class="text-body mb-2"><strong>Template:</strong> "Write for {audience}. {task}. Keep reading level around {grade} and include {style cues}."</p>
+        <p class="text-body italic">Example: "Write for MBA students: compare A/B testing vs. causal inference, 8th-grade reading level."</p>
+      </div>
+      
+      <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4">
+        <h3 class="text-lg font-serif font-semibold text-black dark:text-foreground mb-2">3. Flipped Interaction Pattern</h3>
+        <p class="text-body mb-2"><strong>Purpose:</strong> Model interviews you before answering</p>
+        <p class="text-body mb-2"><strong>Template:</strong> "You are a consultant. Ask up to 5 clarifying questions. After I answer, propose a solution."</p>
+        <p class="text-body italic">Example: "You're a product strategist. Ask 4 questions about our app. Then recommend a launch plan."</p>
+      </div>
+      
+      <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4">
+        <h3 class="text-lg font-serif font-semibold text-black dark:text-foreground mb-2">4. Template Pattern</h3>
+        <p class="text-body mb-2"><strong>Purpose:</strong> Provide structured form to fill</p>
+        <p class="text-body mb-2"><strong>Template:</strong> "Use this template: {fields}. Populate it for {task}."</p>
+        <p class="text-body italic">Example: "Use template—Problem, Evidence, Options, Recommendation—for a memo on cart abandonment."</p>
+      </div>
+      
+      <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4">
+        <h3 class="text-lg font-serif font-semibold text-black dark:text-foreground mb-2">5. Recipe Pattern</h3>
+        <p class="text-body mb-2"><strong>Purpose:</strong> Stepwise procedure with ingredients & tools</p>
+        <p class="text-body mb-2"><strong>Template:</strong> "Create a recipe for {goal} including: Inputs, Tools, Steps (numbered), Quality checks, Variations."</p>
+        <p class="text-body italic">Example: "Recipe for blog post: inputs (audience, thesis), steps (outline→draft→revise), QC checklist."</p>
+      </div>
+      
+      <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4">
+        <h3 class="text-lg font-serif font-semibold text-black dark:text-foreground mb-2">6. Alternative Approaches Pattern</h3>
+        <p class="text-body mb-2"><strong>Purpose:</strong> Generate multiple methods with trade-offs</p>
+        <p class="text-body mb-2"><strong>Template:</strong> "Provide 3 approaches to {problem}. For each: steps, pros, cons, effort, risk. End with a comparison table."</p>
+        <p class="text-body italic">Example: "Three ways to implement search (keyword, semantic, hybrid) with pros/cons."</p>
+      </div>
+      
+      <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4">
+        <h3 class="text-lg font-serif font-semibold text-black dark:text-foreground mb-2">7. Bridge Pattern</h3>
+        <p class="text-body mb-2"><strong>Purpose:</strong> Combine goal → constraints → examples → evaluation</p>
+        <p class="text-body mb-2"><strong>Template:</strong> "Goal: {goal}. Constraints: {list}. Examples: {few-shot}. Evaluation: {rubric}. Task: {do X}. Output format: {schema}."</p>
+        <p class="text-body italic">Example: "Goal: draft policy brief. Constraints: ≤400 words, neutral tone, cite 2 sources. Evaluation: clarity, evidence."</p>
+      </div>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Advanced Techniques</h2>
+      <p class="text-body mb-4">Beyond basic patterns, these advanced techniques unlock more sophisticated AI interactions:</p>
+      
+      <table class="w-full border-collapse border border-ink-light-gray dark:border-border mb-4">
+        <thead>
+          <tr class="bg-ink-black/5 dark:bg-ink-black/20">
+            <th class="border border-ink-light-gray dark:border-border p-3 text-left font-serif">Technique</th>
+            <th class="border border-ink-light-gray dark:border-border p-3 text-left font-serif">Description</th>
+            <th class="border border-ink-light-gray dark:border-border p-3 text-left font-serif">When to Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border border-ink-light-gray dark:border-border p-3 font-serif"><strong>Chain of Thought</strong></td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Ask AI to show step-by-step reasoning</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Complex problems, math, logic</td>
+          </tr>
+          <tr class="bg-ink-black/5 dark:bg-ink-black/20">
+            <td class="border border-ink-light-gray dark:border-border p-3 font-serif"><strong>Few-Shot Learning</strong></td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Provide examples before asking for output</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Consistent format needed</td>
+          </tr>
+          <tr>
+            <td class="border border-ink-light-gray dark:border-border p-3 font-serif"><strong>Zero-Shot</strong></td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">No examples, just instructions</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Simple tasks, general queries</td>
+          </tr>
+          <tr class="bg-ink-black/5 dark:bg-ink-black/20">
+            <td class="border border-ink-light-gray dark:border-border p-3 font-serif"><strong>ReAct Prompting</strong></td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Combine reasoning + action methodically</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Problem-solving, analysis</td>
+          </tr>
+          <tr>
+            <td class="border border-ink-light-gray dark:border-border p-3 font-serif"><strong>Self-Consistency</strong></td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Generate multiple answers, pick most common</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">High-stakes decisions, accuracy critical</td>
+          </tr>
+          <tr class="bg-ink-black/5 dark:bg-ink-black/20">
+            <td class="border border-ink-light-gray dark:border-border p-3 font-serif"><strong>Prompt Chaining</strong></td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Use output of one prompt as input to next</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Multi-stage tasks, complex workflows</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Output Formatting Techniques</h2>
+      <p class="text-body mb-4">Control how the AI structures its responses:</p>
+      
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>JSON/XML:</strong> "Output as JSON with keys: {list}" or "Use XML structure"</li>
+        <li><strong>Markdown:</strong> "Format as markdown with headers, lists, code blocks"</li>
+        <li><strong>Structured Lists:</strong> "Provide numbered list" or "Use bullet points with sub-items"</li>
+        <li><strong>Tables:</strong> "Format as table with columns: {cols}" or "Create comparison table"</li>
+        <li><strong>Code Blocks:</strong> "Wrap code in ```language``` blocks" or "Use syntax highlighting"</li>
+      </ul>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">System vs User Prompts</h2>
+      <p class="text-body mb-4">Understanding when to use system vs user prompts is crucial:</p>
+      
+      <table class="w-full border-collapse border border-ink-light-gray dark:border-border mb-4">
+        <thead>
+          <tr class="bg-ink-black/5 dark:bg-ink-black/20">
+            <th class="border border-ink-light-gray dark:border-border p-3 text-left font-serif">Type</th>
+            <th class="border border-ink-light-gray dark:border-border p-3 text-left font-serif">Purpose</th>
+            <th class="border border-ink-light-gray dark:border-border p-3 text-left font-serif">Best For</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border border-ink-light-gray dark:border-border p-3 font-serif"><strong>System Prompt</strong></td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Set behavior, role, constraints (persistent)</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Defining assistant personality, rules, context</td>
+          </tr>
+          <tr class="bg-ink-black/5 dark:bg-ink-black/20">
+            <td class="border border-ink-light-gray dark:border-border p-3 font-serif"><strong>User Prompt</strong></td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Specific task, question, request</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Individual queries, one-off tasks</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Common Mistakes & Optimization</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div class="bg-red-50 dark:bg-red-900/20 p-4 rounded border border-red-200 dark:border-red-800">
+          <h3 class="text-lg font-serif font-semibold text-red-900 dark:text-red-300 mb-2">Avoid:</h3>
+          <ul class="list-disc list-inside space-y-1 text-body ml-4">
+            <li>Vague instructions</li>
+            <li>Too many constraints</li>
+            <li>Ignoring context</li>
+            <li>No examples</li>
+            <li>Single attempt</li>
+          </ul>
+        </div>
+        <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded border border-blue-200 dark:border-blue-800">
+          <h3 class="text-lg font-serif font-semibold text-blue-900 dark:text-blue-300 mb-2">Optimize:</h3>
+          <ul class="list-disc list-inside space-y-1 text-body ml-4">
+            <li>Remove redundant words</li>
+            <li>Put important info first</li>
+            <li>Use abbreviations</li>
+            <li>Break into sub-prompts</li>
+            <li>Remove unnecessary examples</li>
+          </ul>
+        </div>
+      </div>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Temperature Guidelines by Task</h2>
+      <table class="w-full border-collapse border border-ink-light-gray dark:border-border mb-4">
+        <thead>
+          <tr class="bg-ink-black/5 dark:bg-ink-black/20">
+            <th class="border border-ink-light-gray dark:border-border p-3 text-left font-serif">Task Type</th>
+            <th class="border border-ink-light-gray dark:border-border p-3 text-left font-serif">Recommended Temp</th>
+            <th class="border border-ink-light-gray dark:border-border p-3 text-left font-serif">Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Code generation</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">0.1-0.3</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Precision required</td>
+          </tr>
+          <tr class="bg-ink-black/5 dark:bg-ink-black/20">
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Factual Q&A</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">0.1-0.3</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Accuracy critical</td>
+          </tr>
+          <tr>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Translation</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">0.2-0.4</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Consistency needed</td>
+          </tr>
+          <tr class="bg-ink-black/5 dark:bg-ink-black/20">
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Creative writing</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">0.7-0.9</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Variety desired</td>
+          </tr>
+          <tr>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Brainstorming</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">0.8-1.0</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Maximum creativity</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Prompt Structure Template</h2>
+      <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-6 border-l-4 border-black dark:border-foreground">
+        <p class="text-body mb-2"><strong>[Instruction]</strong> What do you want the AI to do?</p>
+        <p class="text-body mb-2"><strong>[Context]</strong> Background information the AI needs</p>
+        <p class="text-body mb-2"><strong>[Examples]</strong> Show what good output looks like</p>
+        <p class="text-body"><strong>[Constraints]</strong> Limitations or specific requirements</p>
+      </div>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Best Practices Summary</h2>
+      <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded mb-6 border border-green-200 dark:border-green-800">
+        <ul class="list-disc list-inside space-y-2 text-body ml-4">
+          <li><strong>Start simple, iterate:</strong> Begin with basic prompts and refine based on results</li>
+          <li><strong>Be explicit:</strong> Don't assume the AI knows what you mean</li>
+          <li><strong>Provide context/examples:</strong> Help the AI understand your intent</li>
+          <li><strong>Test edge cases:</strong> Verify your prompts work in various scenarios</li>
+          <li><strong>Use appropriate temperature:</strong> Match temperature to task requirements</li>
+          <li><strong>Optimize tokens:</strong> Remove redundancy while maintaining clarity</li>
+          <li><strong>Document successful prompts:</strong> Build a library of effective prompts</li>
+        </ul>
+      </div>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Conclusion</h2>
+      <p class="text-body mb-4">Prompt engineering is both an art and a science. By understanding core principles, mastering essential patterns, and applying advanced techniques, you can dramatically improve your interactions with AI models. Remember that effective prompting is an iterative process—start simple, test, refine, and optimize.</p>
+      <p class="text-body mb-4">As AI continues to evolve, so too will the techniques for interacting with it. Stay curious, experiment with different approaches, and document what works. The investment in learning prompt engineering pays dividends in productivity, creativity, and the quality of AI-generated outputs.</p>
+    `,
+    date: '2025-01-22',
+    readTime: '18 min read',
+    category: 'AI',
+    author: 'Suhas Reddy'
   }
 ];
 

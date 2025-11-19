@@ -80,6 +80,16 @@ const blogPosts: BlogPost[] = [
     readTime: '13 min read',
     category: 'DevOps',
     author: 'Suhas Reddy'
+  },
+  {
+    id: '7',
+    title: 'Prompt Engineering Cheatsheet: A Comprehensive Guide',
+    excerpt: 'Master the art of prompt engineering with essential patterns, advanced techniques, and best practices for getting the most out of AI models.',
+    content: 'Full blog post content goes here...',
+    date: '2025-01-22',
+    readTime: '18 min read',
+    category: 'AI',
+    author: 'Suhas Reddy'
   }
 ];
 
