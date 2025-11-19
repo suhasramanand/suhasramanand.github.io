@@ -1173,6 +1173,20 @@ module "compute" {
       <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Conclusion</h2>
       <p class="text-body mb-4">Prompt engineering is both an art and a science. By understanding core principles, mastering essential patterns, and applying advanced techniques, you can dramatically improve your interactions with AI models. Remember that effective prompting is an iterative process—start simple, test, refine, and optimize.</p>
       <p class="text-body mb-4">As AI continues to evolve, so too will the techniques for interacting with it. Stay curious, experiment with different approaches, and document what works. The investment in learning prompt engineering pays dividends in productivity, creativity, and the quality of AI-generated outputs.</p>
+      
+      <div class="mt-12 pt-8 border-t-2 border-ink-light-gray dark:border-border">
+        <div class="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-6 rounded-lg border border-blue-200 dark:border-blue-800">
+          <h3 class="text-2xl font-serif font-bold text-black dark:text-foreground mb-3">🙏 Acknowledgments</h3>
+          <p class="text-body mb-4">A special thank you to <strong class="font-semibold text-black dark:text-foreground">Professor Nik Brown</strong> for sharing his expertise and teaching us the art of prompt engineering. His insights, guidance, and innovative approaches have been invaluable in understanding how to effectively communicate with AI models.</p>
+          <p class="text-body mb-4">If you're interested in learning more about prompt engineering and AI, be sure to check out Prof. Nik Brown on LinkedIn:</p>
+          <a href="https://www.linkedin.com/in/nikbearbrown/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 font-serif font-semibold">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+            Connect with Prof. Nik Brown on LinkedIn
+          </a>
+        </div>
+      </div>
     `,
     date: '2025-01-22',
     readTime: '18 min read',
