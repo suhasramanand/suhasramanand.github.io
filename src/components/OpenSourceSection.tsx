@@ -34,15 +34,14 @@ const OpenSourceSection: React.FC = React.memo(() => {
 
   // Open source contributions - Add your PR links here
   const contributions: OpenSourceContribution[] = [
-    // Example format:
-    // {
-    //   repository: 'example/repo',
-    //   title: 'Fix bug in authentication',
-    //   description: 'Fixed a critical bug in the authentication flow that was causing login failures.',
-    //   prUrl: 'https://github.com/example/repo/pull/123',
-    //   date: '2025-11-15',
-    //   status: 'merged'
-    // },
+    {
+      repository: 'apple/container',
+      title: 'Add network prune command',
+      description: 'Implements the network prune command to remove unused networks. Removes networks not connected to any containers, preserves default/system networks, and only prunes networks in running state.',
+      prUrl: 'https://github.com/apple/container/pull/906',
+      date: '2025-11-20',
+      status: 'open'
+    },
   ];
 
   const getStatusColor = (status?: string) => {
