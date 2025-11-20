@@ -63,10 +63,6 @@ const OpenSourceSection: React.FC = React.memo(() => {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   };
 
-  if (contributions.length === 0) {
-    return null; // Don't render section if there are no contributions
-  }
-
   return (
     <section id="opensource" className="py-16 sm:py-20 md:py-24 relative" ref={sectionRef}>
       <div className="section-container">
@@ -76,8 +72,15 @@ const OpenSourceSection: React.FC = React.memo(() => {
           Contributing to open source projects and making a positive impact on the developer community.
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-12">
-          {contributions.map((contribution, index) => (
+        {contributions.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-body text-ink-gray dark:text-muted-foreground font-serif">
+              Open source contributions coming soon...
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-12">
+            {contributions.map((contribution, index) => (
             <div
               key={index}
               ref={el => contributionRefs.current[index] = el}
@@ -126,7 +129,8 @@ const OpenSourceSection: React.FC = React.memo(() => {
               </div>
             </div>
           ))}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );
