@@ -441,7 +441,10 @@ const SupportBot: React.FC = () => {
         'contact section': 'contact',
         'certifications': 'certifications',
         'activities': 'activities',
-        'blog section': 'blog'
+        'blog section': 'blog',
+        'contributions': 'opensource',
+        'open source': 'opensource',
+        'contribs': 'opensource'
       };
       const targetId = sectionMap[section] || section;
       scrollToSection(targetId);
@@ -480,6 +483,34 @@ const SupportBot: React.FC = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  // Auto-notify about contributions after 10 seconds
+  useEffect(() => {
+    const notificationTimer = setTimeout(() => {
+      // Check if notification message already exists
+      const hasNotification = messages.some(
+        msg => msg.sender === 'bot' && msg.text.includes('latest contributions')
+      );
+      
+      if (!hasNotification && isVisible) {
+        // Auto-open chat and show notification
+        setIsOpen(true);
+        
+        // Add notification message after a brief delay
+        setTimeout(() => {
+          const notificationMessage: Message = {
+            id: `notification-${Date.now()}`,
+            text: "Hey! 👋 Don't miss out - check out my latest open source contributions! I've been contributing to some amazing projects.",
+            sender: 'bot',
+            suggestions: ['Scroll to Contributions', 'View GitHub', 'About me']
+          };
+          setMessages(prev => [...prev, notificationMessage]);
+        }, 300);
+      }
+    }, 10000); // 10 seconds
+
+    return () => clearTimeout(notificationTimer);
+  }, [isVisible, messages]);
 
   useEffect(() => {
     if (chatContainerRef.current) {
