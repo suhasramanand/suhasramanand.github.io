@@ -19,6 +19,7 @@ const EducationSection = lazy(() => import('@/components/EducationSection'));
 const ProjectsSection = lazy(() => import('@/components/ProjectsSection'));
 const SkillsSection = lazy(() => import('@/components/SkillsSection'));
 const ActivitiesSection = lazy(() => import('@/components/ActivitiesSection'));
+const OpenSourceSection = lazy(() => import('@/components/OpenSourceSection'));
 const CertificationsSection = lazy(() => import('@/components/CertificationsSection'));
 const ContactSection = lazy(() => import('@/components/ContactSection'));
 
@@ -166,6 +167,10 @@ const Index = () => {
         
         <AnimatedSection id="activities" animationType="fadeInUp" delay={0} duration={0.3}>
           <ActivitiesSection />
+        </AnimatedSection>
+        
+        <AnimatedSection id="opensource" animationType="fadeInUp" delay={0} duration={0.3}>
+          <OpenSourceSection />
         </AnimatedSection>
         
         <AnimatedSection id="certifications" animationType="fadeInUp" delay={0} duration={0.3}>
