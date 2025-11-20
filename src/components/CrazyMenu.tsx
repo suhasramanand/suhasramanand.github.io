@@ -46,7 +46,7 @@ const menuItems: MenuItem[] = [
   },
   { id: "projects", label: "Projects", icon: <Code className="h-5 w-5" />, color: "from-pink-500 to-purple-500" },
   { id: "activities", label: "Activities", icon: <Sparkles className="h-5 w-5" />, color: "from-yellow-500 to-orange-500" },
-  { id: "opensource", label: "Contribs", icon: <GitMerge className="h-5 w-5" />, color: "from-green-500 to-teal-500" },
+  { id: "opensource", label: "Contributions", icon: <GitMerge className="h-5 w-5" />, color: "from-green-500 to-teal-500" },
   { id: "certifications", label: "Certifications", icon: <Award className="h-5 w-5" />, color: "from-indigo-500 to-purple-500" },
   { id: "blog", label: "Blog", icon: <BookOpen className="h-5 w-5" />, color: "from-indigo-500 to-purple-500" },
   { id: "contact", label: "Contact", icon: <Mail className="h-5 w-5" />, color: "from-cyan-500 to-blue-500" },
