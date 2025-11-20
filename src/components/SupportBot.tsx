@@ -49,6 +49,7 @@ const SupportBot: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const notificationShownRef = useRef(false);
   const navigate = useNavigate();
 
   const scrollToSection = (id: string) => {
@@ -484,15 +485,14 @@ const SupportBot: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Auto-notify about contributions after 10 seconds
+  // Auto-notify about contributions after 10 seconds (only once)
   useEffect(() => {
+    if (notificationShownRef.current) return; // Already shown, don't show again
+    
     const notificationTimer = setTimeout(() => {
-      // Check if notification message already exists
-      const hasNotification = messages.some(
-        msg => msg.sender === 'bot' && msg.text.includes('latest contributions')
-      );
-      
-      if (!hasNotification && isVisible) {
+      if (!notificationShownRef.current && isVisible) {
+        notificationShownRef.current = true; // Mark as shown
+        
         // Auto-open chat and show notification
         setIsOpen(true);
         
@@ -510,7 +510,7 @@ const SupportBot: React.FC = () => {
     }, 10000); // 10 seconds
 
     return () => clearTimeout(notificationTimer);
-  }, [isVisible, messages]);
+  }, [isVisible]);
 
   useEffect(() => {
     if (chatContainerRef.current) {
