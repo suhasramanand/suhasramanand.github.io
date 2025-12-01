@@ -388,10 +388,10 @@ const CrazyMenu: React.FC = () => {
         ref={navRef}
         className="fixed top-0 left-0 right-0 z-50 bg-paper-cream/95 dark:bg-background/95 backdrop-blur-sm border-b border-ink-light-gray/30 dark:border-border"
       >
-        <div className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12">
-          <div className="flex justify-center items-center h-16 relative">
+        <div className="max-w-5xl mx-auto pl-0 pr-6 sm:pl-0 sm:pr-8 lg:pl-0 lg:pr-12">
+          <div className="flex justify-between items-center h-16">
                   <div
-                    className="absolute left-0 flex items-center cursor-pointer group flex-shrink-0"
+                    className="flex items-center cursor-pointer group flex-shrink-0 -ml-4 sm:-ml-6"
                     onClick={() => scrollToSection("hero")}
                     role="button"
                     tabIndex={0}
@@ -409,7 +409,7 @@ const CrazyMenu: React.FC = () => {
                   </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex md:items-center">
+            <div className="hidden md:flex md:items-center md:ml-12 lg:ml-16">
               <div className="flex items-center space-x-1">
                 {menuItems.map((item, index) => (
                         <button
@@ -433,9 +433,9 @@ const CrazyMenu: React.FC = () => {
                 </div>
               </div>
             </div>
-
+            
             {/* Mobile Menu Button */}
-            <div className="absolute right-0 flex items-center gap-2 md:hidden">
+            <div className="flex items-center gap-2 md:hidden">
               <ThemeToggle />
               <button
                 onClick={toggleMenu}
