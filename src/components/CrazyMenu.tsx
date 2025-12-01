@@ -388,10 +388,10 @@ const CrazyMenu: React.FC = () => {
         ref={navRef}
         className="fixed top-0 left-0 right-0 z-50 bg-paper-cream/95 dark:bg-background/95 backdrop-blur-sm border-b border-ink-light-gray/30 dark:border-border"
       >
-        <div className="max-w-5xl mx-auto pl-0 pr-6 sm:pl-0 sm:pr-8 lg:pl-0 lg:pr-12">
+        <div className="max-w-5xl mx-auto pl-2 pr-6 sm:pl-0 sm:pr-8 lg:pl-0 lg:pr-12">
           <div className="flex justify-between items-center h-16">
                   <div
-                    className="flex items-center cursor-pointer group flex-shrink-0 -ml-4 sm:-ml-6"
+                    className="flex items-center cursor-pointer group flex-shrink-0 sm:-ml-6"
                     onClick={() => scrollToSection("hero")}
                     role="button"
                     tabIndex={0}
