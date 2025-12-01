@@ -106,7 +106,7 @@ const HeroSection: React.FC = () => {
       <div className="relative z-10 max-w-4xl w-full">
         <div className="mb-12">
           <h1 ref={nameRef} className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-black dark:text-foreground mb-6 tracking-tight">
-            Hi, I'm <span className="text-black dark:text-foreground">Suhas Reddy</span>
+            Hi, I'm <span className="text-black dark:text-foreground">Suhas</span>
           </h1>
           <p ref={titleRef} className="text-xl sm:text-2xl md:text-3xl text-ink-gray dark:text-muted-foreground font-serif font-medium mb-6 italic">
             Software Engineer & Cloud Specialist
