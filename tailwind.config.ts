@@ -75,6 +75,11 @@ export default {
 					gray: '#6B6B6B',
 					'light-gray': '#9B9B9B',
 				},
+				orange: {
+					DEFAULT: '#FF6B35',
+					light: '#FF8C5A',
+					dark: '#E55A2B',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

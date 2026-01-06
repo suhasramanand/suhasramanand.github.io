@@ -10,7 +10,7 @@ import AnimatedSection from '@/components/AnimatedSection';
 import FloatingActionButton from '@/components/FloatingActionButton';
 import ProgressBar from '@/components/ProgressBar';
 import SupportBot from '@/components/SupportBot';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 // Lazy load below-the-fold sections for better initial load performance
 const AboutSection = lazy(() => import('@/components/AboutSection'));
@@ -182,41 +182,34 @@ const Index = () => {
         </AnimatedSection>
       </Suspense>
       
-      {/* Enhanced Footer with social links */}
-      <footer className="py-12 text-center border-t border-black/20 dark:border-border relative z-10">
-        <div className="section-container">
-          {/* Social Links */}
-          <div className="flex justify-center gap-4 mb-6">
-            <a 
-              href="https://github.com/suhasramanand" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group p-3 border border-black/20 dark:border-border hover:bg-black dark:hover:bg-foreground hover:text-paper-cream dark:hover:text-background transition-all duration-200"
-              aria-label="GitHub Profile"
-            >
-              <Github size={22} />
-            </a>
-            <a 
-              href="https://linkedin.com/in/suhasreddybr/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group p-3 border border-black/20 dark:border-border hover:bg-black dark:hover:bg-foreground hover:text-paper-cream dark:hover:text-background transition-all duration-200"
-              aria-label="LinkedIn Profile"
-            >
-              <Linkedin size={22} />
-            </a>
-            <a 
-              href="mailto:reachsuhasreddy@gmail.com"
-              className="group p-3 border border-black/20 dark:border-border hover:bg-black dark:hover:bg-foreground hover:text-paper-cream dark:hover:text-background transition-all duration-200"
-              aria-label="Email Contact"
-            >
-              <Mail size={22} />
-            </a>
-          </div>
-          
-          <p className="text-black dark:text-foreground font-serif">&copy; {new Date().getFullYear()} Suhas Reddy</p>
+      {/* CodeRabbit-style Footer */}
+      <footer className="relative z-40 footer-with-watermark" style={{ overflow: 'hidden', minHeight: '400px', marginTop: '0' }}>
+        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 z-30">
         </div>
       </footer>
+      
+      {/* Bottom Footer Section - After fade */}
+      <div className="relative z-40 footer-bottom-section" style={{ marginTop: '0', paddingTop: '0' }}>
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-8">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-2 text-ink-gray dark:text-muted-foreground text-sm">
+              <span>English</span>
+              <ChevronDown size={16} />
+            </div>
+            <div className="flex flex-wrap gap-6 text-sm">
+              <a href="/terms-of-service" className="text-ink-gray dark:text-muted-foreground hover:text-black dark:hover:text-foreground transition-colors">
+                Terms of Service
+              </a>
+              <a href="/privacy-policy" className="text-ink-gray dark:text-muted-foreground hover:text-black dark:hover:text-foreground transition-colors">
+                Privacy Policy
+              </a>
+              <span className="text-ink-gray dark:text-muted-foreground">
+                Suhas Reddy © {new Date().getFullYear()}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   );
 };

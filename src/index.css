@@ -288,6 +288,149 @@ html:not([data-scroll-locked]) {
   .dark .blog-content .bg-ink-black\/5 {
     background-color: hsl(var(--muted)) !important;
   }
+
+  /* Footer with integrated watermark and grid pattern - matches page background exactly */
+  .footer-with-watermark {
+    position: relative;
+    background-color: #F5F1E8;
+    background-image: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.02) 2px,
+        rgba(0, 0, 0, 0.02) 4px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.02) 2px,
+        rgba(0, 0, 0, 0.02) 4px
+      );
+    background-size: 20px 20px;
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .dark .footer-with-watermark {
+    background-color: hsl(var(--background));
+    background-image: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.02) 2px,
+        rgba(255, 255, 255, 0.02) 4px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.02) 2px,
+        rgba(255, 255, 255, 0.02) 4px
+      );
+    background-size: 20px 20px;
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer-with-watermark::before {
+    content: 'SUHAS REDDY';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(5rem, 16vw, 12rem);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: transparent;
+    -webkit-text-stroke: 2.5px rgba(0, 0, 0, 0.25);
+    text-stroke: 2.5px rgba(0, 0, 0, 0.25);
+    transform: translateY(10%);
+    line-height: 0.85;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+    padding: 2rem;
+    box-sizing: border-box;
+    mask-image: linear-gradient(to top, transparent 0%, transparent 30%, rgba(0, 0, 0, 0.3) 45%, black 50%, black 100%);
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, transparent 31.5%, rgba(0, 0, 0, 0.3) 45%, black 50%, black 100%);
+  }
+
+  .dark .footer-with-watermark::before {
+    -webkit-text-stroke: 2.5px rgba(180, 180, 180, 0.6);
+    text-stroke: 2.5px rgba(180, 180, 180, 0.6);
+  }
+
+  /* Remove separate grid pattern - using footer background instead */
+  .footer-with-watermark::after {
+    display: none;
+  }
+
+  /* Footer fade gradient - minimal, only bottom 5% - transparent fill */
+  .footer-fade-light {
+    background: linear-gradient(to top, transparent 0%, transparent 95%, rgba(245, 241, 232, 0.15) 97.5%, transparent 100%);
+  }
+
+  .footer-fade-dark {
+    background: linear-gradient(to top, transparent 0%, transparent 95%, hsla(var(--background), 0.15) 97.5%, transparent 100%);
+  }
+
+  /* Bottom footer section - appears after fade - matches page background exactly */
+  .footer-bottom-section {
+    background-color: #F5F1E8;
+    background-image: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.02) 2px,
+        rgba(0, 0, 0, 0.02) 4px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.02) 2px,
+        rgba(0, 0, 0, 0.02) 4px
+      );
+    background-size: 20px 20px;
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .dark .footer-bottom-section {
+    background-color: hsl(var(--background));
+    background-image: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.02) 2px,
+        rgba(255, 255, 255, 0.02) 4px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.02) 2px,
+        rgba(255, 255, 255, 0.02) 4px
+      );
+    background-size: 20px 20px;
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 /* Typing cursor animation - old computer style */
