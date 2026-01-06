@@ -177,7 +177,7 @@ const ContactSection: React.FC = React.memo(() => {
   }, []);
 
   return (
-    <section id="contact" className="py-16 sm:py-20 md:py-24 relative" ref={sectionRef}>
+    <section id="contact" className="pt-16 sm:pt-20 md:pt-24 pb-0 relative" ref={sectionRef}>
       <div className="section-container">
         <h2 ref={headingRef} className="section-title">Get In Touch</h2>
         

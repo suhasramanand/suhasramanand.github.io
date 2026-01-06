@@ -222,7 +222,7 @@ html:not([data-scroll-locked]) {
   }
   
   .text-body {
-    @apply text-base sm:text-lg text-ink-black leading-relaxed;
+    @apply text-base sm:text-lg text-black dark:text-foreground leading-relaxed;
     font-family: 'Cormorant Garamond', Georgia, serif;
   }
   

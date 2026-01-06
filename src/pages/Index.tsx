@@ -183,7 +183,7 @@ const Index = () => {
       </Suspense>
       
       {/* CodeRabbit-style Footer */}
-      <footer className="relative z-40 footer-with-watermark" style={{ overflow: 'hidden', minHeight: '400px', marginTop: '0' }}>
+      <footer className="relative z-40 footer-with-watermark" style={{ overflow: 'hidden', minHeight: '400px', marginTop: '-1px' }}>
         <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 z-30">
         </div>
       </footer>

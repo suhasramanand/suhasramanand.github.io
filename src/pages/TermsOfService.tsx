@@ -79,7 +79,7 @@ const TermsOfService = () => {
               <h2 className="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4">6. Contact Information</h2>
               <p className="text-body">
                 If you have any questions about these Terms of Service, please contact me at{' '}
-                <a href="mailto:reachsuhasreddy@gmail.com" className="text-black dark:text-foreground underline hover:opacity-80">
+                <a href="mailto:reachsuhasreddy@gmail.com" className="text-black dark:text-foreground underline hover:opacity-80 transition-opacity">
                   reachsuhasreddy@gmail.com
                 </a>
               </p>
