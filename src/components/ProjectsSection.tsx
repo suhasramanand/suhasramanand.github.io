@@ -23,8 +23,7 @@ const projects: ProjectItem[] = [
     description: "A modern invoice management platform for small businesses. Built a full-stack application with React, TypeScript, Node.js, and PostgreSQL. Features include multi-step invoice builder, client management, dashboard analytics, PDF generation, and WCAG 2.1 AA accessibility compliance. Implemented test-driven development with comprehensive test coverage.",
     technologies: ["React", "TypeScript", "Node.js", "Express", "PostgreSQL", "Material-UI", "JWT", "Jest", "Vite"],
     github: "https://github.com/suhasramanand/invoiceflow",
-    link: "https://invoiceflow-isqqi5fg7-suhasramanands-projects.vercel.app",
-    image: "/images/projects/invoiceflow.png"
+    link: "https://invoiceflow-isqqi5fg7-suhasramanands-projects.vercel.app"
   },
   {
     title: "HomeFit - AI-Powered Apartment Finder",
