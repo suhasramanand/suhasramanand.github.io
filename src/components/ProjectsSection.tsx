@@ -18,6 +18,15 @@ interface ProjectItem {
 
 const projects: ProjectItem[] = [
   {
+    title: "InvoiceFlow - Invoice Management Platform",
+    period: "Jan 2026",
+    description: "A modern invoice management platform for small businesses. Built a full-stack application with React, TypeScript, Node.js, and PostgreSQL. Features include multi-step invoice builder, client management, dashboard analytics, PDF generation, and WCAG 2.1 AA accessibility compliance. Implemented test-driven development with comprehensive test coverage.",
+    technologies: ["React", "TypeScript", "Node.js", "Express", "PostgreSQL", "Material-UI", "JWT", "Jest", "Vite"],
+    github: "https://github.com/suhasramanand/invoiceflow",
+    link: "https://invoiceflow.vercel.app",
+    image: "/images/projects/invoiceflow.png"
+  },
+  {
     title: "Scalable Infrastructure Deployment",
     period: "Sep 2025",
     description: "Scalable Infrastructure Deployment with Terraform, Kubernetes (AWS EKS), and CI/CD pipelines for microservices architecture. Automated cloud infrastructure provisioning and container orchestration for high-availability systems.",
