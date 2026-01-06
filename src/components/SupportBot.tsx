@@ -163,9 +163,9 @@ const SupportBot: React.FC = () => {
       tools: ["Git (95%)", "CI/CD (90%)", "Agile/Scrum (85%)", "JIRA (80%)"]
     },
     projects: [
+      "InvoiceFlow - Modern invoice management platform for small businesses",
       "Scalable Infrastructure Deployment with Terraform and Kubernetes",
-      "CodeReviewer.AI - AI-powered pull request review bot",
-      "JobHunt - Automated job aggregator for entry-level positions"
+      "CodeReviewer.AI - AI-powered pull request review bot"
     ]
   };
 
