@@ -27,6 +27,15 @@ const projects: ProjectItem[] = [
     image: "/images/projects/invoiceflow.png"
   },
   {
+    title: "HomeFit - AI-Powered Apartment Finder",
+    period: "Jan 2026",
+    description: "Full-stack apartment finder platform with AI-powered matching, broker management, and role-based access control. Built with React, Node.js, MongoDB, and Groq AI for intelligent property recommendations and seamless user experience.",
+    technologies: ["React", "Node.js", "MongoDB", "AI", "Groq", "Express"],
+    github: "https://github.com/suhasramanand/homefit",
+    link: "https://homefit-dcmcvhn71-suhasramanands-projects.vercel.app",
+    image: "/images/projects/homefit.png"
+  },
+  {
     title: "Scalable Infrastructure Deployment",
     period: "Sep 2025",
     description: "Scalable Infrastructure Deployment with Terraform, Kubernetes (AWS EKS), and CI/CD pipelines for microservices architecture. Automated cloud infrastructure provisioning and container orchestration for high-availability systems.",
