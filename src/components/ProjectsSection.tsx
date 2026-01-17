@@ -266,21 +266,22 @@ const ProjectsSection: React.FC = React.memo(() => {
     }
   }, [searchQuery, selectedTags, api]);
 
-  // Add wheel scrolling support
+  // Add horizontal wheel support for touchpad gestures
   useEffect(() => {
     const carouselContainer = carouselContainerRef.current;
     if (!carouselContainer || !api) return;
 
     const handleWheel = (e: WheelEvent) => {
-      // Handle vertical wheel scroll and convert to horizontal carousel scroll
-      if (Math.abs(e.deltaY) > 0) {
+      // Only handle horizontal scrolling (touchpad horizontal swipe)
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
         e.preventDefault();
-        if (e.deltaY > 0) {
+        if (e.deltaX > 0) {
           api.scrollNext();
         } else {
           api.scrollPrev();
         }
       }
+      // Ignore vertical scrolling to allow normal page scrolling
     };
 
     carouselContainer.addEventListener('wheel', handleWheel, { passive: false });
@@ -289,6 +290,7 @@ const ProjectsSection: React.FC = React.memo(() => {
       carouselContainer.removeEventListener('wheel', handleWheel);
     };
   }, [api]);
+
 
   // Removed scroll-triggered animations for instant display
   useEffect(() => {
@@ -432,6 +434,8 @@ const ProjectsSection: React.FC = React.memo(() => {
                 loop: false,
                 slidesToScroll: 1,
                 dragFree: true,
+                watchDrag: true,
+                watchResize: true,
               }}
               className="w-full"
               style={{
