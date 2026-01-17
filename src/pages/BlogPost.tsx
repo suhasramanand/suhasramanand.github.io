@@ -1624,7 +1624,7 @@ rate(apiserver_request_total{code=~"5.."}[5m])</code></pre>
       
       <p class="text-body mb-4">Mastering the control plane will help you build more reliable, secure, and performant Kubernetes clusters. Take time to experiment, monitor, and understand how your control plane behaves under different conditions.</p>
     `,
-    date: '2025-01-17',
+    date: '2026-01-16',
     readTime: '25 min read',
     category: 'Kubernetes',
     author: 'Suhas Reddy'

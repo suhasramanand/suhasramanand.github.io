@@ -96,7 +96,7 @@ const blogPosts: BlogPost[] = [
     title: 'Understanding Kubernetes Control Plane: A Deep Dive',
     excerpt: 'A comprehensive exploration of the Kubernetes control plane components, their interactions, high availability patterns, and best practices for production deployments.',
     content: 'Full blog post content goes here...',
-    date: '2025-01-17',
+    date: '2026-01-16',
     readTime: '25 min read',
     category: 'Kubernetes',
     author: 'Suhas Reddy'
@@ -134,18 +134,20 @@ const Blog: React.FC = () => {
     return Array.from(cats).sort();
   }, []);
 
-  // Filter posts
+  // Filter and sort posts by date (newest first)
   const filteredPosts = useMemo(() => {
-    return blogPosts.filter(post => {
-      const matchesSearch = searchQuery === '' || 
-        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.category.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      const matchesCategory = selectedCategory === null || post.category === selectedCategory;
-      
-      return matchesSearch && matchesCategory;
-    });
+    return blogPosts
+      .filter(post => {
+        const matchesSearch = searchQuery === '' || 
+          post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          post.category.toLowerCase().includes(searchQuery.toLowerCase());
+        
+        const matchesCategory = selectedCategory === null || post.category === selectedCategory;
+        
+        return matchesSearch && matchesCategory;
+      })
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }, [searchQuery, selectedCategory]);
 
   return (
