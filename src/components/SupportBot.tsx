@@ -485,32 +485,7 @@ const SupportBot: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Auto-notify about contributions after 10 seconds (only once)
-  useEffect(() => {
-    if (notificationShownRef.current) return; // Already shown, don't show again
-    
-    const notificationTimer = setTimeout(() => {
-      if (!notificationShownRef.current && isVisible) {
-        notificationShownRef.current = true; // Mark as shown
-        
-        // Auto-open chat and show notification
-        setIsOpen(true);
-        
-        // Add notification message after a brief delay
-        setTimeout(() => {
-          const notificationMessage: Message = {
-            id: `notification-${Date.now()}`,
-            text: "Hey! 👋 Don't miss out - check out my latest open source contributions! I've been contributing to some amazing projects.",
-            sender: 'bot',
-            suggestions: ['Scroll to Contributions', 'View GitHub', 'About me']
-          };
-          setMessages(prev => [...prev, notificationMessage]);
-        }, 300);
-      }
-    }, 10000); // 10 seconds
-
-    return () => clearTimeout(notificationTimer);
-  }, [isVisible]);
+  // Auto-popup disabled - removed auto-notify functionality
 
   useEffect(() => {
     if (chatContainerRef.current) {

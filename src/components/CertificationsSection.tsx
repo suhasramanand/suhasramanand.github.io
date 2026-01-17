@@ -70,9 +70,17 @@ const CertificationsSection: React.FC = React.memo(() => {
   }, []);
 
   return (
-    <section id="certifications" className="py-16 sm:py-20 md:py-24 relative" ref={sectionRef}>
+    <section id="certifications" className="py-8 sm:py-12 md:py-16 relative" ref={sectionRef}>
       <div className="section-container">
-        <h2 ref={headingRef} className="section-title">Certifications</h2>
+        <div className="mb-12 sm:mb-16">
+          <div ref={headingRef} className="uppercase text-xs sm:text-sm font-sans tracking-wider mb-4 sm:mb-6 text-ink-gray dark:text-muted-foreground">
+            Certifications
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold tracking-tight leading-tight">
+            <span className="text-black dark:text-foreground">Validated expertise and </span>
+            <span className="italic text-ink-gray dark:text-muted-foreground">continuous learning</span>
+          </h2>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-4xl mx-auto mt-12">
           {certifications.map((cert, index) => {

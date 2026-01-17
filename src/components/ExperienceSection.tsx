@@ -65,28 +65,114 @@ const ExperienceSection: React.FC = React.memo(() => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const timelineItemsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const timelineLineRef = useRef<HTMLDivElement>(null);
+  const timelineContainerRef = useRef<HTMLDivElement>(null);
 
-  // Animation handled by AnimatedSection wrapper
+  // Animate timeline line as user scrolls
+  useEffect(() => {
+    if (!timelineLineRef.current || !timelineContainerRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Animate timeline line from top to bottom as user scrolls
+      gsap.to(timelineLineRef.current, {
+        scaleY: 1,
+        transformOrigin: "top",
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: timelineContainerRef.current,
+          start: "top 70%",
+          end: "bottom 30%",
+          scrub: 1,
+        },
+      });
+
+      // Animate timeline dots appearing
+      timelineItemsRef.current.forEach((item, index) => {
+        if (item) {
+          const dot = item.querySelector('[data-timeline-dot]') as HTMLElement;
+          if (dot) {
+            gsap.fromTo(
+              dot,
+              {
+                scale: 0,
+                opacity: 0,
+              },
+              {
+                scale: 1,
+                opacity: 1,
+                duration: 0.5,
+                ease: "back.out(1.7)",
+                scrollTrigger: {
+                  trigger: item,
+                  start: "top 80%",
+                  toggleActions: "play none none none",
+                },
+              }
+            );
+          }
+        }
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
       id="experience"
-      className="py-16 sm:py-20 md:py-24 relative"
+      className="py-8 sm:py-12 md:py-16 relative"
       ref={sectionRef}
     >
       <div className="section-container">
-        <h2 ref={headingRef} className="section-title">
-          Work Experience
-        </h2>
+        <div className="mb-12 sm:mb-16">
+          <div ref={headingRef} className="uppercase text-xs sm:text-sm font-sans tracking-wider mb-4 sm:mb-6 text-ink-gray dark:text-muted-foreground">
+            Work Experience
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold tracking-tight leading-tight">
+            <span className="text-black dark:text-foreground">Building expertise through </span>
+            <span className="italic text-ink-gray dark:text-muted-foreground">real-world practice</span>
+          </h2>
+        </div>
 
-        <div className="space-y-12 md:space-y-16 mt-12">
-          {experiences.map((exp, index) => (
-            <div
-              key={index}
-              ref={(el) => (timelineItemsRef.current[index] = el)}
-              className="relative"
-            >
-              <div className="paper-card">
+        <div ref={timelineContainerRef} className="relative mt-12">
+          {/* Timeline line */}
+          <div 
+            ref={timelineLineRef}
+            className="hidden md:block absolute left-8 top-0 bottom-0 w-0.5 bg-ink-light-gray/30 dark:bg-border origin-top"
+            style={{ transform: 'scaleY(0)' }}
+          ></div>
+          
+          <div className="space-y-12 md:space-y-16">
+            {experiences.map((exp, index) => (
+              <div
+                key={index}
+                ref={(el) => (timelineItemsRef.current[index] = el)}
+                className="relative"
+              >
+                {/* Timeline dot */}
+                <div 
+                  data-timeline-dot
+                  className="hidden md:block absolute left-6 top-6 w-4 h-4 rounded-full bg-black dark:bg-foreground border-2 border-paper-cream dark:border-background z-10"
+                  style={{ scale: 0, opacity: 0 }}
+                ></div>
+                
+                {/* Card with left margin for timeline on desktop */}
+                <div className="md:ml-16">
+                  <div className="paper-card relative overflow-hidden">
+                    {/* Dotted Grid Background Pattern */}
+                    <div 
+                      className="absolute inset-0 opacity-[0.08] dark:opacity-[0.12] pointer-events-none"
+                      style={{
+                        backgroundImage: `
+                          radial-gradient(circle, currentColor 1px, transparent 1px)
+                        `,
+                        backgroundSize: '20px 20px',
+                        backgroundPosition: '0 0, 0 0',
+                        color: 'currentColor',
+                      }}
+                    />
+                    <div className="relative z-10">
                 <div className="mb-6 pb-6 border-b border-ink-light-gray/30 dark:border-border">
                   <div className="flex flex-wrap items-start gap-4 mb-3">
                     <img
@@ -130,9 +216,12 @@ const ExperienceSection: React.FC = React.memo(() => {
                     </li>
                   ))}
                 </ul>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -3,6 +3,14 @@ import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Github, ExternalLink, Search, X } from 'lucide-react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -138,10 +146,13 @@ const ProjectsSection: React.FC = React.memo(() => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
-  const [showAll, setShowAll] = useState(false);
   const [showAllTags, setShowAllTags] = useState(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+  const carouselContainerRef = useRef<HTMLDivElement>(null);
 
   // Get all unique tags from projects
   const allTags = useMemo(() => {
@@ -174,15 +185,110 @@ const ProjectsSection: React.FC = React.memo(() => {
     });
   }, [searchQuery, selectedTags]);
 
-  // Projects to display (top 3 or all based on showAll state)
-  const displayedProjects = useMemo(() => {
-    return showAll ? filteredProjects : filteredProjects.slice(0, 3);
-  }, [showAll, filteredProjects]);
-
-  // Reset showAll when filters change
+  // Sync carousel state
   useEffect(() => {
-    setShowAll(false);
-  }, [searchQuery, selectedTags]);
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
+  // Auto-slide functionality
+  useEffect(() => {
+    if (!api || filteredProjects.length <= 1) {
+      return;
+    }
+
+    let isPaused = false;
+    let pauseTimeout: NodeJS.Timeout;
+    let interval: NodeJS.Timeout;
+
+    const pauseAutoSlide = () => {
+      isPaused = true;
+      clearTimeout(pauseTimeout);
+      // Resume after 8 seconds of no interaction
+      pauseTimeout = setTimeout(() => {
+        isPaused = false;
+      }, 8000);
+    };
+
+    const startAutoSlide = () => {
+      interval = setInterval(() => {
+        if (!isPaused && api) {
+          if (api.canScrollNext()) {
+            api.scrollNext();
+          } else {
+            // Loop back to start
+            api.scrollTo(0);
+          }
+        }
+      }, 4000); // Auto-slide every 4 seconds
+    };
+
+    // Pause on user interaction
+    const carouselContainer = carouselContainerRef.current;
+    if (carouselContainer) {
+      carouselContainer.addEventListener('mousedown', pauseAutoSlide);
+      carouselContainer.addEventListener('wheel', pauseAutoSlide);
+    }
+
+    // Also pause on navigation button clicks
+    const navButtons = carouselContainer?.querySelectorAll('button[aria-label*="slide"]');
+    navButtons?.forEach(btn => {
+      btn.addEventListener('click', pauseAutoSlide);
+    });
+
+    startAutoSlide();
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(pauseTimeout);
+      if (carouselContainer) {
+        carouselContainer.removeEventListener('mousedown', pauseAutoSlide);
+        carouselContainer.removeEventListener('wheel', pauseAutoSlide);
+        navButtons?.forEach(btn => {
+          btn.removeEventListener('click', pauseAutoSlide);
+        });
+      }
+    };
+  }, [api, filteredProjects.length]);
+
+  // Reset carousel to first slide when filters change
+  useEffect(() => {
+    if (api) {
+      api.scrollTo(0);
+    }
+  }, [searchQuery, selectedTags, api]);
+
+  // Add wheel scrolling support
+  useEffect(() => {
+    const carouselContainer = carouselContainerRef.current;
+    if (!carouselContainer || !api) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      // Handle vertical wheel scroll and convert to horizontal carousel scroll
+      if (Math.abs(e.deltaY) > 0) {
+        e.preventDefault();
+        if (e.deltaY > 0) {
+          api.scrollNext();
+        } else {
+          api.scrollPrev();
+        }
+      }
+    };
+
+    carouselContainer.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      carouselContainer.removeEventListener('wheel', handleWheel);
+    };
+  }, [api]);
 
   // Removed scroll-triggered animations for instant display
   useEffect(() => {
@@ -233,9 +339,17 @@ const ProjectsSection: React.FC = React.memo(() => {
   };
 
   return (
-    <section id="projects" className="py-16 sm:py-20 md:py-24 relative" ref={sectionRef}>
+    <section id="projects" className="py-8 sm:py-12 md:py-16 relative" ref={sectionRef}>
       <div className="section-container">
-        <h2 ref={headingRef} className="section-title">Projects</h2>
+        <div className="mb-12 sm:mb-16">
+          <div ref={headingRef} className="uppercase text-xs sm:text-sm font-sans tracking-wider mb-4 sm:mb-6 text-ink-gray dark:text-muted-foreground">
+            Projects
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold tracking-tight leading-tight">
+            <span className="text-black dark:text-foreground">Innovation through </span>
+            <span className="italic text-ink-gray dark:text-muted-foreground">code and creativity</span>
+          </h2>
+        </div>
         
         {/* Search and Filter Section */}
         <div className="mt-8 mb-8 space-y-6">
@@ -308,85 +422,128 @@ const ProjectsSection: React.FC = React.memo(() => {
           )}
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-12 max-w-6xl mx-auto">
-          {displayedProjects.map((project) => {
-            const originalIndex = projects.findIndex(p => p.title === project.title);
-            return (
-            <div 
-              key={project.title}
-              ref={el => projectRefs.current[originalIndex] = el}
-              className="paper-card h-full flex flex-col"
-              onMouseEnter={() => setHoveredProject(originalIndex)}
-              onMouseLeave={() => setHoveredProject(null)}
+        {/* Carousel Section */}
+        {filteredProjects.length > 0 && (
+          <div className="mt-12 relative" ref={carouselContainerRef}>
+            <Carousel
+              setApi={setApi}
+              opts={{
+                align: "start",
+                loop: false,
+                slidesToScroll: 1,
+                dragFree: true,
+              }}
+              className="w-full"
+              style={{
+                maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+              }}
             >
-              {project.image && (
-                <div className="mb-6 overflow-hidden border border-ink-light-gray/30 dark:border-border">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
-                    loading="lazy"
-                  />
-                </div>
-              )}
-              <div className="mb-6">
-                <h3 className="text-xl sm:text-2xl font-serif font-semibold text-black dark:text-foreground mb-4">{project.title}</h3>
-                
-                <p className="text-body mb-6 text-black dark:text-foreground">
-                  {project.description}
-                </p>
-                
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.technologies.map((tech, i) => (
-                    <span 
-                      key={i}
-                      className="inline-block px-3 py-1 border border-ink-light-gray/40 dark:border-border text-ink-gray dark:text-muted-foreground text-sm font-serif"
+              <CarouselContent className="-ml-2 md:-ml-6">
+                {filteredProjects.map((project) => {
+                  const originalIndex = projects.findIndex(p => p.title === project.title);
+                  return (
+                    <CarouselItem
+                      key={project.title}
+                      className="pl-2 md:pl-6 basis-full sm:basis-4/5 md:basis-1/2 lg:basis-2/5 xl:basis-1/3"
                     >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
+                      <div
+                        ref={el => projectRefs.current[originalIndex] = el}
+                        className="paper-card h-full flex flex-col"
+                        onMouseEnter={() => setHoveredProject(originalIndex)}
+                        onMouseLeave={() => setHoveredProject(null)}
+                      >
+                        {project.image && (
+                          <div className="mb-4 overflow-hidden border border-ink-light-gray/30 dark:border-border rounded-sm">
+                            <img
+                              src={project.image}
+                              alt={project.title}
+                              className="w-full h-40 md:h-44 object-cover transition-transform duration-300 hover:scale-105"
+                              loading="lazy"
+                            />
+                          </div>
+                        )}
+                        <div className="mb-4 flex-1 flex flex-col">
+                          <h3 className="text-lg sm:text-xl font-serif font-semibold text-black dark:text-foreground mb-2">
+                            {project.title}
+                          </h3>
+                          
+                          <p className="text-sm mb-4 text-black dark:text-foreground line-clamp-3">
+                            {project.description}
+                          </p>
+                          
+                          <div className="flex flex-wrap gap-1.5 mb-4">
+                            {project.technologies.slice(0, 4).map((tech, i) => (
+                              <span
+                                key={i}
+                                className="inline-block px-2 py-0.5 border border-ink-light-gray/40 dark:border-border text-ink-gray dark:text-muted-foreground text-xs font-serif"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                            {project.technologies.length > 4 && (
+                              <span className="inline-block px-2 py-0.5 text-ink-gray dark:text-muted-foreground text-xs font-serif">
+                                +{project.technologies.length - 4}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-4 pt-3 border-t border-ink-light-gray/30 dark:border-border">
+                          {project.github && (
+                            <a
+                              href={project.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 text-black dark:text-foreground hover:text-ink-gray dark:hover:text-muted-foreground transition-colors text-sm font-serif"
+                            >
+                              <Github size={16} />
+                              <span>View on GitHub</span>
+                            </a>
+                          )}
+                          
+                          {project.link && (
+                            <a
+                              href={project.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 text-black dark:text-foreground hover:text-ink-gray dark:hover:text-muted-foreground transition-colors text-sm font-serif"
+                            >
+                              <ExternalLink size={16} />
+                              <span>Live Demo</span>
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </CarouselItem>
+                  );
+                })}
+              </CarouselContent>
               
-              <div className="flex flex-wrap gap-4 mt-auto pt-4 border-t border-ink-light-gray/30 dark:border-border">
-                {project.github && (
-                  <a 
-                    href={project.github} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-black dark:text-foreground hover:text-ink-gray dark:hover:text-muted-foreground transition-colors text-sm font-serif"
-                  >
-                    <Github size={16} />
-                    <span>View on GitHub</span>
-                  </a>
-                )}
-                
-                {project.link && (
-                  <a 
-                    href={project.link} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-black dark:text-foreground hover:text-ink-gray dark:hover:text-muted-foreground transition-colors text-sm font-serif"
-                  >
-                    <ExternalLink size={16} />
-                    <span>Live Demo</span>
-                  </a>
-                )}
+              {filteredProjects.length > 1 && (
+                <>
+                  <CarouselPrevious 
+                    className="left-2 md:-left-12 top-1/2 -translate-y-1/2 bg-paper-cream/90 dark:bg-card/90 backdrop-blur-sm border-ink-light-gray/40 dark:border-border hover:bg-paper-cream dark:hover:bg-card shadow-lg z-10"
+                    variant="outline"
+                    size="icon"
+                  />
+                  <CarouselNext 
+                    className="right-2 md:-right-12 top-1/2 -translate-y-1/2 bg-paper-cream/90 dark:bg-card/90 backdrop-blur-sm border-ink-light-gray/40 dark:border-border hover:bg-paper-cream dark:hover:bg-card shadow-lg z-10"
+                    variant="outline"
+                    size="icon"
+                  />
+                </>
+              )}
+            </Carousel>
+            
+            {/* Carousel Indicators */}
+            {filteredProjects.length > 1 && count > 0 && (
+              <div className="flex justify-center items-center gap-2 mt-6">
+                <span className="text-sm font-serif text-ink-gray dark:text-muted-foreground">
+                  {current} / {count}
+                </span>
               </div>
-            </div>
-            );
-          })}
-        </div>
-
-        {/* Show More / Show Less Button */}
-        {filteredProjects.length > 3 && (
-          <div className="text-center mt-12">
-            <button
-              onClick={() => setShowAll(!showAll)}
-              className="minimal-button-outline px-8 py-3"
-            >
-              {showAll ? 'Show Less' : `Show More (${filteredProjects.length - 3} more)`}
-            </button>
+            )}
           </div>
         )}
 

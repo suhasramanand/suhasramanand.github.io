@@ -100,16 +100,24 @@ const ActivitiesSection: React.FC = React.memo(() => {
   ];
 
   return (
-    <section id="activities" className="py-16 sm:py-20 md:py-24 relative" ref={sectionRef}>
+    <section id="activities" className="py-8 sm:py-12 md:py-16 relative" ref={sectionRef}>
       <div className="section-container">
-        <h2 ref={headingRef} className="section-title">Activities</h2>
+        <div className="mb-12 sm:mb-16">
+          <div ref={headingRef} className="uppercase text-xs sm:text-sm font-sans tracking-wider mb-4 sm:mb-6 text-ink-gray dark:text-muted-foreground">
+            Activities
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold tracking-tight leading-tight">
+            <span className="text-black dark:text-foreground">Beyond code, </span>
+            <span className="italic text-ink-gray dark:text-muted-foreground">exploring passions</span>
+          </h2>
+        </div>
         
-        <div className="flex justify-center items-center gap-8 md:gap-12 flex-wrap max-w-5xl mx-auto mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto mt-12">
           {activities.map((activity, index) => (
             <div
               key={index}
               ref={el => badgeRefs.current[index] = el}
-              className="paper-card w-full md:w-[500px] flex flex-row items-center gap-6"
+              className="paper-card flex flex-row items-center gap-4 sm:gap-6"
             >
               <div className="w-32 h-32 flex-shrink-0 flex items-center justify-center p-2 overflow-hidden border-2 border-black/30 dark:border-border bg-paper-beige dark:bg-muted">
                     <img

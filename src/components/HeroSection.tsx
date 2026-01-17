@@ -151,7 +151,7 @@ const HeroSection: React.FC = () => {
           </button>
         </div>
         
-        <div ref={scrollRef} className="absolute bottom-2 left-1/2 transform -translate-x-1/2">
+        <div ref={scrollRef} className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
           <div className="flex flex-col items-center cursor-pointer" onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}>
             <p className="text-xs text-ink-gray dark:text-muted-foreground mb-2 font-serif">Scroll</p>
             <ArrowDown className="text-black dark:text-foreground animate-bounce w-4 h-4" />

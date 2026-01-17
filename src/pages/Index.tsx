@@ -5,10 +5,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import HeroSection from '@/components/HeroSection';
 import CrazyMenu from '@/components/CrazyMenu';
-import AnimatedBackground from '@/components/AnimatedBackground';
 import AnimatedSection from '@/components/AnimatedSection';
 import FloatingActionButton from '@/components/FloatingActionButton';
-import ProgressBar from '@/components/ProgressBar';
 import SupportBot from '@/components/SupportBot';
 import { ChevronDown } from 'lucide-react';
 
@@ -117,9 +115,6 @@ const Index = () => {
 
   return (
     <main className="relative overflow-hidden">
-      {/* Crazy animated background */}
-      <AnimatedBackground />
-      
       {/* Crazy morphing menu */}
       <CrazyMenu />
       
@@ -129,8 +124,6 @@ const Index = () => {
       {/* Support Bot */}
       <SupportBot />
       
-      {/* Gamification progress bar */}
-      <ProgressBar />
       
       {/* Portfolio sections with animations */}
       <AnimatedSection id="hero" animationType="fadeInUp" delay={0.2}>
