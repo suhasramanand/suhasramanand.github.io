@@ -216,7 +216,7 @@ const blogPosts: BlogPost[] = [
       </ul>
       
       <h2 class="text-2xl font-serif font-semibold text-black mb-4 mt-8">Conclusion</h2>
-      <p class="text-body mb-4">SRE is not just a job title—it's a mindset and a set of practices that balance reliability with innovation. By implementing error budgets, focusing on automation, and maintaining a culture of continuous improvement, organizations can build systems that are both reliable and capable of rapid iteration.</p>
+      <p class="text-body mb-4">SRE is not just a job title - it's a mindset and a set of practices that balance reliability with innovation. By implementing error budgets, focusing on automation, and maintaining a culture of continuous improvement, organizations can build systems that are both reliable and capable of rapid iteration.</p>
       <p class="text-body mb-4">Remember: perfect reliability is not the goal. The goal is to make informed trade-offs between reliability and feature velocity, using data and engineering practices to optimize both.</p>
     `,
     date: '2025-11-17',
@@ -229,7 +229,7 @@ const blogPosts: BlogPost[] = [
     title: 'Optimizing CI/CD Pipelines: Reducing Build Times by 70%',
     excerpt: 'Practical strategies for accelerating your CI/CD pipelines through parallelization, caching, and intelligent dependency management.',
     content: `
-      <p class="text-body mb-4">Slow CI/CD pipelines are productivity killers. Every minute developers wait for builds is a minute they're not shipping features. In this post, I'll share practical strategies that helped reduce our pipeline execution time from 45 minutes to under 14 minutes—a 70% improvement.</p>
+      <p class="text-body mb-4">Slow CI/CD pipelines are productivity killers. Every minute developers wait for builds is a minute they're not shipping features. In this post, I'll share practical strategies that helped reduce our pipeline execution time from 45 minutes to under 14 minutes - a 70% improvement.</p>
       
       <h2 class="text-2xl font-serif font-semibold text-black mb-4 mt-8">Understanding Pipeline Bottlenecks</h2>
       <p class="text-body mb-4">Before optimizing, you need to understand where time is spent. Common bottlenecks include:</p>
@@ -383,7 +383,7 @@ jobs:
       </ul>
       
       <h2 class="text-2xl font-serif font-semibold text-black mb-4 mt-8">Conclusion</h2>
-      <p class="text-body mb-4">CI/CD optimization is an ongoing process. Start by measuring current performance, identify bottlenecks, and implement optimizations incrementally. The strategies outlined here—caching, parallelization, and intelligent execution—can dramatically improve pipeline performance.</p>
+      <p class="text-body mb-4">CI/CD optimization is an ongoing process. Start by measuring current performance, identify bottlenecks, and implement optimizations incrementally. The strategies outlined here - caching, parallelization, and intelligent execution - can dramatically improve pipeline performance.</p>
       <p class="text-body mb-4">Remember: fast feedback loops are essential for developer productivity. Every minute saved in CI/CD translates to faster feature delivery and happier developers.</p>
     `,
     date: '2025-11-16',
@@ -703,7 +703,7 @@ with tracer.start_as_current_span("process_request"):
       
       <h2 class="text-2xl font-serif font-semibold text-black mb-4 mt-8">Conclusion</h2>
       <p class="text-body mb-4">There's no one-size-fits-all answer. The best choice depends on your existing infrastructure, team expertise, compliance requirements, and budget. AWS EKS offers the most comprehensive enterprise features, GKE provides the best Kubernetes experience, and AKS is the most cost-effective for Microsoft-centric organizations.</p>
-      <p class="text-body mb-4">Evaluate your specific needs, run proof-of-concepts, and consider long-term strategic alignment with your cloud provider. Remember: the managed Kubernetes service is just one piece of your infrastructure puzzle—consider the entire ecosystem when making your decision.</p>
+      <p class="text-body mb-4">Evaluate your specific needs, run proof-of-concepts, and consider long-term strategic alignment with your cloud provider. Remember: the managed Kubernetes service is just one piece of your infrastructure puzzle - consider the entire ecosystem when making your decision.</p>
     `,
     date: '2025-11-14',
     readTime: '11 min read',
@@ -923,7 +923,7 @@ module "compute" {
       </ul>
       
       <h2 class="text-2xl font-serif font-semibold text-black mb-4 mt-8">Conclusion</h2>
-      <p class="text-body mb-4">Terraform modules are essential for managing infrastructure at scale. By following these best practices—versioning, validation, documentation, and testing—you can build a library of reusable, reliable infrastructure components.</p>
+      <p class="text-body mb-4">Terraform modules are essential for managing infrastructure at scale. By following these best practices - versioning, validation, documentation, and testing - you can build a library of reusable, reliable infrastructure components.</p>
       <p class="text-body mb-4">Start small with simple modules, iterate based on real usage, and gradually build a comprehensive module library. Well-designed modules are investments that pay dividends in reduced maintenance overhead and faster infrastructure delivery.</p>
     `,
     date: '2025-11-13',
@@ -1223,7 +1223,7 @@ module "compute" {
       </div>
       
       <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Conclusion</h2>
-      <p class="text-body mb-4">Prompt engineering is both an art and a science. By understanding core principles, mastering essential patterns, and applying advanced techniques, you can dramatically improve your interactions with AI models. Remember that effective prompting is an iterative process—start simple, test, refine, and optimize.</p>
+      <p class="text-body mb-4">Prompt engineering is both an art and a science. By understanding core principles, mastering essential patterns, and applying advanced techniques, you can dramatically improve your interactions with AI models. Remember that effective prompting is an iterative process - start simple, test, refine, and optimize.</p>
       <p class="text-body mb-4">As AI continues to evolve, so too will the techniques for interacting with it. Stay curious, experiment with different approaches, and document what works. The investment in learning prompt engineering pays dividends in productivity, creativity, and the quality of AI-generated outputs.</p>
       
       <div class="mt-12 pt-8 border-t-2 border-ink-light-gray dark:border-border">
@@ -1243,6 +1243,390 @@ module "compute" {
     date: '2025-11-19',
     readTime: '18 min read',
     category: 'AI',
+    author: 'Suhas Reddy'
+  },
+  {
+    id: '8',
+    title: 'Understanding Kubernetes Control Plane: A Deep Dive',
+    excerpt: 'A comprehensive exploration of the Kubernetes control plane components, their interactions, high availability patterns, and best practices for production deployments.',
+    content: `
+      <p class="text-body mb-4">The Kubernetes control plane is the brain of your cluster. It makes decisions about the cluster (such as scheduling containers), detects and responds to cluster events (such as scaling applications), and maintains the desired state of your system. Understanding how the control plane works is essential for anyone working with Kubernetes in production.</p>
+      
+      <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-6 border-l-4 border-black dark:border-foreground">
+        <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-2">Quick Reference: Control Plane Components</h3>
+        <p class="text-body mb-2"><strong>etcd:</strong> Distributed key-value store that holds cluster state</p>
+        <p class="text-body mb-2"><strong>API Server:</strong> Front-end for the control plane, validates and processes requests</p>
+        <p class="text-body mb-2"><strong>Controller Manager:</strong> Runs controllers that maintain cluster state</p>
+        <p class="text-body mb-2"><strong>Scheduler:</strong> Assigns pods to nodes based on resource requirements</p>
+        <p class="text-body"><strong>Cloud Controller Manager:</strong> Integrates cluster with cloud provider APIs</p>
+      </div>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">What is the Control Plane?</h2>
+      <p class="text-body mb-4">The Kubernetes control plane consists of a set of processes that manage the cluster state. These processes can run on any machine in the cluster, but typically run on dedicated master nodes (also called control plane nodes). The control plane's primary responsibility is to maintain the desired state of the cluster as defined by the user through Kubernetes API objects.</p>
+      
+      <p class="text-body mb-4">When you create a deployment, the control plane ensures that the specified number of replicas are running. If a pod crashes, the control plane detects this and creates a new one. If you scale a service, the control plane adjusts the number of running pods accordingly. All of this happens automatically through the control plane's watch-loops and reconciliation logic.</p>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Core Control Plane Components</h2>
+      
+      <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-3 mt-6">1. etcd</h3>
+      <p class="text-body mb-4"><strong>etcd</strong> is a distributed, reliable key-value store used by Kubernetes to store all cluster data. It's the single source of truth for the cluster state. Every change to the cluster state (creating pods, updating deployments, etc.) is written to etcd. Every read of cluster state comes from etcd.</p>
+      
+      <p class="text-body mb-4">Key characteristics of etcd in Kubernetes:</p>
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>Consistency:</strong> etcd uses the Raft consensus algorithm to ensure all control plane nodes agree on cluster state</li>
+        <li><strong>Watch API:</strong> Components can watch for changes to objects, enabling reactive behavior</li>
+        <li><strong>Persistent Storage:</strong> All cluster configuration and state is persisted to disk</li>
+        <li><strong>API Versioning:</strong> etcd stores objects in a versioned format, enabling API evolution</li>
+      </ul>
+      
+      <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded mb-4 border border-blue-200 dark:border-blue-800">
+        <h4 class="font-serif font-semibold text-black dark:text-foreground mb-2">Example: etcd Data Structure</h4>
+        <p class="text-sm text-body mb-2">When you create a deployment, etcd stores it at a path like:</p>
+        <pre class="bg-white dark:bg-card p-3 rounded text-xs font-mono overflow-x-auto"><code>/registry/deployments/default/my-app</code></pre>
+        <p class="text-xs text-ink-gray dark:text-muted-foreground mt-2">All Kubernetes objects follow similar hierarchical paths, making it easy to query and watch specific resource types.</p>
+      </div>
+      
+      <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-3 mt-6">2. kube-apiserver</h3>
+      <p class="text-body mb-4">The <strong>API Server</strong> is the front-end to the Kubernetes control plane. It's the only component that directly communicates with etcd. All other components interact with the cluster through the API Server. This design provides a single point of entry with built-in authentication, authorization, and admission control.</p>
+      
+      <p class="text-body mb-4">The API Server performs several critical functions:</p>
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>Request Validation:</strong> Ensures API requests conform to the expected schema</li>
+        <li><strong>Authentication:</strong> Verifies the identity of users and service accounts</li>
+        <li><strong>Authorization:</strong> Checks if authenticated users have permission to perform the requested action</li>
+        <li><strong>Admission Control:</strong> Intercepts requests to mutate or validate objects before persistence</li>
+        <li><strong>API Versioning:</strong> Supports multiple API versions simultaneously (e.g., v1, apps/v1)</li>
+        <li><strong>Rate Limiting:</strong> Prevents API abuse and ensures fair resource access</li>
+      </ul>
+      
+      <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4">
+        <h4 class="text-lg font-serif font-semibold text-black dark:text-foreground mb-2">Request Flow Through API Server</h4>
+        <ol class="list-decimal list-inside space-y-1 text-body ml-4">
+          <li>Client sends request (kubectl, API call, etc.)</li>
+          <li>API Server authenticates the request</li>
+          <li>API Server authorizes the request</li>
+          <li>Admission controllers validate/mutate the object</li>
+          <li>API Server writes to etcd</li>
+          <li>API Server returns response to client</li>
+        </ol>
+      </div>
+      
+      <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-3 mt-6">3. kube-controller-manager</h3>
+      <p class="text-body mb-4">The <strong>Controller Manager</strong> runs controllers that continuously watch the cluster state and take action to move the current state toward the desired state. Each controller is a control loop that watches specific resources in the API Server and responds to changes.</p>
+      
+      <p class="text-body mb-4">Key built-in controllers include:</p>
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>Deployment Controller:</strong> Manages deployments and their replica sets</li>
+        <li><strong>ReplicaSet Controller:</strong> Maintains the desired number of pod replicas</li>
+        <li><strong>Namespace Controller:</strong> Handles namespace lifecycle events</li>
+        <li><strong>Node Controller:</strong> Monitors node health and manages node lifecycles</li>
+        <li><strong>Service Controller:</strong> Creates cloud provider load balancers for services</li>
+        <li><strong>Job Controller:</strong> Manages job completion and cleanup</li>
+        <li><strong>Endpoint Controller:</strong> Populates endpoints objects for services</li>
+        <li><strong>PersistentVolume Controller:</strong> Manages volume lifecycle</li>
+      </ul>
+      
+      <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded mb-4 border border-green-200 dark:border-green-800">
+        <h4 class="font-serif font-semibold text-black dark:text-foreground mb-2">Example: Deployment Controller Watch Loop</h4>
+        <p class="text-sm text-body mb-2">When you create a deployment with 3 replicas:</p>
+        <ol class="list-decimal list-inside space-y-1 text-sm text-body ml-4">
+          <li>Deployment Controller detects new deployment in API Server</li>
+          <li>Controller creates a ReplicaSet with 3 replicas</li>
+          <li>ReplicaSet Controller detects new ReplicaSet</li>
+          <li>ReplicaSet Controller creates 3 Pod objects</li>
+          <li>Scheduler assigns pods to nodes</li>
+          <li>Controllers continuously watch to maintain 3 running pods</li>
+        </ol>
+      </div>
+      
+      <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-3 mt-6">4. kube-scheduler</h3>
+      <p class="text-body mb-4">The <strong>Scheduler</strong> is responsible for assigning pods to nodes. When you create a pod, the scheduler finds a suitable node that meets the pod's resource requirements and constraints.</p>
+      
+      <p class="text-body mb-4">The scheduling process consists of two main phases:</p>
+      <ol class="list-decimal list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>Filtering (Predicates):</strong> Filters out nodes that don't meet the pod's requirements (resource availability, node selectors, taints/tolerations, etc.)</li>
+        <li><strong>Scoring (Priorities):</strong> Ranks the remaining nodes based on various factors (resource utilization, affinity rules, anti-affinity rules, etc.)</li>
+      </ol>
+      
+      <p class="text-body mb-4">The scheduler considers many factors when making decisions:</p>
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>Resource Requests:</strong> CPU and memory requirements specified in pod specs</li>
+        <li><strong>Node Affinity:</strong> Preferred or required node labels</li>
+        <li><strong>Pod Affinity/Anti-Affinity:</strong> Rules about co-locating or separating pods</li>
+        <li><strong>Taints and Tolerations:</strong> Mechanism to prevent pods from being scheduled on certain nodes</li>
+        <li><strong>Inter-pod Affinity:</strong> Rules about placing pods relative to other pods</li>
+      </ul>
+      
+      <pre class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4 overflow-x-auto text-sm font-mono"><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: app
+    image: nginx
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+      limits:
+        memory: "256Mi"
+        cpu: "200m"
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: disktype
+            operator: In
+            values:
+            - ssd</code></pre>
+      
+      <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-3 mt-6">5. cloud-controller-manager</h3>
+      <p class="text-body mb-4">The <strong>Cloud Controller Manager</strong> integrates Kubernetes with cloud provider APIs. It runs controllers that interact with cloud services for features like load balancers, node management, and storage provisioning.</p>
+      
+      <p class="text-body mb-4">Cloud-specific controllers include:</p>
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>Node Controller:</strong> Manages cloud provider node lifecycles</li>
+        <li><strong>Route Controller:</strong> Configures routes in cloud provider networking</li>
+        <li><strong>Service Controller:</strong> Integrates with cloud load balancers</li>
+        <li><strong>Volume Controller:</strong> Manages cloud provider storage</li>
+      </ul>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">How Components Interact</h2>
+      <p class="text-body mb-4">Understanding how control plane components interact is crucial for troubleshooting and optimization. Here's a typical flow when you create a deployment:</p>
+      
+      <ol class="list-decimal list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>User Action:</strong> You run <code class="bg-ink-black/10 dark:bg-ink-black/30 px-1 rounded text-sm">kubectl create deployment</code></li>
+        <li><strong>kubectl → API Server:</strong> kubectl sends a POST request to create a Deployment object</li>
+        <li><strong>API Server:</strong> Validates, authenticates, and authorizes the request</li>
+        <li><strong>API Server → etcd:</strong> Writes the Deployment object to etcd</li>
+        <li><strong>Controller Manager:</strong> Deployment Controller watches etcd, detects new Deployment</li>
+        <li><strong>Controller Manager → API Server:</strong> Creates a ReplicaSet object</li>
+        <li><strong>API Server → etcd:</strong> Writes ReplicaSet to etcd</li>
+        <li><strong>Controller Manager:</strong> ReplicaSet Controller watches etcd, detects new ReplicaSet</li>
+        <li><strong>Controller Manager → API Server:</strong> Creates Pod objects (with no node assignment)</li>
+        <li><strong>API Server → etcd:</strong> Writes Pods to etcd</li>
+        <li><strong>Scheduler:</strong> Watches etcd for pods with no node assignment</li>
+        <li><strong>Scheduler → API Server:</strong> Updates Pod objects with node assignments</li>
+        <li><strong>API Server → etcd:</strong> Updates Pod objects in etcd</li>
+        <li><strong>kubelet:</strong> On assigned node, watches etcd for pods assigned to its node</li>
+        <li><strong>kubelet:</strong> Creates containers via container runtime (Docker, containerd, etc.)</li>
+      </ol>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">High Availability (HA) Control Plane</h2>
+      <p class="text-body mb-4">For production environments, you must run multiple control plane nodes to ensure high availability. If a single control plane node fails, other nodes can take over, ensuring cluster operations continue uninterrupted.</p>
+      
+      <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-3 mt-6">HA Architecture</h3>
+      <p class="text-body mb-4">A highly available control plane typically consists of:</p>
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>3 or 5 etcd Instances:</strong> Run as a cluster using Raft consensus (requires odd number for quorum)</li>
+        <li><strong>3 or more API Servers:</strong> Behind a load balancer, all can handle requests</li>
+        <li><strong>3 or more Controller Managers:</strong> Leader election ensures only one active instance</li>
+        <li><strong>3 or more Schedulers:</strong> Leader election ensures only one active instance</li>
+      </ul>
+      
+      <div class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4">
+        <h4 class="text-lg font-serif font-semibold text-black dark:text-foreground mb-2">Leader Election Mechanism</h4>
+        <p class="text-body mb-2">Controller Manager and Scheduler use leader election to prevent split-brain scenarios:</p>
+        <ol class="list-decimal list-inside space-y-1 text-body ml-4">
+          <li>Multiple instances attempt to acquire a lease in etcd</li>
+          <li>First instance to acquire the lease becomes the leader</li>
+          <li>Leader periodically renews the lease</li>
+          <li>If leader fails, lease expires and another instance becomes leader</li>
+          <li>Only the leader performs control operations</li>
+        </ol>
+      </div>
+      
+      <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-3 mt-6">etcd High Availability</h3>
+      <p class="text-body mb-4">etcd uses the Raft consensus algorithm to maintain consistency across multiple nodes. Key concepts:</p>
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>Quorum:</strong> Majority of nodes must be healthy (3 nodes = 2 required, 5 nodes = 3 required)</li>
+        <li><strong>Leader:</strong> One node handles all write operations</li>
+        <li><strong>Followers:</strong> Replicate writes from the leader</li>
+        <li><strong>Split-Brain Prevention:</strong> Raft ensures only one leader exists at a time</li>
+      </ul>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Security Best Practices</h2>
+      <p class="text-body mb-4">Securing the control plane is critical for cluster security. Key practices include:</p>
+      
+      <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-3 mt-6">1. API Server Security</h3>
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>TLS Everywhere:</strong> Enable TLS for all API Server communications</li>
+        <li><strong>RBAC:</strong> Use Role-Based Access Control to limit permissions</li>
+        <li><strong>API Server Audit Logging:</strong> Log all API requests for security monitoring</li>
+        <li><strong>Admission Controllers:</strong> Use admission controllers like PodSecurityPolicy or OPA Gatekeeper</li>
+        <li><strong>Network Policies:</strong> Restrict network access to API Server</li>
+      </ul>
+      
+      <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-3 mt-6">2. etcd Security</h3>
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>Encryption at Rest:</strong> Encrypt etcd data on disk</li>
+        <li><strong>TLS for Peer Communication:</strong> Encrypt communication between etcd members</li>
+        <li><strong>Access Control:</strong> Limit access to etcd to control plane nodes only</li>
+        <li><strong>Regular Backups:</strong> Backup etcd data regularly for disaster recovery</li>
+      </ul>
+      
+      <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-3 mt-6">3. Component Security</h3>
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>Service Account Tokens:</strong> Use least-privilege service accounts</li>
+        <li><strong>Network Segmentation:</strong> Isolate control plane nodes from worker nodes</li>
+        <li><strong>Regular Updates:</strong> Keep control plane components updated with security patches</li>
+        <li><strong>Certificate Rotation:</strong> Implement automatic certificate rotation</li>
+      </ul>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Troubleshooting the Control Plane</h2>
+      <p class="text-body mb-4">When issues arise with the control plane, systematic troubleshooting is essential:</p>
+      
+      <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-3 mt-6">Common Issues and Solutions</h3>
+      
+      <table class="w-full border-collapse border border-ink-light-gray dark:border-border mb-4">
+        <thead>
+          <tr class="bg-ink-black/5 dark:bg-ink-black/20">
+            <th class="border border-ink-light-gray dark:border-border p-3 text-left font-serif">Issue</th>
+            <th class="border border-ink-light-gray dark:border-border p-3 text-left font-serif">Symptoms</th>
+            <th class="border border-ink-light-gray dark:border-border p-3 text-left font-serif">Diagnosis</th>
+            <th class="border border-ink-light-gray dark:border-border p-3 text-left font-serif">Solution</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">API Server Down</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">kubectl commands fail, cluster unresponsive</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body"><code class="text-xs">kubectl get nodes</code> fails</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Check API Server pod status, logs, and health endpoints</td>
+          </tr>
+          <tr class="bg-ink-black/5 dark:bg-ink-black/20">
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">etcd Quorum Lost</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Writes fail, read-only mode</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">etcd health check fails</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Restore quorum by bringing up failed etcd nodes or restore from backup</td>
+          </tr>
+          <tr>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Scheduler Not Assigning Pods</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Pods stuck in Pending state</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body"><code class="text-xs">kubectl describe pod</code> shows no events</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Check scheduler logs, verify node resources, check taints/tolerations</td>
+          </tr>
+          <tr class="bg-ink-black/5 dark:bg-ink-black/20">
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Controller Not Reconciling</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Desired state not achieved</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Pods not scaling, deployments not updating</td>
+            <td class="border border-ink-light-gray dark:border-border p-3 text-body">Check controller manager logs, verify leader election, check resource limits</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-3 mt-6">Useful Diagnostic Commands</h3>
+      <pre class="bg-ink-black/5 dark:bg-ink-black/20 p-4 rounded mb-4 overflow-x-auto text-sm font-mono"><code># Check control plane component status
+kubectl get componentstatuses
+
+# View API Server logs
+kubectl logs -n kube-system kube-apiserver-master-node
+
+# Check etcd health
+etcdctl endpoint health
+
+# View scheduler logs
+kubectl logs -n kube-system kube-scheduler-master-node
+
+# Check controller manager logs
+kubectl logs -n kube-system kube-controller-manager-master-node
+
+# Verify leader election
+kubectl get endpoints kube-controller-manager -n kube-system -o yaml
+kubectl get endpoints kube-scheduler -n kube-system -o yaml
+
+# Check API Server metrics
+curl -k https://localhost:6443/metrics</code></pre>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Performance Optimization</h2>
+      <p class="text-body mb-4">Optimizing control plane performance is crucial for large clusters:</p>
+      
+      <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-3 mt-6">1. etcd Optimization</h3>
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>Dedicated Hardware:</strong> Use SSD storage for etcd data directory</li>
+        <li><strong>Network Latency:</strong> Ensure low latency between etcd nodes (< 10ms)</li>
+        <li><strong>Compaction:</strong> Configure automatic compaction to prevent database growth</li>
+        <li><strong>Snapshot Frequency:</strong> Adjust snapshot frequency based on write load</li>
+        <li><strong>Resource Limits:</strong> Allocate sufficient CPU and memory (2GB+ RAM for small clusters)</li>
+      </ul>
+      
+      <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-3 mt-6">2. API Server Optimization</h3>
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>Request Timeouts:</strong> Configure appropriate request timeouts</li>
+        <li><strong>Rate Limiting:</strong> Set up rate limiting to prevent API abuse</li>
+        <li><strong>Audit Logging:</strong> Disable or filter audit logging in production if not needed</li>
+        <li><strong>Watch Cache:</strong> Tune watch cache size based on cluster size</li>
+        <li><strong>Horizontal Scaling:</strong> Run multiple API Server instances behind a load balancer</li>
+      </ul>
+      
+      <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-3 mt-6">3. Controller Optimization</h3>
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>Concurrent Syncs:</strong> Tune controller concurrent sync settings</li>
+        <li><strong>Resync Period:</strong> Adjust resync periods based on update frequency</li>
+        <li><strong>Selective Watching:</strong> Use field selectors to reduce watch load</li>
+      </ul>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Monitoring the Control Plane</h2>
+      <p class="text-body mb-4">Effective monitoring is essential for maintaining a healthy control plane:</p>
+      
+      <h3 class="text-xl font-serif font-semibold text-black dark:text-foreground mb-3 mt-6">Key Metrics to Monitor</h3>
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li><strong>API Server:</strong> Request rate, latency (p50, p95, p99), error rate</li>
+        <li><strong>etcd:</strong> Request rate, latency, leader changes, disk I/O</li>
+        <li><strong>Scheduler:</strong> Scheduling rate, scheduling latency, pending pods</li>
+        <li><strong>Controller Manager:</strong> Reconciliation duration, error rate, leader election status</li>
+        <li><strong>Node Metrics:</strong> CPU, memory, disk usage of control plane nodes</li>
+      </ul>
+      
+      <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded mb-4 border border-blue-200 dark:border-blue-800">
+        <h4 class="font-serif font-semibold text-black dark:text-foreground mb-2">Example: Prometheus Queries</h4>
+        <pre class="bg-white dark:bg-card p-3 rounded text-xs font-mono overflow-x-auto"><code># API Server request latency (p99)
+histogram_quantile(0.99, 
+  rate(apiserver_request_duration_seconds_bucket[5m]))
+
+# etcd request rate
+rate(etcd_server_requests_total[5m])
+
+# Pending pods waiting for scheduling
+count(kube_pod_status_phase{phase="Pending"})
+
+# API Server error rate
+rate(apiserver_request_total{code=~"5.."}[5m])</code></pre>
+      </div>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Best Practices for Production</h2>
+      <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded mb-6 border border-green-200 dark:border-green-800">
+        <ul class="list-disc list-inside space-y-2 text-body ml-4">
+          <li><strong>Always Run HA:</strong> Deploy at least 3 control plane nodes for production</li>
+          <li><strong>Separate etcd:</strong> Run etcd on dedicated nodes for better performance</li>
+          <li><strong>Regular Backups:</strong> Automate etcd backups and test restore procedures</li>
+          <li><strong>Resource Limits:</strong> Set appropriate resource requests and limits for all control plane components</li>
+          <li><strong>Monitoring:</strong> Implement comprehensive monitoring and alerting</li>
+          <li><strong>Security:</strong> Enable TLS, RBAC, and network policies</li>
+          <li><strong>Updates:</strong> Plan and test control plane upgrades carefully</li>
+          <li><strong>Documentation:</strong> Document your control plane architecture and procedures</li>
+        </ul>
+      </div>
+      
+      <h2 class="text-2xl font-serif font-semibold text-black dark:text-foreground mb-4 mt-8">Conclusion</h2>
+      <p class="text-body mb-4">The Kubernetes control plane is a sophisticated system that orchestrates your entire cluster. Understanding its components, how they interact, and how to troubleshoot them is essential for anyone operating Kubernetes in production.</p>
+      
+      <p class="text-body mb-4">Key takeaways:</p>
+      <ul class="list-disc list-inside mb-4 space-y-2 text-body ml-4">
+        <li>The control plane maintains desired cluster state through watch-loops and reconciliation</li>
+        <li>All components communicate through the API Server, which is the single source of truth interface</li>
+        <li>etcd stores all cluster state and must be highly available and backed up regularly</li>
+        <li>High availability requires multiple control plane nodes and proper leader election</li>
+        <li>Security, monitoring, and optimization are ongoing concerns for production clusters</li>
+      </ul>
+      
+      <p class="text-body mb-4">Mastering the control plane will help you build more reliable, secure, and performant Kubernetes clusters. Take time to experiment, monitor, and understand how your control plane behaves under different conditions.</p>
+    `,
+    date: '2025-01-17',
+    readTime: '25 min read',
+    category: 'Kubernetes',
     author: 'Suhas Reddy'
   }
 ];

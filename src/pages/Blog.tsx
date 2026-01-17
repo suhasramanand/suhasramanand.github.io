@@ -90,6 +90,16 @@ const blogPosts: BlogPost[] = [
     readTime: '13 min read',
     category: 'DevOps',
     author: 'Suhas Reddy'
+  },
+  {
+    id: '8',
+    title: 'Understanding Kubernetes Control Plane: A Deep Dive',
+    excerpt: 'A comprehensive exploration of the Kubernetes control plane components, their interactions, high availability patterns, and best practices for production deployments.',
+    content: 'Full blog post content goes here...',
+    date: '2025-01-17',
+    readTime: '25 min read',
+    category: 'Kubernetes',
+    author: 'Suhas Reddy'
   }
 ];
 
