@@ -138,8 +138,8 @@ const ExperienceSection: React.FC = React.memo(() => {
   const timelineLineRef = useRef<HTMLDivElement>(null);
   const timelineContainerRef = useRef<HTMLDivElement>(null);
   const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
-  const [count, setCount] = useState(0);
+  const [current, setCurrent] = useState(1);
+  const [count, setCount] = useState(experiences.length);
 
   // Animate timeline line as user scrolls
   useEffect(() => {
@@ -197,12 +197,24 @@ const ExperienceSection: React.FC = React.memo(() => {
       return;
     }
 
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap() + 1);
-
-    api.on("select", () => {
+    const updateCarouselState = () => {
+      const snapList = api.scrollSnapList();
+      setCount(snapList.length);
       setCurrent(api.selectedScrollSnap() + 1);
-    });
+    };
+
+    // Initial state
+    updateCarouselState();
+
+    // Update on select
+    api.on("select", updateCarouselState);
+    api.on("reInit", updateCarouselState);
+
+    // Cleanup
+    return () => {
+      api.off("select", updateCarouselState);
+      api.off("reInit", updateCarouselState);
+    };
   }, [api]);
 
   // Helper function to render experience card
@@ -371,7 +383,7 @@ const ExperienceSection: React.FC = React.memo(() => {
           </Carousel>
 
           {/* Carousel Navigation */}
-          {experiences.length > 1 && count > 0 && (
+          {experiences.length > 1 && (
             <div className="flex justify-center items-center gap-4 mt-6">
               <button
                 onClick={(e) => {
@@ -391,7 +403,7 @@ const ExperienceSection: React.FC = React.memo(() => {
                 <ChevronLeft size={20} className="text-black dark:text-foreground font-bold" strokeWidth={2.5} />
               </button>
               <span className="text-sm font-serif text-ink-gray dark:text-muted-foreground min-w-[3rem] text-center">
-                {current} / {count}
+                {current} / {count || experiences.length}
               </span>
               <button
                 onClick={(e) => {
