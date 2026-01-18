@@ -2,6 +2,30 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
+// Plugin to inject Google Analytics into HTML
+const injectGA = () => {
+  return {
+    name: 'inject-ga',
+    transformIndexHtml(html: string) {
+      const gaId = process.env.VITE_GA_MEASUREMENT_ID;
+      if (gaId) {
+        const gaScript = `
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=${gaId}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '${gaId}');
+    </script>`;
+        // Insert before closing </head> tag
+        return html.replace('</head>', `${gaScript}\n  </head>`);
+      }
+      return html;
+    }
+  };
+};
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   base: mode === 'production' ? '/' : '/',
@@ -11,6 +35,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
+    injectGA(),
   ],
   resolve: {
     alias: {

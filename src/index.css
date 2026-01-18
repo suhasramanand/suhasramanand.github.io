@@ -171,7 +171,7 @@ html:not([data-scroll-locked]) {
   }
   
   .paper-card {
-    @apply bg-paper-cream dark:bg-card border border-black/20 dark:border-border p-8 transition-all duration-200;
+    @apply bg-paper-cream dark:bg-card border border-black/20 dark:border-border p-4 md:p-6 lg:p-8 transition-all duration-200;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
   

@@ -1,7 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Calendar, MapPin, TrendingUp, Target, CheckCircle2 } from "lucide-react";
+import { Calendar, MapPin, TrendingUp, Target, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -131,6 +137,9 @@ const ExperienceSection: React.FC = React.memo(() => {
   const timelineItemsRef = useRef<(HTMLDivElement | null)[]>([]);
   const timelineLineRef = useRef<HTMLDivElement>(null);
   const timelineContainerRef = useRef<HTMLDivElement>(null);
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
 
   // Animate timeline line as user scrolls
   useEffect(() => {
@@ -182,6 +191,139 @@ const ExperienceSection: React.FC = React.memo(() => {
     return () => ctx.revert();
   }, []);
 
+  // Sync carousel state
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
+  // Helper function to render experience card
+  const renderExperienceCard = (exp: ExperienceItem, index: number) => (
+    <div className="paper-card relative overflow-hidden">
+      {/* Dotted Grid Background Pattern */}
+      <div 
+        className="absolute inset-0 opacity-[0.08] dark:opacity-[0.12] pointer-events-none"
+        style={{
+          backgroundImage: `
+            radial-gradient(circle, currentColor 1px, transparent 1px)
+          `,
+          backgroundSize: '20px 20px',
+          backgroundPosition: '0 0, 0 0',
+          color: 'currentColor',
+        }}
+      />
+      <div className="relative z-10">
+        {/* Header - More compact on mobile */}
+        <div className="mb-4 md:mb-8 pb-3 md:pb-6 border-b border-ink-light-gray/30 dark:border-border">
+          <div className="flex flex-wrap items-start gap-2 md:gap-4 mb-2 md:mb-4">
+            <img
+              src={exp.logo}
+              alt={`${exp.company} logo`}
+              className="h-8 md:h-10 w-auto object-contain opacity-80 dark:opacity-90"
+              loading="lazy"
+            />
+            <div className="flex-1 min-w-0">
+              <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-serif font-semibold text-black dark:text-foreground mb-0.5 md:mb-1">
+                {exp.title}
+              </h3>
+              <h4 className="text-sm sm:text-base md:text-lg lg:text-xl font-serif font-medium text-ink-gray dark:text-muted-foreground italic">
+                {exp.company}
+              </h4>
+            </div>
+            {exp.tag && (
+              <span className="px-2 md:px-3 py-0.5 md:py-1 text-xs font-sans tracking-wider uppercase border border-ink-light-gray/40 dark:border-border text-ink-gray dark:text-muted-foreground shrink-0">
+                {exp.tag}
+              </span>
+            )}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-ink-gray dark:text-muted-foreground">
+            <div className="flex items-center gap-1 md:gap-2">
+              <Calendar size={14} className="md:w-4 md:h-4 text-ink-light-gray dark:text-muted-foreground shrink-0" />
+              <span className="font-serif">{exp.period}</span>
+            </div>
+            <div className="flex items-center gap-1 md:gap-2">
+              <MapPin size={14} className="md:w-4 md:h-4 text-ink-light-gray dark:text-muted-foreground shrink-0" />
+              <span className="font-serif">{exp.location}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* KPIs Section - More compact on mobile */}
+        {exp.kpis && exp.kpis.length > 0 && (
+          <div className="mb-4 md:mb-8">
+            <div className="flex items-center gap-1.5 md:gap-2 mb-2 md:mb-4">
+              <TrendingUp size={14} className="md:w-[18px] md:h-[18px] text-black dark:text-foreground shrink-0" />
+              <h5 className="text-xs md:text-sm font-sans uppercase tracking-wider text-black dark:text-foreground font-semibold">
+                Key Performance Indicators
+              </h5>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
+              {exp.kpis.map((kpi, i) => (
+                <div
+                  key={i}
+                  className="bg-paper-cream/50 dark:bg-card/50 border border-ink-light-gray/30 dark:border-border p-2 md:p-4 transition-all hover:border-black/40 dark:hover:border-foreground/40"
+                >
+                  <div className="flex items-start gap-1.5 md:gap-2 mb-1 md:mb-2">
+                    <Target size={12} className="md:w-4 md:h-4 text-black dark:text-foreground mt-0.5 flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-lg md:text-xl lg:text-2xl font-serif font-bold text-black dark:text-foreground mb-0.5 md:mb-1">
+                        {kpi.value}
+                      </div>
+                      <div className="text-xs md:text-sm font-serif text-ink-gray dark:text-muted-foreground">
+                        {kpi.label}
+                      </div>
+                      {kpi.description && (
+                        <div className="text-[10px] md:text-xs text-ink-light-gray dark:text-muted-foreground mt-0.5 md:mt-1 font-sans">
+                          {kpi.description}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Responsibilities Section - More compact on mobile with scroll */}
+        {exp.responsibilities && exp.responsibilities.length > 0 && (
+          <div>
+            <div className="flex items-center gap-1.5 md:gap-2 mb-2 md:mb-4">
+              <CheckCircle2 size={14} className="md:w-[18px] md:h-[18px] text-black dark:text-foreground shrink-0" />
+              <h5 className="text-xs md:text-sm font-sans uppercase tracking-wider text-black dark:text-foreground font-semibold">
+                Key Responsibilities
+              </h5>
+            </div>
+            <div className="space-y-2 md:space-y-4 max-h-[300px] md:max-h-none overflow-y-auto md:overflow-visible">
+              {exp.responsibilities.map((resp, i) => (
+                <div
+                  key={i}
+                  className="border-l-2 border-black/20 dark:border-foreground/20 pl-2 md:pl-4 py-1 md:py-2"
+                >
+                  <div className="font-serif font-semibold text-black dark:text-foreground mb-0.5 md:mb-1 text-sm md:text-base">
+                    {resp.category}
+                  </div>
+                  <div className="font-serif text-ink-gray dark:text-muted-foreground text-xs md:text-sm leading-snug md:leading-relaxed">
+                    {resp.description}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
   return (
     <section
       id="experience"
@@ -199,11 +341,85 @@ const ExperienceSection: React.FC = React.memo(() => {
           </h2>
         </div>
 
-        <div ref={timelineContainerRef} className="relative mt-12">
+        {/* Mobile Carousel - hidden on desktop */}
+        <div className="md:hidden relative mt-12">
+          <Carousel
+            setApi={setApi}
+            opts={{
+              align: "start",
+              loop: false,
+              slidesToScroll: 1,
+              dragFree: false,
+              containScroll: "trimSnaps",
+              watchDrag: true,
+              watchResize: true,
+              skipSnaps: false,
+              duration: 10,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2">
+              {experiences.map((exp, index) => (
+                <CarouselItem
+                  key={index}
+                  className="pl-2 basis-full"
+                >
+                  {renderExperienceCard(exp, index)}
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+
+          {/* Carousel Navigation */}
+          {experiences.length > 1 && count > 0 && (
+            <div className="flex justify-center items-center gap-4 mt-6">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (api) {
+                    const currentIndex = api.selectedScrollSnap();
+                    if (currentIndex > 0) {
+                      api.scrollTo(currentIndex - 1);
+                    }
+                  }
+                }}
+                className="h-10 w-10 rounded-full bg-white/95 dark:bg-card/95 backdrop-blur-sm border-2 border-black/20 dark:border-border hover:bg-white dark:hover:bg-card hover:border-black/40 dark:hover:border-foreground/60 shadow-lg hover:shadow-xl z-20 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-110 active:scale-95"
+                disabled={current === 1}
+                aria-label="Previous slide"
+              >
+                <ChevronLeft size={20} className="text-black dark:text-foreground font-bold" strokeWidth={2.5} />
+              </button>
+              <span className="text-sm font-serif text-ink-gray dark:text-muted-foreground min-w-[3rem] text-center">
+                {current} / {count}
+              </span>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (api) {
+                    const currentIndex = api.selectedScrollSnap();
+                    if (currentIndex < count - 1) {
+                      api.scrollTo(currentIndex + 1);
+                    }
+                  }
+                }}
+                className="h-10 w-10 rounded-full bg-white/95 dark:bg-card/95 backdrop-blur-sm border-2 border-black/20 dark:border-border hover:bg-white dark:hover:bg-card hover:border-black/40 dark:hover:border-foreground/60 shadow-lg hover:shadow-xl z-20 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-110 active:scale-95"
+                disabled={current === count}
+                aria-label="Next slide"
+              >
+                <ChevronRight size={20} className="text-black dark:text-foreground font-bold" strokeWidth={2.5} />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Desktop Timeline - hidden on mobile */}
+        <div ref={timelineContainerRef} className="hidden md:block relative mt-12">
           {/* Timeline line */}
           <div 
             ref={timelineLineRef}
-            className="hidden md:block absolute left-8 top-0 bottom-0 w-0.5 bg-ink-light-gray/30 dark:bg-border origin-top"
+            className="absolute left-8 top-0 bottom-0 w-0.5 bg-ink-light-gray/30 dark:bg-border origin-top"
             style={{ transform: 'scaleY(0)' }}
           ></div>
           
@@ -217,127 +433,13 @@ const ExperienceSection: React.FC = React.memo(() => {
                 {/* Timeline dot */}
                 <div 
                   data-timeline-dot
-                  className="hidden md:block absolute left-6 top-6 w-4 h-4 rounded-full bg-black dark:bg-foreground border-2 border-paper-cream dark:border-background z-10"
+                  className="absolute left-6 top-6 w-4 h-4 rounded-full bg-black dark:bg-foreground border-2 border-paper-cream dark:border-background z-10"
                   style={{ scale: 0, opacity: 0 }}
                 ></div>
                 
                 {/* Card with left margin for timeline on desktop */}
                 <div className="md:ml-16">
-                  <div className="paper-card relative overflow-hidden">
-                    {/* Dotted Grid Background Pattern */}
-                    <div 
-                      className="absolute inset-0 opacity-[0.08] dark:opacity-[0.12] pointer-events-none"
-                      style={{
-                        backgroundImage: `
-                          radial-gradient(circle, currentColor 1px, transparent 1px)
-                        `,
-                        backgroundSize: '20px 20px',
-                        backgroundPosition: '0 0, 0 0',
-                        color: 'currentColor',
-                      }}
-                    />
-                    <div className="relative z-10">
-                {/* Header */}
-                <div className="mb-8 pb-6 border-b border-ink-light-gray/30 dark:border-border">
-                  <div className="flex flex-wrap items-start gap-4 mb-4">
-                    <img
-                      src={exp.logo}
-                      alt={`${exp.company} logo`}
-                      className="h-10 w-auto object-contain opacity-80 dark:opacity-90"
-                      loading="lazy"
-                    />
-                    <div className="flex-1">
-                      <h3 className="text-xl sm:text-2xl font-serif font-semibold text-black dark:text-foreground mb-1">
-                        {exp.title}
-                      </h3>
-                      <h4 className="text-lg sm:text-xl font-serif font-medium text-ink-gray dark:text-muted-foreground italic">
-                        {exp.company}
-                      </h4>
-                    </div>
-                    {exp.tag && (
-                      <span className="px-3 py-1 text-xs font-sans tracking-wider uppercase border border-ink-light-gray/40 dark:border-border text-ink-gray dark:text-muted-foreground">
-                        {exp.tag}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-ink-gray dark:text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <Calendar size={16} className="text-ink-light-gray dark:text-muted-foreground" />
-                      <span className="font-serif">{exp.period}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <MapPin size={16} className="text-ink-light-gray dark:text-muted-foreground" />
-                      <span className="font-serif">{exp.location}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* KPIs Section */}
-                {exp.kpis && exp.kpis.length > 0 && (
-                  <div className="mb-8">
-                    <div className="flex items-center gap-2 mb-4">
-                      <TrendingUp size={18} className="text-black dark:text-foreground" />
-                      <h5 className="text-sm font-sans uppercase tracking-wider text-black dark:text-foreground font-semibold">
-                        Key Performance Indicators
-                      </h5>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {exp.kpis.map((kpi, i) => (
-                        <div
-                          key={i}
-                          className="bg-paper-cream/50 dark:bg-card/50 border border-ink-light-gray/30 dark:border-border p-4 transition-all hover:border-black/40 dark:hover:border-foreground/40"
-                        >
-                          <div className="flex items-start gap-2 mb-2">
-                            <Target size={16} className="text-black dark:text-foreground mt-0.5 flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <div className="text-2xl font-serif font-bold text-black dark:text-foreground mb-1">
-                                {kpi.value}
-                              </div>
-                              <div className="text-sm font-serif text-ink-gray dark:text-muted-foreground">
-                                {kpi.label}
-                              </div>
-                              {kpi.description && (
-                                <div className="text-xs text-ink-light-gray dark:text-muted-foreground mt-1 font-sans">
-                                  {kpi.description}
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Responsibilities Section */}
-                {exp.responsibilities && exp.responsibilities.length > 0 && (
-                  <div>
-                    <div className="flex items-center gap-2 mb-4">
-                      <CheckCircle2 size={18} className="text-black dark:text-foreground" />
-                      <h5 className="text-sm font-sans uppercase tracking-wider text-black dark:text-foreground font-semibold">
-                        Key Responsibilities
-                      </h5>
-                    </div>
-                    <div className="space-y-4">
-                      {exp.responsibilities.map((resp, i) => (
-                        <div
-                          key={i}
-                          className="border-l-2 border-black/20 dark:border-foreground/20 pl-4 py-2"
-                        >
-                          <div className="font-serif font-semibold text-black dark:text-foreground mb-1 text-base">
-                            {resp.category}
-                          </div>
-                          <div className="font-serif text-ink-gray dark:text-muted-foreground text-sm leading-relaxed">
-                            {resp.description}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                    </div>
-                  </div>
+                  {renderExperienceCard(exp, index)}
                 </div>
               </div>
             ))}
