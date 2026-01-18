@@ -6,6 +6,7 @@ import { BookOpen, Calendar, Clock, Home, Search, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import CrazyMenu from '@/components/CrazyMenu';
 import FloatingActionButton from '@/components/FloatingActionButton';
+import SEO from '@/components/SEO';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -152,6 +153,12 @@ const Blog: React.FC = () => {
 
   return (
     <>
+      <SEO
+        title="Blog - Software Engineering & Cloud Infrastructure Articles"
+        description="Read articles on software engineering, cloud infrastructure, DevOps, Kubernetes, Terraform, AI, and more. Technical guides, best practices, and insights from a Cloud Specialist."
+        keywords="Blog, Software Engineering Blog, Cloud Blog, DevOps Articles, Kubernetes Tutorial, Terraform Guide, Technical Blog, Programming Blog"
+        url="/blog"
+      />
       <CrazyMenu />
       <FloatingActionButton />
       <main className="pt-16">

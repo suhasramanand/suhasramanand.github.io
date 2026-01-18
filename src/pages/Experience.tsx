@@ -6,6 +6,7 @@ import FloatingActionButton from '@/components/FloatingActionButton';
 import SupportBot from '@/components/SupportBot';
 import AnimatedSection from '@/components/AnimatedSection';
 import ExperienceSection from '@/components/ExperienceSection';
+import SEO from '@/components/SEO';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,6 +17,12 @@ const Experience = () => {
 
   return (
     <main className="relative overflow-hidden min-h-screen">
+      <SEO
+        title="Work Experience - Professional Journey"
+        description="My professional experience as a Software Engineer specializing in Cloud Infrastructure, SRE, and DevOps. Work history at Calix Inc, Elanco, and Bosch with expertise in AWS, GCP, Kubernetes, and CI/CD pipelines."
+        keywords="Work Experience, Software Engineer Experience, Cloud Engineer, SRE Experience, DevOps Experience, Calix, Elanco, Bosch"
+        url="/experience"
+      />
       <CrazyMenu />
       <FloatingActionButton />
       <SupportBot />

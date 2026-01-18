@@ -6,6 +6,7 @@ import FloatingActionButton from '@/components/FloatingActionButton';
 import SupportBot from '@/components/SupportBot';
 import AnimatedSection from '@/components/AnimatedSection';
 import ProjectsSection from '@/components/ProjectsSection';
+import SEO from '@/components/SEO';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,6 +17,12 @@ const Projects = () => {
 
   return (
     <main className="relative overflow-hidden min-h-screen">
+      <SEO
+        title="Projects - Portfolio Showcase"
+        description="Explore my portfolio of full-stack applications, cloud infrastructure projects, AI-powered tools, and DevOps solutions. Built with modern technologies including React, Node.js, Python, AWS, GCP, and Kubernetes."
+        keywords="Software Projects, Portfolio, Full Stack Development, Cloud Projects, DevOps Projects, React Projects, Python Projects, Open Source"
+        url="/projects"
+      />
       <CrazyMenu />
       <FloatingActionButton />
       <SupportBot />

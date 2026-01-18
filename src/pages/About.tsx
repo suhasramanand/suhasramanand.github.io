@@ -6,6 +6,7 @@ import FloatingActionButton from '@/components/FloatingActionButton';
 import SupportBot from '@/components/SupportBot';
 import AnimatedSection from '@/components/AnimatedSection';
 import AboutSection from '@/components/AboutSection';
+import SEO from '@/components/SEO';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,6 +17,12 @@ const About = () => {
 
   return (
     <main className="relative overflow-hidden min-h-screen">
+      <SEO
+        title="About Me - Software Engineer & Cloud Specialist"
+        description="Learn about my journey as a Software Engineer and Cloud Specialist. Passionate about building scalable systems, cloud infrastructure automation, and DevOps practices. Currently pursuing Master's at Northeastern University."
+        keywords="About, Software Engineer Bio, Cloud Specialist, Personal Introduction, Developer Story, Professional Background"
+        url="/about"
+      />
       <CrazyMenu />
       <FloatingActionButton />
       <SupportBot />

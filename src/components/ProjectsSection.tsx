@@ -418,7 +418,7 @@ const ProjectsSection: React.FC = React.memo(() => {
             <Carousel
               setApi={setApi}
               opts={{
-                align: "start",
+                align: filteredProjects.length <= 3 ? "center" : "start",
                 loop: false,
                 slidesToScroll: 1,
                 dragFree: false,
@@ -431,8 +431,10 @@ const ProjectsSection: React.FC = React.memo(() => {
               }}
               className="w-full"
               style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+                ...(filteredProjects.length > 3 ? {
+                  maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+                } : {})
               }}
             >
               <CarouselContent className="-ml-2 md:-ml-6">

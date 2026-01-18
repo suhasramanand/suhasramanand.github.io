@@ -6,6 +6,7 @@ import FloatingActionButton from '@/components/FloatingActionButton';
 import SupportBot from '@/components/SupportBot';
 import AnimatedSection from '@/components/AnimatedSection';
 import ContactSection from '@/components/ContactSection';
+import SEO from '@/components/SEO';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,6 +17,12 @@ const Contact = () => {
 
   return (
     <main className="relative overflow-hidden min-h-screen">
+      <SEO
+        title="Contact - Get in Touch"
+        description="Get in touch with me for collaboration opportunities, project inquiries, or just to connect. I'm always open to discussing software engineering, cloud infrastructure, and new opportunities."
+        keywords="Contact, Get in Touch, Collaboration, Hire Software Engineer, Contact Developer, Portfolio Contact"
+        url="/contact"
+      />
       <CrazyMenu />
       <FloatingActionButton />
       <SupportBot />

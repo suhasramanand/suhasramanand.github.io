@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import CrazyMenu from '@/components/CrazyMenu';
 import FloatingActionButton from '@/components/FloatingActionButton';
+import SEO from '@/components/SEO';
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -1673,8 +1674,51 @@ const BlogPost: React.FC = () => {
       .slice(0, 3);
   }, [post]);
 
+  // Article schema for SEO
+  const articleSchema = post ? {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": post.title,
+    "description": post.excerpt,
+    "image": `https://suhasramanand.github.io/images/profile/profile-pic.jpg`,
+    "datePublished": post.date,
+    "dateModified": post.date,
+    "author": {
+      "@type": "Person",
+      "name": post.author,
+      "url": "https://suhasramanand.github.io"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Suhas Reddy",
+      "url": "https://suhasramanand.github.io"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://suhasramanand.github.io/blog/${post.id}`
+    },
+    "articleSection": post.category,
+    "keywords": post.category
+  } : null;
+
   return (
     <>
+      {post && (
+        <SEO
+          title={post.title}
+          description={post.excerpt}
+          keywords={`${post.category}, Blog, Software Engineering, ${post.title}`}
+          url={`/blog/${post.id}`}
+          type="article"
+          article={{
+            publishedTime: post.date,
+            modifiedTime: post.date,
+            author: post.author,
+            tags: [post.category]
+          }}
+          schema={articleSchema}
+        />
+      )}
       <CrazyMenu />
       <FloatingActionButton />
       <main className="pt-16">

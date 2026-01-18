@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import React from "react";
 import { ThemeProvider } from "next-themes";
+import { HelmetProvider } from "react-helmet-async";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Analytics from "./components/Analytics";
 import Index from "./pages/Index";
@@ -55,14 +56,15 @@ const GitHubHeatmap = lazy(() => import("./pages/test/GitHubHeatmap"));
 const queryClient = new QueryClient();
 
 const App = () => (
-  <ErrorBoundary>
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <Analytics />
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
+  <HelmetProvider>
+    <ErrorBoundary>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <Analytics />
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/resume" element={<Resume />} />
@@ -133,6 +135,7 @@ const App = () => (
       </QueryClientProvider>
     </ThemeProvider>
   </ErrorBoundary>
+  </HelmetProvider>
 );
 
 export default App;
