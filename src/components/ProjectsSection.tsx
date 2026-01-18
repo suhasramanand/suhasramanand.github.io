@@ -2,13 +2,11 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Github, ExternalLink, Search, X } from 'lucide-react';
+import { Github, ExternalLink, Search, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
 
@@ -199,65 +197,7 @@ const ProjectsSection: React.FC = React.memo(() => {
     });
   }, [api]);
 
-  // Auto-slide functionality
-  useEffect(() => {
-    if (!api || filteredProjects.length <= 1) {
-      return;
-    }
-
-    let isPaused = false;
-    let pauseTimeout: NodeJS.Timeout;
-    let interval: NodeJS.Timeout;
-
-    const pauseAutoSlide = () => {
-      isPaused = true;
-      clearTimeout(pauseTimeout);
-      // Resume after 8 seconds of no interaction
-      pauseTimeout = setTimeout(() => {
-        isPaused = false;
-      }, 8000);
-    };
-
-    const startAutoSlide = () => {
-      interval = setInterval(() => {
-        if (!isPaused && api) {
-          if (api.canScrollNext()) {
-            api.scrollNext();
-          } else {
-            // Loop back to start
-            api.scrollTo(0);
-          }
-        }
-      }, 4000); // Auto-slide every 4 seconds
-    };
-
-    // Pause on user interaction
-    const carouselContainer = carouselContainerRef.current;
-    if (carouselContainer) {
-      carouselContainer.addEventListener('mousedown', pauseAutoSlide);
-      carouselContainer.addEventListener('wheel', pauseAutoSlide);
-    }
-
-    // Also pause on navigation button clicks
-    const navButtons = carouselContainer?.querySelectorAll('button[aria-label*="slide"]');
-    navButtons?.forEach(btn => {
-      btn.addEventListener('click', pauseAutoSlide);
-    });
-
-    startAutoSlide();
-
-    return () => {
-      clearInterval(interval);
-      clearTimeout(pauseTimeout);
-      if (carouselContainer) {
-        carouselContainer.removeEventListener('mousedown', pauseAutoSlide);
-        carouselContainer.removeEventListener('wheel', pauseAutoSlide);
-        navButtons?.forEach(btn => {
-          btn.removeEventListener('click', pauseAutoSlide);
-        });
-      }
-    };
-  }, [api, filteredProjects.length]);
+  // Auto-slide functionality disabled
 
   // Reset carousel to first slide when filters change
   useEffect(() => {
@@ -266,19 +206,48 @@ const ProjectsSection: React.FC = React.memo(() => {
     }
   }, [searchQuery, selectedTags, api]);
 
-  // Add horizontal wheel support for touchpad gestures
+  // Add horizontal wheel support for touchpad swipes
   useEffect(() => {
     const carouselContainer = carouselContainerRef.current;
     if (!carouselContainer || !api) return;
+
+    let wheelTimeout: NodeJS.Timeout;
+    let lastWheelTime = 0;
+    let accumulatedDeltaX = 0;
 
     const handleWheel = (e: WheelEvent) => {
       // Only handle horizontal scrolling (touchpad horizontal swipe)
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
         e.preventDefault();
-        if (e.deltaX > 0) {
-          api.scrollNext();
-        } else {
-          api.scrollPrev();
+        
+        const now = Date.now();
+        const timeDelta = now - lastWheelTime;
+        
+        // Reset accumulation if wheel stops for too long
+        if (timeDelta > 100) {
+          accumulatedDeltaX = 0;
+        }
+        
+        accumulatedDeltaX += e.deltaX;
+        lastWheelTime = now;
+        
+        // Clear any pending scroll
+        clearTimeout(wheelTimeout);
+        
+        // Lower threshold and faster response for instant feel
+        const threshold = 30;
+        const currentIndex = api.selectedScrollSnap();
+        const totalSlides = api.scrollSnapList().length;
+        
+        // Immediate scroll check without delay
+        if (accumulatedDeltaX > threshold && currentIndex < totalSlides - 1) {
+          // Scroll to next slide immediately
+          api.scrollTo(currentIndex + 1);
+          accumulatedDeltaX = 0;
+        } else if (accumulatedDeltaX < -threshold && currentIndex > 0) {
+          // Scroll to previous slide immediately
+          api.scrollTo(currentIndex - 1);
+          accumulatedDeltaX = 0;
         }
       }
       // Ignore vertical scrolling to allow normal page scrolling
@@ -287,6 +256,7 @@ const ProjectsSection: React.FC = React.memo(() => {
     carouselContainer.addEventListener('wheel', handleWheel, { passive: false });
 
     return () => {
+      clearTimeout(wheelTimeout);
       carouselContainer.removeEventListener('wheel', handleWheel);
     };
   }, [api]);
@@ -340,9 +310,27 @@ const ProjectsSection: React.FC = React.memo(() => {
     setSelectedTags([]);
   };
 
+  // Get the primary link for a project (prefer live demo, fallback to GitHub)
+  const getProjectLink = (project: ProjectItem): string | null => {
+    return project.link || project.github || null;
+  };
+
+  // Handle card click
+  const handleCardClick = (project: ProjectItem, e: React.MouseEvent) => {
+    const link = getProjectLink(project);
+    if (link) {
+      window.open(link, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  // Stop propagation for link clicks so they don't trigger card click
+  const handleLinkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
   return (
     <section id="projects" className="py-8 sm:py-12 md:py-16 relative" ref={sectionRef}>
-      <div className="section-container">
+      <div className="section-container max-w-7xl">
         <div className="mb-12 sm:mb-16">
           <div ref={headingRef} className="uppercase text-xs sm:text-sm font-sans tracking-wider mb-4 sm:mb-6 text-ink-gray dark:text-muted-foreground">
             Projects
@@ -433,9 +421,13 @@ const ProjectsSection: React.FC = React.memo(() => {
                 align: "start",
                 loop: false,
                 slidesToScroll: 1,
-                dragFree: true,
-                watchDrag: true,
+                dragFree: false,
+                containScroll: "trimSnaps",
+                watchDrag: true, // Enable drag for touchpad
                 watchResize: true,
+                skipSnaps: false,
+                duration: 10, // Very fast scroll duration for instant response
+                startIndex: 0,
               }}
               className="w-full"
               style={{
@@ -449,13 +441,14 @@ const ProjectsSection: React.FC = React.memo(() => {
                   return (
                     <CarouselItem
                       key={project.title}
-                      className="pl-2 md:pl-6 basis-full sm:basis-4/5 md:basis-1/2 lg:basis-2/5 xl:basis-1/3"
+                      className="pl-2 md:pl-6 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/4 2xl:basis-1/5"
                     >
                       <div
                         ref={el => projectRefs.current[originalIndex] = el}
-                        className="paper-card h-full flex flex-col"
+                        className={`paper-card h-full flex flex-col ${getProjectLink(project) ? 'cursor-pointer' : ''}`}
                         onMouseEnter={() => setHoveredProject(originalIndex)}
                         onMouseLeave={() => setHoveredProject(null)}
+                        onClick={(e) => handleCardClick(project, e)}
                       >
                         {project.image && (
                           <div className="mb-4 overflow-hidden border border-ink-light-gray/30 dark:border-border rounded-sm">
@@ -493,13 +486,14 @@ const ProjectsSection: React.FC = React.memo(() => {
                           </div>
                         </div>
                         
-                        <div className="flex flex-wrap gap-4 pt-3 border-t border-ink-light-gray/30 dark:border-border">
+                        <div className="flex flex-wrap gap-4 pt-3 border-t border-ink-light-gray/30 dark:border-border" onClick={handleLinkClick}>
                           {project.github && (
                             <a
                               href={project.github}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="flex items-center gap-2 text-black dark:text-foreground hover:text-ink-gray dark:hover:text-muted-foreground transition-colors text-sm font-serif"
+                              onClick={handleLinkClick}
                             >
                               <Github size={16} />
                               <span>View on GitHub</span>
@@ -512,6 +506,7 @@ const ProjectsSection: React.FC = React.memo(() => {
                               target="_blank"
                               rel="noopener noreferrer"
                               className="flex items-center gap-2 text-black dark:text-foreground hover:text-ink-gray dark:hover:text-muted-foreground transition-colors text-sm font-serif"
+                              onClick={handleLinkClick}
                             >
                               <ExternalLink size={16} />
                               <span>Live Demo</span>
@@ -524,28 +519,49 @@ const ProjectsSection: React.FC = React.memo(() => {
                 })}
               </CarouselContent>
               
-              {filteredProjects.length > 1 && (
-                <>
-                  <CarouselPrevious 
-                    className="left-2 md:-left-12 top-1/2 -translate-y-1/2 bg-paper-cream/90 dark:bg-card/90 backdrop-blur-sm border-ink-light-gray/40 dark:border-border hover:bg-paper-cream dark:hover:bg-card shadow-lg z-10"
-                    variant="outline"
-                    size="icon"
-                  />
-                  <CarouselNext 
-                    className="right-2 md:-right-12 top-1/2 -translate-y-1/2 bg-paper-cream/90 dark:bg-card/90 backdrop-blur-sm border-ink-light-gray/40 dark:border-border hover:bg-paper-cream dark:hover:bg-card shadow-lg z-10"
-                    variant="outline"
-                    size="icon"
-                  />
-                </>
-              )}
             </Carousel>
             
-            {/* Carousel Indicators */}
+            {/* Carousel Indicators with Arrow Buttons */}
             {filteredProjects.length > 1 && count > 0 && (
-              <div className="flex justify-center items-center gap-2 mt-6">
-                <span className="text-sm font-serif text-ink-gray dark:text-muted-foreground">
+              <div className="flex justify-center items-center gap-4 mt-6">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (api) {
+                      const currentIndex = api.selectedScrollSnap();
+                      if (currentIndex > 0) {
+                        api.scrollTo(currentIndex - 1);
+                      }
+                    }
+                  }}
+                  className="h-10 w-10 rounded-full bg-white/95 dark:bg-card/95 backdrop-blur-sm border-2 border-black/20 dark:border-border hover:bg-white dark:hover:bg-card hover:border-black/40 dark:hover:border-foreground/60 shadow-lg hover:shadow-xl z-20 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-110 active:scale-95"
+                  disabled={current === 1}
+                  aria-label="Previous slide"
+                >
+                  <ChevronLeft size={20} className="text-black dark:text-foreground font-bold" strokeWidth={2.5} />
+                </button>
+                <span className="text-sm font-serif text-ink-gray dark:text-muted-foreground min-w-[3rem] text-center">
                   {current} / {count}
                 </span>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (api) {
+                      const currentIndex = api.selectedScrollSnap();
+                      const totalSlides = api.scrollSnapList().length;
+                      if (currentIndex < totalSlides - 1) {
+                        api.scrollTo(currentIndex + 1);
+                      }
+                    }
+                  }}
+                  className="h-10 w-10 rounded-full bg-white/95 dark:bg-card/95 backdrop-blur-sm border-2 border-black/20 dark:border-border hover:bg-white dark:hover:bg-card hover:border-black/40 dark:hover:border-foreground/60 shadow-lg hover:shadow-xl z-20 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-110 active:scale-95"
+                  disabled={current === count}
+                  aria-label="Next slide"
+                >
+                  <ChevronRight size={20} className="text-black dark:text-foreground font-bold" strokeWidth={2.5} />
+                </button>
               </div>
             )}
           </div>

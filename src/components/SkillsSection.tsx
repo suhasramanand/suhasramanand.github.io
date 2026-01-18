@@ -2,13 +2,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Code, Server, Database, Cloud, PenTool, GitBranch } from 'lucide-react';
+import { Code, Server, Database, Cloud, PenTool, GitBranch, ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
 
@@ -149,8 +147,12 @@ const SkillsSection: React.FC = React.memo(() => {
     const startAutoSlide = () => {
       interval = setInterval(() => {
         if (!isPaused && api) {
-          if (api.canScrollNext()) {
-            api.scrollNext();
+          const currentIndex = api.selectedScrollSnap();
+          const totalSlides = api.scrollSnapList().length;
+          
+          if (currentIndex < totalSlides - 1) {
+            // Scroll to next slide by index
+            api.scrollTo(currentIndex + 1);
           } else {
             // Loop back to start
             api.scrollTo(0);
@@ -187,28 +189,7 @@ const SkillsSection: React.FC = React.memo(() => {
     };
   }, [api, skillCategories.length]);
 
-  // Add wheel scrolling support
-  useEffect(() => {
-    const carouselContainer = carouselContainerRef.current;
-    if (!carouselContainer || !api) return;
-
-    const handleWheel = (e: WheelEvent) => {
-      if (Math.abs(e.deltaY) > 0) {
-        e.preventDefault();
-        if (e.deltaY > 0) {
-          api.scrollNext();
-        } else {
-          api.scrollPrev();
-        }
-      }
-    };
-
-    carouselContainer.addEventListener('wheel', handleWheel, { passive: false });
-
-    return () => {
-      carouselContainer.removeEventListener('wheel', handleWheel);
-    };
-  }, [api]);
+  // Wheel scrolling disabled - use arrows or drag only
 
   useEffect(() => {
     if (headingRef.current) {
@@ -218,7 +199,7 @@ const SkillsSection: React.FC = React.memo(() => {
 
   return (
     <section id="skills" className="py-8 sm:py-12 md:py-16 relative" ref={sectionRef}>
-      <div className="section-container">
+      <div className="section-container max-w-7xl">
         <div className="mb-12 sm:mb-16">
           <div ref={headingRef} className="uppercase text-xs sm:text-sm font-sans tracking-wider mb-4 sm:mb-6 text-ink-gray dark:text-muted-foreground">
             Skills & Expertise
@@ -233,12 +214,16 @@ const SkillsSection: React.FC = React.memo(() => {
         <div className="mt-8 relative" ref={carouselContainerRef}>
           <Carousel
             setApi={setApi}
-            opts={{
-              align: "start",
-              loop: false,
-              slidesToScroll: 1,
-              dragFree: true,
-            }}
+              opts={{
+                align: "start",
+                loop: false,
+                slidesToScroll: 1,
+                dragFree: false,
+                containScroll: "trimSnaps",
+                watchDrag: true,
+                watchResize: true,
+                skipSnaps: false,
+              }}
             className="w-full"
             style={{
               maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
@@ -249,27 +234,27 @@ const SkillsSection: React.FC = React.memo(() => {
               {skillCategories.map((category, catIndex) => (
                 <CarouselItem
                   key={catIndex}
-                  className="pl-2 md:pl-6 basis-full sm:basis-4/5 md:basis-2/3 lg:basis-1/2 xl:basis-2/5"
+                  className="pl-2 md:pl-6 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/4 2xl:basis-1/5"
                 >
-                  <div className="paper-card h-full flex flex-col p-6 md:p-8">
-                    <div className="mb-6 pb-4 border-b border-ink-light-gray/30 dark:border-border">
-                      <div className="flex items-center gap-3 mb-2">
+                  <div className="paper-card h-full flex flex-col p-4 md:p-6">
+                    <div className="mb-4 pb-3 border-b border-ink-light-gray/30 dark:border-border">
+                      <div className="flex items-center gap-2 mb-2">
                         <div className="text-black dark:text-foreground">
                           {category.icon}
                         </div>
-                        <h3 className="text-xl sm:text-2xl font-serif font-semibold text-black dark:text-foreground">{category.title}</h3>
+                        <h3 className="text-lg sm:text-xl font-serif font-semibold text-black dark:text-foreground">{category.title}</h3>
                       </div>
                     </div>
                     
-                    <div className="space-y-4 flex-1">
+                    <div className="space-y-3 flex-1">
                       {category.skills.map((skill, skillIndex) => (
                         <div key={skillIndex}>
-                          <div className="flex justify-between items-center mb-2 gap-4">
-                            <span className="text-base sm:text-lg font-medium font-serif text-black dark:text-foreground flex-1">{skill.name}</span>
-                            <span className="text-sm sm:text-base text-ink-gray dark:text-muted-foreground font-serif whitespace-nowrap">{skill.level}%</span>
+                          <div className="flex justify-between items-center mb-1.5 gap-2">
+                            <span className="text-sm sm:text-base font-medium font-serif text-black dark:text-foreground flex-1 truncate">{skill.name}</span>
+                            <span className="text-xs sm:text-sm text-ink-gray dark:text-muted-foreground font-serif whitespace-nowrap">{skill.level}%</span>
                           </div>
                           
-                          <div className="h-2 bg-ink-light-gray/20 dark:bg-muted/30 overflow-hidden rounded-full">
+                          <div className="h-1.5 bg-ink-light-gray/20 dark:bg-muted/30 overflow-hidden rounded-full">
                             <div 
                               className="h-full bg-black dark:bg-foreground transition-all duration-1000 rounded-full"
                               style={{ width: `${skill.level}%` }}
@@ -283,28 +268,49 @@ const SkillsSection: React.FC = React.memo(() => {
               ))}
             </CarouselContent>
             
-            {skillCategories.length > 1 && (
-              <>
-                <CarouselPrevious 
-                  className="left-2 md:-left-12 top-1/2 -translate-y-1/2 bg-paper-cream/90 dark:bg-card/90 backdrop-blur-sm border-ink-light-gray/40 dark:border-border hover:bg-paper-cream dark:hover:bg-card shadow-lg z-10"
-                  variant="outline"
-                  size="icon"
-                />
-                <CarouselNext 
-                  className="right-2 md:-right-12 top-1/2 -translate-y-1/2 bg-paper-cream/90 dark:bg-card/90 backdrop-blur-sm border-ink-light-gray/40 dark:border-border hover:bg-paper-cream dark:hover:bg-card shadow-lg z-10"
-                  variant="outline"
-                  size="icon"
-                />
-              </>
-            )}
           </Carousel>
           
-          {/* Carousel Indicators */}
+          {/* Carousel Indicators with Arrow Buttons */}
           {skillCategories.length > 1 && count > 0 && (
-            <div className="flex justify-center items-center gap-2 mt-6">
-              <span className="text-sm font-serif text-ink-gray dark:text-muted-foreground">
+            <div className="flex justify-center items-center gap-4 mt-6">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (api) {
+                    const currentIndex = api.selectedScrollSnap();
+                    if (currentIndex > 0) {
+                      api.scrollTo(currentIndex - 1);
+                    }
+                  }
+                }}
+                className="h-10 w-10 rounded-full bg-white/95 dark:bg-card/95 backdrop-blur-sm border-2 border-black/20 dark:border-border hover:bg-white dark:hover:bg-card hover:border-black/40 dark:hover:border-foreground/60 shadow-lg hover:shadow-xl z-20 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-110 active:scale-95"
+                disabled={current === 1}
+                aria-label="Previous slide"
+              >
+                <ChevronLeft size={20} className="text-black dark:text-foreground font-bold" strokeWidth={2.5} />
+              </button>
+              <span className="text-sm font-serif text-ink-gray dark:text-muted-foreground min-w-[3rem] text-center">
                 {current} / {count}
               </span>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  if (api) {
+                    const currentIndex = api.selectedScrollSnap();
+                    const totalSlides = api.scrollSnapList().length;
+                    if (currentIndex < totalSlides - 1) {
+                      api.scrollTo(currentIndex + 1);
+                    }
+                  }
+                }}
+                className="h-10 w-10 rounded-full bg-white/95 dark:bg-card/95 backdrop-blur-sm border-2 border-black/20 dark:border-border hover:bg-white dark:hover:bg-card hover:border-black/40 dark:hover:border-foreground/60 shadow-lg hover:shadow-xl z-20 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:scale-110 active:scale-95"
+                disabled={current === count}
+                aria-label="Next slide"
+              >
+                <ChevronRight size={20} className="text-black dark:text-foreground font-bold" strokeWidth={2.5} />
+              </button>
             </div>
           )}
         </div>

@@ -17,19 +17,12 @@ window.scrollTo(0, 0);
 document.documentElement.scrollTop = 0;
 document.body.scrollTop = 0;
 
-// Also prevent scroll on load - multiple attempts to ensure it sticks
-const forceScrollToTop = () => {
-  window.scrollTo(0, 0);
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
-};
-
+// Scroll to top on initial page load only
 window.addEventListener('load', () => {
-  forceScrollToTop();
-  // Additional attempts after load
-  setTimeout(forceScrollToTop, 0);
-  setTimeout(forceScrollToTop, 50);
-  setTimeout(forceScrollToTop, 100);
+  // Only scroll to top if we're not already at the top (prevents interference with user scrolling)
+  if (window.scrollY === 0 || window.location.hash) {
+    window.scrollTo(0, 0);
+  }
 }, { once: true });
 
 createRoot(document.getElementById("root")!).render(<App />);

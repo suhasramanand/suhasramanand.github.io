@@ -16,6 +16,15 @@ import Test from "./pages/Test";
 import NotFound from "./pages/NotFound";
 import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import About from "./pages/About";
+import Projects from "./pages/Projects";
+import Experience from "./pages/Experience";
+import Education from "./pages/Education";
+import Skills from "./pages/Skills";
+import Activities from "./pages/Activities";
+import OpenSource from "./pages/OpenSource";
+import Certifications from "./pages/Certifications";
+import Contact from "./pages/Contact";
 
 // Import React Three Fiber with React explicitly available
 const ThreeDSkills = lazy(async () => {
@@ -62,6 +71,15 @@ const App = () => (
               <Route path="/terms-of-service" element={<TermsOfService />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/test" element={<Test />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/experience" element={<Experience />} />
+              <Route path="/education" element={<Education />} />
+              <Route path="/skills" element={<Skills />} />
+              <Route path="/activities" element={<Activities />} />
+              <Route path="/opensource" element={<OpenSource />} />
+              <Route path="/certifications" element={<Certifications />} />
+              <Route path="/contact" element={<Contact />} />
               <Route 
                 path="/test/3d-skills" 
                 element={

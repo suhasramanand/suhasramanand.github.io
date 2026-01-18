@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { Github, Linkedin, Mail, ArrowDown, FileText } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowDown, FileText, BookOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from 'next-themes';
 
 const HeroSection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -11,25 +12,19 @@ const HeroSection: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const { resolvedTheme } = useTheme();
   const [displayedDesc, setDisplayedDesc] = useState("");
+  const isDark = resolvedTheme === 'dark';
   
   const fullDescText = "Master's student at Northeastern University specialized in building scalable applications with expertise in Full Stack, DevOps and Cloud infrastructure.";
 
-  // Prevent scroll on page load and ensure we start at top
+  // Initial scroll to top only on first mount
   useEffect(() => {
-    // Force scroll to top immediately
-    if (window.scrollY > 0) {
+    // Only scroll to top if we're at the top or there's a hash in URL
+    // This prevents interfering with user scrolling
+    if (window.scrollY === 0 || window.location.hash) {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     }
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-    
-    // Also handle on next frame to ensure it sticks
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    });
   }, []);
 
   const typeText = (text: string, setText: (text: string) => void) => {
@@ -102,13 +97,43 @@ const HeroSection: React.FC = () => {
   }, []);
 
   return (
-    <div ref={sectionRef} id="hero" className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 sm:px-8 overflow-hidden">
+    <div 
+      ref={sectionRef} 
+      id="hero" 
+      className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 sm:px-8 overflow-hidden"
+    >
       <div className="relative z-10 max-w-4xl w-full">
         <div className="mb-12">
-          <h1 ref={nameRef} className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-black dark:text-foreground mb-6 tracking-tight">
-            Hi, I'm <span className="text-black dark:text-foreground">Suhas</span>
+          <h1 
+            ref={nameRef} 
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold text-black dark:text-foreground mb-6 tracking-tight" 
+            style={{ 
+              textShadow: isDark 
+                ? '2px 2px 0px rgba(255,255,255,0.1), 4px 4px 0px rgba(255,255,255,0.08), 6px 6px 0px rgba(255,255,255,0.05)'
+                : '2px 2px 0px rgba(0,0,0,0.1), 4px 4px 0px rgba(0,0,0,0.08), 6px 6px 0px rgba(0,0,0,0.05)'
+            }}
+          >
+            <span>Hi, I'm </span>
+            <span 
+              className="text-black dark:text-foreground" 
+              style={{ 
+                textShadow: isDark
+                  ? '2px 2px 0px rgba(255,255,255,0.15), 4px 4px 0px rgba(255,255,255,0.12), 6px 6px 0px rgba(255,255,255,0.08), 8px 8px 0px rgba(255,255,255,0.05)'
+                  : '2px 2px 0px rgba(0,0,0,0.15), 4px 4px 0px rgba(0,0,0,0.12), 6px 6px 0px rgba(0,0,0,0.08), 8px 8px 0px rgba(0,0,0,0.05)'
+              }}
+            >
+              Suhas
+            </span>
           </h1>
-          <p ref={titleRef} className="text-xl sm:text-2xl md:text-3xl text-ink-gray dark:text-muted-foreground font-serif font-medium mb-6 italic">
+          <p 
+            ref={titleRef} 
+            className="text-xl sm:text-2xl md:text-3xl text-ink-gray dark:text-muted-foreground font-serif font-medium mb-6 italic" 
+            style={{ 
+              textShadow: isDark
+                ? '1px 1px 0px rgba(255,255,255,0.08), 2px 2px 0px rgba(255,255,255,0.05)'
+                : '1px 1px 0px rgba(0,0,0,0.08), 2px 2px 0px rgba(0,0,0,0.05)'
+            }}
+          >
             Software Engineer & Cloud Specialist
           </p>
                 <p ref={descRef} className="text-base sm:text-lg md:text-xl text-ink-gray/80 dark:text-muted-foreground/80 mb-12 max-w-2xl mx-auto leading-relaxed font-serif min-h-[3rem]">
@@ -120,6 +145,17 @@ const HeroSection: React.FC = () => {
                     />
                   )}
                 </p>
+        </div>
+
+        {/* Blog Banner */}
+        <div className="mb-8">
+          <a
+            href="/blog"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/20 dark:border-foreground/20 bg-white/50 dark:bg-card/50 hover:bg-white/70 dark:hover:bg-card/70 transition-all hover:scale-105 hover:shadow-lg text-sm font-serif text-ink-gray dark:text-muted-foreground hover:text-black dark:hover:text-foreground"
+          >
+            <BookOpen size={16} />
+            <span>Read my blog</span>
+          </a>
         </div>
 
         {/* GitHub, LinkedIn and Resume Buttons */}

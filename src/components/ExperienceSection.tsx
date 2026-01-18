@@ -1,9 +1,20 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Calendar, MapPin } from "lucide-react";
+import { Calendar, MapPin, TrendingUp, Target, CheckCircle2 } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
+
+interface KPI {
+  label: string;
+  value: string;
+  description?: string;
+}
+
+interface Responsibility {
+  category: string;
+  description: string;
+}
 
 interface ExperienceItem {
   title: string;
@@ -11,7 +22,8 @@ interface ExperienceItem {
   period: string;
   location: string;
   logo: string;
-  points: string[];
+  kpis: KPI[];
+  responsibilities: Responsibility[];
   tag?: string; // Optional tag like "Internship" or "Full-time"
 }
 
@@ -25,11 +37,28 @@ interface ExperienceItem {
     location: "Remote",
     tag: "Internship",
     logo: "/images/companies/Calix.png",
-    points: [
-      "Automated AlloyDB database deployments using Liquibase and Bash scripts, integrated with Cloud Build triggers and Bamboo pipelines, reducing manual provisioning time by 35%",
-      "Developed monitoring scripts to detect deployment inconsistencies and package drift, reducing incident frequency and improving reliability KPIs",
-      "Hardened CI/CD pipelines with Bitbucket pipelines, implementing automated testing, secret management, and compliance checks",
-      "Collaborated with SRE and engineering teams to troubleshoot issues, enforce least-privilege IAM policies, and ensure smooth production deployments",
+    kpis: [
+      { label: "Deployment Time Reduction", value: "35%", description: "Reduced manual provisioning time" },
+      { label: "Incident Frequency", value: "Reduced", description: "Improved reliability metrics" },
+      { label: "CI/CD Hardening", value: "100%", description: "Pipeline security & compliance" },
+    ],
+    responsibilities: [
+      {
+        category: "Infrastructure Automation",
+        description: "Automated AlloyDB database deployments using Liquibase and Bash scripts, integrated with Cloud Build triggers and Bamboo pipelines"
+      },
+      {
+        category: "Monitoring & Reliability",
+        description: "Developed monitoring scripts to detect deployment inconsistencies and package drift, improving system reliability"
+      },
+      {
+        category: "CI/CD Security",
+        description: "Hardened CI/CD pipelines with Bitbucket pipelines, implementing automated testing, secret management, and compliance checks"
+      },
+      {
+        category: "Cross-functional Collaboration",
+        description: "Collaborated with SRE and engineering teams to troubleshoot issues, enforce least-privilege IAM policies, and ensure smooth production deployments"
+      },
     ],
   },
   {
@@ -39,11 +68,32 @@ interface ExperienceItem {
     location: "Bangalore, India",
     tag: "Full-time",
     logo: "/images/companies/Elanco.png",
-    points: [
-      "Engineered full stack enterprise SaaS applications with the FERN stack (Firebase, Express, React, Node.js), with a microservices architecture ensuring seamless integration between front-end and back-end for optimal performance.",
-      "Developed front-end features using React, improving UI responsiveness and creating a smooth user experience while building back-end services with Express and Node.js, handling API logic and server-side operations.",
-      "Automated infrastructure monitoring using Ansible and Shell scripting, streamlining backend processes and reducing downtime by 15%.",
-      "Implemented CI/CD pipelines using GitHub Actions and Docker, automating builds, testing, and deployments while integrating version control with Git for efficient collaboration and reliable software releases.",
+    kpis: [
+      { label: "Downtime Reduction", value: "15%", description: "Streamlined backend processes" },
+      { label: "Deployment Automation", value: "100%", description: "CI/CD pipeline implementation" },
+      { label: "System Architecture", value: "Microservices", description: "Scalable FERN stack applications" },
+    ],
+    responsibilities: [
+      {
+        category: "Full-Stack Development",
+        description: "Engineered enterprise SaaS applications with the FERN stack (Firebase, Express, React, Node.js), using microservices architecture for optimal performance"
+      },
+      {
+        category: "Frontend Engineering",
+        description: "Developed React-based front-end features, improving UI responsiveness and creating seamless user experiences"
+      },
+      {
+        category: "Backend Services",
+        description: "Built back-end services with Express and Node.js, handling API logic and server-side operations"
+      },
+      {
+        category: "Infrastructure Monitoring",
+        description: "Automated infrastructure monitoring using Ansible and Shell scripting, streamlining backend processes"
+      },
+      {
+        category: "DevOps & Automation",
+        description: "Implemented CI/CD pipelines using GitHub Actions and Docker, automating builds, testing, and deployments"
+      },
     ],
   },
   {
@@ -53,10 +103,24 @@ interface ExperienceItem {
     location: "Bangalore, India",
     tag: "Internship",
     logo: "/images/companies/Bosch.png",
-    points: [
-      "Developed a scalable website using React and TypeScript, incorporating activity tracking and reward systems to improve multi-device engagement by 40%.",
-      "Optimized RESTful APIs with Python FastAPI, implementing asynchronous processing to accelerate response times by 30% and boost system throughput.",
-      "Improved Azure SQL database performance with indexing, caching, and query optimizations, reducing data retrieval times by 25%.",
+    kpis: [
+      { label: "Multi-device Engagement", value: "+40%", description: "Activity tracking improvements" },
+      { label: "API Response Time", value: "-30%", description: "Asynchronous processing optimization" },
+      { label: "Database Performance", value: "-25%", description: "Query optimization & indexing" },
+    ],
+    responsibilities: [
+      {
+        category: "Web Application Development",
+        description: "Developed a scalable website using React and TypeScript, incorporating activity tracking and reward systems"
+      },
+      {
+        category: "API Optimization",
+        description: "Optimized RESTful APIs with Python FastAPI, implementing asynchronous processing to accelerate response times and boost system throughput"
+      },
+      {
+        category: "Database Performance",
+        description: "Improved Azure SQL database performance with indexing, caching, and query optimizations, reducing data retrieval times"
+      },
     ],
   },
 ];
@@ -173,15 +237,16 @@ const ExperienceSection: React.FC = React.memo(() => {
                       }}
                     />
                     <div className="relative z-10">
-                <div className="mb-6 pb-6 border-b border-ink-light-gray/30 dark:border-border">
-                  <div className="flex flex-wrap items-start gap-4 mb-3">
+                {/* Header */}
+                <div className="mb-8 pb-6 border-b border-ink-light-gray/30 dark:border-border">
+                  <div className="flex flex-wrap items-start gap-4 mb-4">
                     <img
                       src={exp.logo}
                       alt={`${exp.company} logo`}
-                      className="h-8 w-auto object-contain opacity-80 dark:opacity-90"
+                      className="h-10 w-auto object-contain opacity-80 dark:opacity-90"
                       loading="lazy"
                     />
-                    <div>
+                    <div className="flex-1">
                       <h3 className="text-xl sm:text-2xl font-serif font-semibold text-black dark:text-foreground mb-1">
                         {exp.title}
                       </h3>
@@ -189,33 +254,88 @@ const ExperienceSection: React.FC = React.memo(() => {
                         {exp.company}
                       </h4>
                     </div>
+                    {exp.tag && (
+                      <span className="px-3 py-1 text-xs font-sans tracking-wider uppercase border border-ink-light-gray/40 dark:border-border text-ink-gray dark:text-muted-foreground">
+                        {exp.tag}
+                      </span>
+                    )}
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-4 text-ink-gray dark:text-muted-foreground mt-3">
+                  <div className="flex flex-wrap items-center gap-4 text-sm text-ink-gray dark:text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <Calendar size={16} className="text-ink-light-gray dark:text-muted-foreground" />
-                      <span className="font-serif text-ink-gray dark:text-muted-foreground">{exp.period}</span>
+                      <span className="font-serif">{exp.period}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <MapPin size={16} className="text-ink-light-gray dark:text-muted-foreground" />
-                      <span className="font-serif text-ink-gray dark:text-muted-foreground">{exp.location}</span>
+                      <span className="font-serif">{exp.location}</span>
                     </div>
-                    {exp.tag && (
-                      <div className="flex items-center gap-2">
-                        <span className="font-serif text-ink-gray dark:text-muted-foreground">{exp.tag}</span>
-                      </div>
-                    )}
                   </div>
                 </div>
 
-                <ul className="space-y-3 text-body">
-                  {exp.points.map((point, i) => (
-                    <li key={i} className="flex gap-3">
-                      <span className="text-black dark:text-foreground mt-1.5 flex-shrink-0 font-serif">—</span>
-                      <span className="font-serif text-black dark:text-foreground">{point}</span>
-                    </li>
-                  ))}
-                </ul>
+                {/* KPIs Section */}
+                {exp.kpis && exp.kpis.length > 0 && (
+                  <div className="mb-8">
+                    <div className="flex items-center gap-2 mb-4">
+                      <TrendingUp size={18} className="text-black dark:text-foreground" />
+                      <h5 className="text-sm font-sans uppercase tracking-wider text-black dark:text-foreground font-semibold">
+                        Key Performance Indicators
+                      </h5>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {exp.kpis.map((kpi, i) => (
+                        <div
+                          key={i}
+                          className="bg-paper-cream/50 dark:bg-card/50 border border-ink-light-gray/30 dark:border-border p-4 transition-all hover:border-black/40 dark:hover:border-foreground/40"
+                        >
+                          <div className="flex items-start gap-2 mb-2">
+                            <Target size={16} className="text-black dark:text-foreground mt-0.5 flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <div className="text-2xl font-serif font-bold text-black dark:text-foreground mb-1">
+                                {kpi.value}
+                              </div>
+                              <div className="text-sm font-serif text-ink-gray dark:text-muted-foreground">
+                                {kpi.label}
+                              </div>
+                              {kpi.description && (
+                                <div className="text-xs text-ink-light-gray dark:text-muted-foreground mt-1 font-sans">
+                                  {kpi.description}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Responsibilities Section */}
+                {exp.responsibilities && exp.responsibilities.length > 0 && (
+                  <div>
+                    <div className="flex items-center gap-2 mb-4">
+                      <CheckCircle2 size={18} className="text-black dark:text-foreground" />
+                      <h5 className="text-sm font-sans uppercase tracking-wider text-black dark:text-foreground font-semibold">
+                        Key Responsibilities
+                      </h5>
+                    </div>
+                    <div className="space-y-4">
+                      {exp.responsibilities.map((resp, i) => (
+                        <div
+                          key={i}
+                          className="border-l-2 border-black/20 dark:border-foreground/20 pl-4 py-2"
+                        >
+                          <div className="font-serif font-semibold text-black dark:text-foreground mb-1 text-base">
+                            {resp.category}
+                          </div>
+                          <div className="font-serif text-ink-gray dark:text-muted-foreground text-sm leading-relaxed">
+                            {resp.description}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
                     </div>
                   </div>
                 </div>

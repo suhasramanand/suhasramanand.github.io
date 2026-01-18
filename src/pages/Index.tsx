@@ -31,30 +31,12 @@ const Index = () => {
       window.history.replaceState(null, '', window.location.pathname + window.location.search);
     }
     
-    // Force scroll to top on mount - multiple attempts to ensure it sticks
-    const forceScrollToTop = () => {
+    // Scroll to top on mount only once (initial load)
+    // Check if this is the first mount by checking if we're already scrolled
+    // This prevents interfering with user scrolling on mobile
+    if (window.scrollY === 0 || window.location.hash) {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    };
-    
-    // Immediate scroll to top
-    forceScrollToTop();
-    
-    // Also use requestAnimationFrame to ensure it happens after render
-    requestAnimationFrame(() => {
-      forceScrollToTop();
-      
-      // Another attempt after a short delay to override any browser behavior
-      setTimeout(() => {
-        forceScrollToTop();
-      }, 0);
-      
-      // Final attempt after a slightly longer delay
-      setTimeout(() => {
-        forceScrollToTop();
-      }, 100);
-    });
+    }
     
     // Initialize any global animations or effects
     
@@ -64,10 +46,6 @@ const Index = () => {
     const refreshScrollTrigger = () => {
       clearTimeout(refreshTimeout);
       refreshTimeout = setTimeout(() => {
-        // Make sure we're still at top before refreshing
-        if (window.scrollY > 0) {
-          forceScrollToTop();
-        }
         ScrollTrigger.refresh();
       }, 300);
     };
