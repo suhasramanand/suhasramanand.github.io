@@ -26,6 +26,9 @@ const Analytics: React.FC = () => {
         const script1 = document.createElement('script');
         script1.async = true;
         script1.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+        script1.onerror = () => {
+          console.warn('Google Analytics script failed to load. This may indicate the Measurement ID is invalid or the property is not fully set up.');
+        };
         document.head.appendChild(script1);
       }
 
