@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 // Google Analytics component
 // Replace 'G-XXXXXXXXXX' with your actual Google Analytics Measurement ID
@@ -13,6 +14,9 @@ declare global {
 }
 
 const Analytics: React.FC = () => {
+  const location = useLocation();
+
+  // Initialize Google Analytics on mount
   useEffect(() => {
     // Check if Google Analytics is already loaded (e.g., from HTML injection)
     if (typeof window !== 'undefined' && window.gtag && window.dataLayer) {
@@ -46,6 +50,17 @@ const Analytics: React.FC = () => {
       }
     }
   }, []);
+
+  // Track page views on route changes (SPA navigation)
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.gtag && GA_MEASUREMENT_ID) {
+      // Send page_view event when route changes
+      window.gtag('config', GA_MEASUREMENT_ID, {
+        page_path: location.pathname + location.search,
+        page_title: document.title,
+      });
+    }
+  }, [location]);
 
   return null;
 };

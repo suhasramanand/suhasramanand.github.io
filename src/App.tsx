@@ -59,12 +59,12 @@ const App = () => (
   <HelmetProvider>
     <ErrorBoundary>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <Analytics />
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <Toaster />
             <Sonner />
             <BrowserRouter>
+            <Analytics />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/resume" element={<Resume />} />
