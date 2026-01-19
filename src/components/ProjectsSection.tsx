@@ -214,48 +214,48 @@ const ProjectsSection: React.FC = React.memo(() => {
     }
   }, [searchQuery, selectedTags, api]);
 
-  // Add horizontal wheel support for touchpad swipes
+  // Add horizontal wheel support for touchpad swipes - optimized for real-time response
   useEffect(() => {
     const carouselContainer = carouselContainerRef.current;
     if (!carouselContainer || !api) return;
 
-    let wheelTimeout: NodeJS.Timeout;
-    let lastWheelTime = 0;
+    let rafId: number | null = null;
     let accumulatedDeltaX = 0;
+    let isScrolling = false;
 
     const handleWheel = (e: WheelEvent) => {
       // Only handle horizontal scrolling (touchpad horizontal swipe)
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
         e.preventDefault();
         
-        const now = Date.now();
-        const timeDelta = now - lastWheelTime;
-        
-        // Reset accumulation if wheel stops for too long
-        if (timeDelta > 100) {
-          accumulatedDeltaX = 0;
-        }
-        
         accumulatedDeltaX += e.deltaX;
-        lastWheelTime = now;
         
-        // Clear any pending scroll
-        clearTimeout(wheelTimeout);
-        
-        // Lower threshold and faster response for instant feel
-        const threshold = 30;
-        const currentIndex = api.selectedScrollSnap();
-        const totalSlides = api.scrollSnapList().length;
-        
-        // Immediate scroll check without delay
-        if (accumulatedDeltaX > threshold && currentIndex < totalSlides - 1) {
-          // Scroll to next slide immediately
-          api.scrollTo(currentIndex + 1);
-          accumulatedDeltaX = 0;
-        } else if (accumulatedDeltaX < -threshold && currentIndex > 0) {
-          // Scroll to previous slide immediately
-          api.scrollTo(currentIndex - 1);
-          accumulatedDeltaX = 0;
+        // Use requestAnimationFrame for smooth, real-time scrolling
+        if (!rafId && !isScrolling) {
+          rafId = requestAnimationFrame(() => {
+            const threshold = 20; // Lower threshold for more responsive feel
+            const currentIndex = api.selectedScrollSnap();
+            const totalSlides = api.scrollSnapList().length;
+            
+            if (Math.abs(accumulatedDeltaX) > threshold) {
+              isScrolling = true;
+              
+              if (accumulatedDeltaX > threshold && currentIndex < totalSlides - 1) {
+                api.scrollTo(currentIndex + 1);
+              } else if (accumulatedDeltaX < -threshold && currentIndex > 0) {
+                api.scrollTo(currentIndex - 1);
+              }
+              
+              accumulatedDeltaX = 0;
+              
+              // Reset scrolling flag after animation
+              setTimeout(() => {
+                isScrolling = false;
+              }, 50);
+            }
+            
+            rafId = null;
+          });
         }
       }
       // Ignore vertical scrolling to allow normal page scrolling
@@ -264,7 +264,9 @@ const ProjectsSection: React.FC = React.memo(() => {
     carouselContainer.addEventListener('wheel', handleWheel, { passive: false });
 
     return () => {
-      clearTimeout(wheelTimeout);
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
       carouselContainer.removeEventListener('wheel', handleWheel);
     };
   }, [api]);
@@ -426,15 +428,15 @@ const ProjectsSection: React.FC = React.memo(() => {
             <Carousel
               setApi={setApi}
               opts={{
-                align: filteredProjects.length <= 3 ? "center" : "start",
+                align: "start",
                 loop: false,
                 slidesToScroll: 1,
-                dragFree: false,
-                containScroll: "trimSnaps",
+                dragFree: true, // Enable free dragging - no snapping to viewport
+                containScroll: "keepSnaps", // Keep snaps but allow free scrolling
                 watchDrag: true, // Enable drag for touchpad
                 watchResize: true,
-                skipSnaps: false,
-                duration: 10, // Very fast scroll duration for instant response
+                skipSnaps: false, // Allow free movement between snaps
+                duration: 15, // Ultra-fast, real-time scroll duration for instant response
                 startIndex: 0,
               }}
               className="w-full"

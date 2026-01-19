@@ -509,8 +509,19 @@ html:not([data-scroll-locked]) {
   word-wrap: break-word;
 }
 
-.terminal-cursor {
-  @apply text-green-400 ml-1;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
-  animation: blink 1s infinite;
-}
+  .terminal-cursor {
+    @apply text-green-400 ml-1;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+    animation: blink 1s infinite;
+  }
+
+  /* Smooth carousel transitions - Embla handles transforms internally */
+  [data-embla-carousel-viewport] {
+    overflow: hidden;
+    will-change: transform;
+  }
+
+  [data-embla-carousel-container] {
+    display: flex;
+    will-change: transform;
+  }
