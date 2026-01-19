@@ -264,7 +264,7 @@ const SkillsSection: React.FC = React.memo(() => {
                       </div>
                     </div>
                     
-                    <div className="space-y-3 flex-1">
+                    <div className={`space-y-3 flex-1 ${category.skills.length > 8 ? 'overflow-y-auto max-h-[400px]' : ''}`}>
                       {category.skills.map((skill, skillIndex) => (
                         <div key={skillIndex}>
                           <div className="flex justify-between items-center mb-1.5 gap-2">
