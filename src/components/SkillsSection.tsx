@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Code, Server, Database, Cloud, PenTool, GitBranch, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Code, Server, Database, Cloud, PenTool, GitBranch, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   Carousel,
   CarouselContent,
@@ -89,6 +89,24 @@ const skillCategories: SkillCategory[] = [
       { name: "CI/CD", level: 90 },
       { name: "Agile/Scrum", level: 85 },
       { name: "JIRA", level: 80 },
+    ]
+  },
+  {
+    icon: <Sparkles size={24} />,
+    title: "AI & Machine Learning",
+    skills: [
+      { name: "LLMs", level: 90 },
+      { name: "Prompt Engineering", level: 90 },
+      { name: "RAG (Retrieval Augmented Generation)", level: 85 },
+      { name: "Agentic AI", level: 85 },
+      { name: "Reinforcement Learning (RL)", level: 75 },
+      { name: "Claude (Anthropic)", level: 90 },
+      { name: "Cursor AI", level: 95 },
+      { name: "Code Rabbit", level: 90 },
+      { name: "Groq AI", level: 85 },
+      { name: "n8n (Workflow Automation)", level: 80 },
+      { name: "AI Code Generation", level: 90 },
+      { name: "AI Evaluation & Monitoring", level: 85 },
     ]
   },
 ];
