@@ -42,6 +42,14 @@ const projects: ProjectItem[] = [
     image: "/images/projects/homefit.png"
   },
   {
+    title: "AdapteEd-AI - Adaptive Learning Platform",
+    period: "Jan 2026",
+    description: "AI-powered adaptive educational platform that personalizes learning experiences using intelligent algorithms. Leverages machine learning to adapt content, difficulty, and pacing based on individual learner progress and performance.",
+    technologies: ["AI", "Machine Learning", "LLMs", "Education Tech", "Adaptive Learning"],
+    github: "https://github.com/suhasramanand/AdapteEd-AI",
+    image: "/images/projects/adapteed-ai.png"
+  },
+  {
     title: "Scalable Infrastructure Deployment",
     period: "Sep 2025",
     description: "Scalable Infrastructure Deployment with Terraform, Kubernetes (AWS EKS), and CI/CD pipelines for microservices architecture. Automated cloud infrastructure provisioning and container orchestration for high-availability systems.",
