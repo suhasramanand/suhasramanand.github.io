@@ -42,10 +42,10 @@ const projects: ProjectItem[] = [
     image: "/images/projects/homefit.png"
   },
   {
-    title: "AdapteEd-AI - Adaptive Learning Platform",
+    title: "AdapteEd-AI - Dyslexia Screening Mobile App",
     period: "Jan 2026",
-    description: "AI-powered adaptive educational platform that personalizes learning experiences using intelligent algorithms. Leverages machine learning to adapt content, difficulty, and pacing based on individual learner progress and performance.",
-    technologies: ["AI", "Machine Learning", "LLMs", "Education Tech", "Adaptive Learning"],
+    description: "Submission to Microsoft Imagine Cup 2026. A mobile application that uses Azure AI to detect early signs of dyslexia in children ages 5-10. Parents record their child reading, AI analyzes pronunciation and fluency using Azure Speech, generates personalized learning recommendations with GPT-4, and tracks progress over time. Features parent and teacher dashboards with risk assessment, progress visualization, and AI-powered intervention strategies.",
+    technologies: ["React Native", "Expo", "Node.js", "Express", "Azure AI Speech", "Azure OpenAI", "PostgreSQL", "Prisma", "Azure Blob Storage"],
     github: "https://github.com/suhasramanand/AdapteEd-AI",
     image: "/images/projects/adapteed-ai.png"
   },
